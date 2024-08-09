@@ -1,7 +1,11 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.dto.bidlist.BidListsResponse;
+import com.nnk.springboot.exceptions.BidListServiceException;
+import com.nnk.springboot.services.BidListService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class BidListController {
-    // TODO: Inject Bid service
+
+    @Autowired
+    private BidListService bidListService;
 
     @RequestMapping("/bidList/list")
-    public String home(Model model)
-    {
-        // TODO: call service find all bids to show to the view
+    public String home(Model model) throws BidListServiceException.BidListAggregationInfoException {
+        BidListsResponse bidListsResponse = bidListService.bidListAggregationInfo();
+        model.addAttribute("bidLists", bidListsResponse);
         return "bidList/list";
     }
 
