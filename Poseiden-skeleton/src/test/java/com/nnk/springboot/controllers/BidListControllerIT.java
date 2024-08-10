@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.BidList;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -87,6 +88,13 @@ public class BidListControllerIT {
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
     }
 
-
+    @Test
+    void showUpdateForm() throws Exception {
+        mockMvc.perform(get("/bidList/update/{id}",1))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"USER\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
+    }
 
 }
