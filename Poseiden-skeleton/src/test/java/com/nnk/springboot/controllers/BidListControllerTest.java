@@ -30,7 +30,7 @@ public class BidListControllerTest {
     Model model;
 
     @Test
-    void homeTest() throws BidListAggregationInfoException {
+    void testHome() throws BidListAggregationInfoException {
         BidListsResponse bidListsResponse = new BidListsResponse();
 
         when(bidListService.bidListAggregationInfo()).thenReturn(bidListsResponse);
@@ -45,7 +45,7 @@ public class BidListControllerTest {
     }
 
     @Test
-    void addBidForm(){
+    void testAddBidForm(){
         BidList bidList = new BidList();
         String viewName = bidListController.addBidForm(bidList,model);
 
@@ -54,7 +54,7 @@ public class BidListControllerTest {
     }
 
     @Test
-    void validate_True() throws BidListSaveException {
+    void testValidate_True() throws BidListSaveException {
         BidList bidList = new BidList();
         BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
@@ -68,7 +68,7 @@ public class BidListControllerTest {
     }
 
     @Test
-    void validate_False() throws BidListSaveException {
+    void testValidate_FalseTest() throws BidListSaveException {
         BidList bidList = new BidList();
         BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
@@ -87,6 +87,21 @@ public class BidListControllerTest {
         verify(bidListService).bidListSave(bidListArgumentCaptor.capture(),bindingResultArgumentCaptor.capture());
         assertEquals(bidList, bidListArgumentCaptor.getValue());
         assertEquals(bindingResult, bindingResultArgumentCaptor.getValue());
+    }
+
+    @Test
+    void testFindBidListByIdTest() throws Exception {
+        BidList bidList = new BidList();
+        bidList.setBidListId((byte) 1);
+        when(bidListService.findBidListById(1)).thenReturn(bidList);
+
+
+        String viewName = bidListController.showUpdateForm(1, model);
+
+        verify(bidListService, times(1)).findBidListById(1);
+
+        assertEquals("bidList/update", viewName);
+        verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));
     }
 
 }

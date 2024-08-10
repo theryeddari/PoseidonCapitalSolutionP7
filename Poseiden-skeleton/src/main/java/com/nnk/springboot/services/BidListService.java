@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
 import com.nnk.springboot.dto.bidlist.BidListsResponseAggregationInfoDTO;
+import com.nnk.springboot.exceptions.BidListServiceException;
 import com.nnk.springboot.repositories.BidListRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,14 @@ public class BidListService {
             return bidList;
         }catch (Exception e) {
             throw new BidListSaveException(e);
+        }
+    }
+
+    public BidList findBidListById(int id) throws FindBidListById {
+        try{
+            return null;
+        }catch (Exception e) {
+            throw new FindBidListById(e);
         }
     }
 }

@@ -20,10 +20,16 @@ public class BidListServiceException extends Exception {
         }
     }
 
-    public static class BidListSaveException extends Throwable {
+    public static class BidListSaveException extends BidListServiceException {
         public BidListSaveException(Exception cause) {
             super(BID_LIST_SAVE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
 
+        }
+    }
+
+    public static class FindBidListById extends BidListServiceException {
+        public FindBidListById(Exception cause) {
+            super(FIND_BID_LIST_BY_ID + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
 }
