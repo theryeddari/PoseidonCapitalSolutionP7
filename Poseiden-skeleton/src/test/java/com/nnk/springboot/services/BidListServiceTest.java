@@ -83,7 +83,7 @@ public class BidListServiceTest {
     }
 
     @Test
-    void testBidListFindById() throws FindBidListById {
+    void testBidListFindById() throws BidListFindByIdException {
         BidList bidList = new BidList();
 
         bidList.setBidListId((byte) 1);
@@ -103,7 +103,7 @@ public class BidListServiceTest {
 
         when(bidListRepository.findById(1)).thenReturn(Optional.empty());
 
-        Exception exception = Assertions.assertThrows(FindBidListById.class, () -> bidListService.BidListFindById(1));
+        Exception exception = Assertions.assertThrows(BidListFindByIdException.class, () -> bidListService.BidListFindById(1));
         assertEquals(BidListNotFoundException.class, exception.getCause().getClass());
     }
     @Test

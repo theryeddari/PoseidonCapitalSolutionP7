@@ -43,7 +43,7 @@ public class BidListController {
     }
 
     @GetMapping("/bidList/update/{id}")
-    public String showUpdateForm(@PathVariable("id") int id, Model model) throws FindBidListById {
+    public String showUpdateForm(@PathVariable("id") int id, Model model) throws BidListFindByIdException {
         BidList bidList = bidListService.BidListFindById(id);
         model.addAttribute("bidList", bidList);
         return "bidList/update";

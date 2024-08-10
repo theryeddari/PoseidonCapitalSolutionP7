@@ -50,7 +50,7 @@ public class BidListService {
         }
     }
 
-    public BidList BidListFindById(int id) throws FindBidListById {
+    public BidList BidListFindById(int id) throws BidListFindByIdException {
         try{
             Optional<BidList> bidList = bidListRepository.findById(id);
             if(bidList.isEmpty()){
@@ -58,7 +58,7 @@ public class BidListService {
             }
             return bidList.get();
         }catch (Exception e) {
-            throw new FindBidListById(e);
+            throw new BidListFindByIdException(e);
         }
     }
 

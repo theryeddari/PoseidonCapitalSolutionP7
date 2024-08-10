@@ -27,15 +27,15 @@ public class BidListServiceException extends Exception {
         }
     }
 
-    public static class FindBidListById extends BidListServiceException {
-        public FindBidListById(Exception cause) {
-            super(FIND_BID_LIST_BY_ID + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+    public static class BidListFindByIdException extends BidListServiceException {
+        public BidListFindByIdException(Exception cause) {
+            super(BID_LIST_FIND_BY_ID + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
 
     public static class BidListNotFoundException extends BidListServiceException {
         public BidListNotFoundException() {
-            super(FIND_BID_LIST_BY_ID);
+            super(BID_LIST_NOT_FOUND_EXCEPTION);
         }
     }
 
