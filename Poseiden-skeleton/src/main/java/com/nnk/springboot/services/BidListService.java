@@ -38,7 +38,14 @@ public class BidListService {
         }
     }
 
-    public BidList bidListSave(BidList bidList, BindingResult bindingResult) {
-        return null;
+    public BidList bidListSave(BidList bidList, BindingResult bindingResult) throws BidListSaveException {
+        try{
+            if(!bindingResult.hasErrors()){
+               bidList = bidListRepository.save(bidList);
+            }
+            return bidList;
+        }catch (Exception e) {
+            throw new BidListSaveException(e);
+        }
     }
 }

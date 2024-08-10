@@ -19,4 +19,11 @@ public class BidListServiceException extends Exception {
             super(BID_LIST_AGGREGATION_INFO_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
+
+    public static class BidListSaveException extends Throwable {
+        public BidListSaveException(Exception cause) {
+            super(BID_LIST_SAVE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+
+        }
+    }
 }

@@ -11,11 +11,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BidListServiceTest {
@@ -54,4 +56,16 @@ public class BidListServiceTest {
 
         assertThrows(BidListServiceException.BidListAggregationInfoException.class, () -> bidListService.bidListAggregationInfo());
     }
+    @Test
+    void bidListSave() throws BidListServiceException.BidListSaveException {
+        BidList bidList = new BidList();
+        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+
+        bindingResult.rejectValue("account", "error.bidList", "Account is required");
+
+        bidListService.bidListSave(bidList,bindingResult);
+
+        verify(bidListRepository, never()).save(bidList);
+    }
 }
+
