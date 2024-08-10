@@ -3,9 +3,9 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
 import com.nnk.springboot.dto.bidlist.BidListsResponseAggregationInfoDTO;
-import com.nnk.springboot.exceptions.BidListServiceException;
 import com.nnk.springboot.repositories.BidListRepository;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +15,9 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
 import java.util.List;
+import java.util.Optional;
 
+import static com.nnk.springboot.exceptions.BidListServiceException.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -29,7 +31,7 @@ public class BidListServiceTest {
     BidListRepository bidListRepository;
 
     @Test
-    void bidListAggregationInfo() throws BidListServiceException.BidListAggregationInfoException {
+    void testBidListAggregationInfo() throws BidListAggregationInfoException {
         BidList bidList = new BidList();
         bidList.setBidListId((byte) 1);
         bidList.setAccount("user");
@@ -51,13 +53,13 @@ public class BidListServiceTest {
     }
 
     @Test
-    void bidListAggregationInfo_Failed(){
+    void testBidListAggregationInfo_Failed(){
         when(bidListRepository.findAll()).thenThrow(new RuntimeException());
 
-        assertThrows(BidListServiceException.BidListAggregationInfoException.class, () -> bidListService.bidListAggregationInfo());
+        assertThrows(BidListAggregationInfoException.class, () -> bidListService.bidListAggregationInfo());
     }
     @Test
-    void bidListSave() throws BidListServiceException.BidListSaveException {
+    void testBidListSave() throws BidListSaveException {
         BidList bidList = new BidList();
         BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
@@ -66,6 +68,31 @@ public class BidListServiceTest {
         bidListService.bidListSave(bidList,bindingResult);
 
         verify(bidListRepository, never()).save(bidList);
+    }
+
+    @Test
+    void testBidListFindById() throws FindBidListById {
+        BidList bidList = new BidList();
+
+        bidList.setBidListId((byte) 1);
+        bidList.setAccount("user");
+        bidList.setType("USER");
+        bidList.setBidQuantity(10D);
+
+        when(bidListRepository.findById(1)).thenReturn(Optional.of(bidList));
+
+        BidList response = bidListService.BidListFindById(1);
+
+        assertEquals(1, (byte) response.getBidListId());
+    }
+
+    @Test
+    void testBidListFindById_BidListNotFoundException() {
+
+        when(bidListRepository.findById(1)).thenReturn(Optional.empty());
+
+        Exception exception = Assertions.assertThrows(FindBidListById.class, () -> bidListService.BidListFindById(1));
+        assertEquals(BidListNotFoundException.class, exception.getCause().getClass());
     }
 }
 

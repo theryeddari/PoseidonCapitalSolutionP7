@@ -32,4 +32,10 @@ public class BidListServiceException extends Exception {
             super(FIND_BID_LIST_BY_ID + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
+
+    public static class BidListNotFoundException extends BidListServiceException {
+        public BidListNotFoundException() {
+            super(FIND_BID_LIST_BY_ID);
+        }
+    }
 }

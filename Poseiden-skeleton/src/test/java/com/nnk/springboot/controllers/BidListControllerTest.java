@@ -93,12 +93,12 @@ public class BidListControllerTest {
     void testFindBidListByIdTest() throws Exception {
         BidList bidList = new BidList();
         bidList.setBidListId((byte) 1);
-        when(bidListService.findBidListById(1)).thenReturn(bidList);
+        when(bidListService.BidListFindById(1)).thenReturn(bidList);
 
 
         String viewName = bidListController.showUpdateForm(1, model);
 
-        verify(bidListService, times(1)).findBidListById(1);
+        verify(bidListService, times(1)).BidListFindById(1);
 
         assertEquals("bidList/update", viewName);
         verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));
