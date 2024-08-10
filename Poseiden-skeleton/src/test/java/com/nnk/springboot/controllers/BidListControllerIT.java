@@ -31,13 +31,19 @@ public class BidListControllerIT {
     ObjectMapper objectMapper;
 
     @Test
-    void bidListAggregationInfo() throws Exception {
+    void home() throws Exception {
 
         mockMvc.perform(get("/bidList/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>user</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>USER</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>10.0</td>")));
+    }
+    @Test
+    void addBidForm() throws Exception {
+
+        mockMvc.perform(get("/bidList/add"))
+                .andExpect(status().isOk());
     }
 
 }

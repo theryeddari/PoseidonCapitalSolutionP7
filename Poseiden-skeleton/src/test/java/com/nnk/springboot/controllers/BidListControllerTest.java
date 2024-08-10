@@ -1,5 +1,6 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
 import com.nnk.springboot.exceptions.BidListServiceException;
 import com.nnk.springboot.services.BidListService;
@@ -38,7 +39,15 @@ public class BidListControllerTest {
         Assertions.assertEquals("bidList/list", viewName);
 
         verify(model, times(1)).addAttribute(eq("bidLists"), eq(bidListsResponse.getBidListsResponseAggregationInfoDTO()));
+    }
 
+    @Test
+    void addBidForm(){
+        BidList bidList = new BidList();
+        String viewName = bidListController.addBidForm(bidList,model);
+
+        Assertions.assertEquals("bidList/add", viewName);
+        verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));
     }
 
 }
