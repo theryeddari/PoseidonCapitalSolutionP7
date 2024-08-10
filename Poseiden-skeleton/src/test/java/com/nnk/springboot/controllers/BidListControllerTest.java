@@ -37,7 +37,7 @@ public class BidListControllerTest {
 
         Assertions.assertEquals("bidList/list", viewName);
 
-        verify(model, times(1)).addAttribute(eq("bidLists"), eq(bidListsResponse));
+        verify(model, times(1)).addAttribute(eq("bidLists"), eq(bidListsResponse.getBidListsResponseAggregationInfoDTO()));
 
     }
 

@@ -2,7 +2,6 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
-import com.nnk.springboot.exceptions.BidListServiceException;
 import com.nnk.springboot.services.BidListService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static com.nnk.springboot.exceptions.BidListServiceException.*;
+
 
 @Controller
 public class BidListController {
@@ -22,9 +23,9 @@ public class BidListController {
     private BidListService bidListService;
 
     @RequestMapping("/bidList/list")
-    public String home(Model model) throws BidListServiceException.BidListAggregationInfoException {
+    public String home(Model model) throws BidListAggregationInfoException {
         BidListsResponse bidListsResponse = bidListService.bidListAggregationInfo();
-        model.addAttribute("bidLists", bidListsResponse);
+        model.addAttribute("bidLists", bidListsResponse.getBidListsResponseAggregationInfoDTO());
         return "bidList/list";
     }
 
