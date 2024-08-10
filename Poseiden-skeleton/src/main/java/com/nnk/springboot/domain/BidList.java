@@ -1,6 +1,9 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,12 +21,18 @@ public class BidList {
     private Byte bidListId;
 
     @Column(name = "account", nullable = false, length = 30)
+    @NotNull
+    @Size(min = 1, max = 30)
     private String account;
 
     @Column(name = "type", nullable = false, length = 30)
+    @NotNull
+    @Size(min = 1, max = 30)
     private String type;
 
     @Column(name = "bidQuantity")
+    @NotNull
+    @DecimalMin(value = "0.01", message = "Bid quantity must be positive.")
     private Double bidQuantity;
 
     @Column(name = "askQuantity")

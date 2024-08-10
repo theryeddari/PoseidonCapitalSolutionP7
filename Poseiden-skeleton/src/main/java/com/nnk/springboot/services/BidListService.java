@@ -40,7 +40,7 @@ public class BidListService {
 
     public BidList bidListSave(BidList bidList, BindingResult bindingResult) throws BidListSaveException {
         try{
-            if(!bindingResult.hasErrors()){
+            if(!bindingResult.hasFieldErrors()){
                bidList = bidListRepository.save(bidList);
             }
             return bidList;
