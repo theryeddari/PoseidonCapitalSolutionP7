@@ -6,6 +6,7 @@ import com.nnk.springboot.dto.bidlist.BidListsResponseAggregationInfoDTO;
 import com.nnk.springboot.repositories.BidListRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -35,5 +36,9 @@ public class BidListService {
         } catch (Exception e) {
             throw new BidListAggregationInfoException(e);
         }
+    }
+
+    public BidList bidListSave(BidList bidList, BindingResult bindingResult) {
+        return null;
     }
 }
