@@ -9,13 +9,13 @@ import static com.nnk.springboot.exceptions.BidListServiceException.*;
 public class BidListControllerAdvice {
 
     @ExceptionHandler(BidListAggregationInfoException.class)
-    public String handleBidListServiceException(BidListAggregationInfoException ex) {
+    public String handleBidListAggregationInfoException(BidListAggregationInfoException ex) {
             //TODO: complete logic Controller Advice response and adapt template to manage it
         return ex.getMessage();
     }
 
     @ExceptionHandler(BidListSaveException.class)
-    public String handleBidBidListSaveException(BidListSaveException ex) {
+    public String handleBidListSaveException(BidListSaveException ex) {
         if(ex.getCause() instanceof BidListIncoherenceBetweenObject){
             return ex.getCause().getMessage();
         }
@@ -28,6 +28,12 @@ public class BidListControllerAdvice {
         if(ex.getCause() instanceof BidListNotFoundException){
             return ex.getCause().getMessage();
         }
+        //TODO: complete logic Controller Advice response and adapt template to manage it
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(BidListDeleteException.class)
+    public String handleBidListDeleteException(BidListDeleteException ex) {
         //TODO: complete logic Controller Advice response and adapt template to manage it
         return ex.getMessage();
     }
