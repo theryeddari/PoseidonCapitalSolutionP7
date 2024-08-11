@@ -135,5 +135,11 @@ public class BidListServiceTest {
         verify(bidListRepository, never()).save(bidList);
 
     }
+    @Test
+    void testBidListDelete() throws BidListDeleteException {
+        doNothing().when(bidListRepository).deleteById(1);
+        bidListService.bidListDelete(1);
+        verify(bidListRepository).deleteById(1);
+    }
 }
 

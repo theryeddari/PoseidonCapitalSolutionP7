@@ -142,4 +142,14 @@ public class BidListControllerTest {
         assertEquals(1, bidListIdArgumentCaptor.getValue());
     }
 
+    @Test
+    void testDeleteBid() throws BidListDeleteException {
+        doNothing().when(bidListService).bidListDelete(1);
+
+        String viewName = bidListController.deleteBid(1);
+
+        verify(bidListService, times(1)).bidListDelete(1);
+        assertEquals("redirect:/bidList/list", viewName);
+    }
+
 }

@@ -112,5 +112,12 @@ public class BidListControllerIT {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/bidList/list"));
     }
+    @Test
+    void deleteBid() throws Exception {
+        mockMvc.perform(get("/bidList/delete/{id}",1))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/bidList/list"));
+
+    }
 
 }

@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
 import com.nnk.springboot.dto.bidlist.BidListsResponseAggregationInfoDTO;
+import com.nnk.springboot.exceptions.BidListServiceException;
 import com.nnk.springboot.repositories.BidListRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -70,6 +71,14 @@ public class BidListService {
 
         } catch (Exception e) {
             throw new BidListSaveException(e);
+        }
+    }
+
+    public void bidListDelete(int id) throws BidListDeleteException {
+        try{
+            bidListRepository.deleteById(id);
+        }catch (Exception e) {
+            throw new BidListDeleteException(e);
         }
     }
 }

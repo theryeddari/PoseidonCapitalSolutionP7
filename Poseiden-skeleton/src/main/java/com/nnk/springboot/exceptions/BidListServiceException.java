@@ -44,4 +44,10 @@ public class BidListServiceException extends Exception {
             super(BID_LIST_INCOHERENCE_BETWEEN_OBJET_EXCEPTION);
         }
     }
+
+    public static class BidListDeleteException extends BidListServiceException {
+        public BidListDeleteException(Exception cause) {
+            super(BID_LIST_DELETE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+        }
+    }
 }

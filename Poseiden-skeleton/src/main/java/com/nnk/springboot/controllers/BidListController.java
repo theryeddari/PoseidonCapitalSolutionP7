@@ -52,14 +52,13 @@ public class BidListController {
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) throws BidListSaveException {
         bidList = bidListService.bidListSave(id, bidList, result);
-        System.out.println("ICI!!!!!!!!!!!!!!" + bidList.getBidListId());
         model.addAttribute("bidList", bidList);
         return "redirect:/bidList/list";
     }
 
     @GetMapping("/bidList/delete/{id}")
-    public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
+    public String deleteBid(@PathVariable("id") Integer id) throws BidListDeleteException {
+        bidListService.bidListDelete(id);
         return "redirect:/bidList/list";
     }
 }
