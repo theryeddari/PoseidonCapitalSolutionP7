@@ -3,9 +3,9 @@ package com.nnk.springboot.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.nnk.springboot.domain.BidList;
+import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestClassOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @WithMockUser(username = "user", roles = "USER")
+@Transactional
 public class BidListControllerIT {
 
     @Autowired

@@ -3,7 +3,6 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
 import com.nnk.springboot.dto.bidlist.BidListsResponseAggregationInfoDTO;
-import com.nnk.springboot.exceptions.BidListServiceException;
 import com.nnk.springboot.repositories.BidListRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ import java.util.Optional;
 import static com.nnk.springboot.exceptions.BidListServiceException.*;
 
 @Service
+@Transactional
 public class BidListService {
 
     final BidListRepository bidListRepository;
@@ -23,7 +23,6 @@ public class BidListService {
         this.bidListRepository = bidListRepository;
     }
 
-    @Transactional
     public BidListsResponse bidListAggregationInfo() throws BidListAggregationInfoException {
         try {
             List<BidList> bidLists = bidListRepository.findAll();
