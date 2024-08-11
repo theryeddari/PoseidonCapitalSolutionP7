@@ -61,4 +61,15 @@ public class BidListService {
             throw new FindBidListById(e);
         }
     }
+
+    public BidList bidListSave(int id, BidList bidList, BindingResult bindingResult) throws BidListSaveException {
+        try {
+            if(id == bidList.getBidListId() ){
+            return bidListSave(bidList,bindingResult);
+        }else throw new BidListIncoherenceBetweenObject();
+
+        } catch (Exception e) {
+            throw new BidListSaveException(e);
+        }
+    }
 }

@@ -58,8 +58,20 @@ public class BidListServiceTest {
 
         assertThrows(BidListAggregationInfoException.class, () -> bidListService.bidListAggregationInfo());
     }
+
     @Test
-    void testBidListSave() throws BidListSaveException {
+    void testBidListSave_BindingSuccess() throws BidListSaveException {
+        BidList bidList = new BidList();
+        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+        when(bidListRepository.save(bidList)).thenReturn(bidList);
+
+        bidListService.bidListSave(bidList,bindingResult);
+
+        verify(bidListRepository, times(1)).save(bidList);
+    }
+
+    @Test
+    void testBidListSave_BindingError() throws BidListSaveException {
         BidList bidList = new BidList();
         BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
@@ -93,6 +105,35 @@ public class BidListServiceTest {
 
         Exception exception = Assertions.assertThrows(FindBidListById.class, () -> bidListService.BidListFindById(1));
         assertEquals(BidListNotFoundException.class, exception.getCause().getClass());
+    }
+    @Test
+    void testBidListSaveOverloadWithIdVerification_Success() throws BidListSaveException {
+
+        BidList bidList = new BidList();
+        bidList.setBidListId((byte) 1);
+        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+
+        when(bidListRepository.save(bidList)).thenReturn(bidList);
+
+        bidListService.bidListSave(1,bidList,bindingResult);
+
+        verify(bidListRepository, times(1)).save(bidList);
+
+    }
+
+    @Test
+    void testBidListSaveOverloadWithIdVerification_Failed() {
+
+        BidList bidList = new BidList();
+        bidList.setBidListId((byte) 1);
+        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+
+        Exception exception = assertThrows(BidListSaveException.class, () -> bidListService.bidListSave(2,bidList,bindingResult));
+
+        assertEquals(BidListIncoherenceBetweenObject.class, exception.getCause().getClass());
+
+        verify(bidListRepository, never()).save(bidList);
+
     }
 }
 

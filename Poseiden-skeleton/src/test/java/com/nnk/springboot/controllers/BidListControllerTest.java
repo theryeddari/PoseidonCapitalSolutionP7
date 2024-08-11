@@ -104,4 +104,42 @@ public class BidListControllerTest {
         verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));
     }
 
+    @Test
+    void testUpdateBid_True() throws BidListSaveException {
+        BidList bidList = new BidList();
+        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+
+        when(bidListService.bidListSave(1,bidList,bindingResult)).thenReturn(bidList);
+
+        String viewName = bidListController.updateBid(1, bidList, bindingResult, model);
+
+        assertEquals("redirect:/bidList/list", viewName);
+        verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));
+    }
+
+    @Test
+    void testUpdateBid_False() throws BidListSaveException {
+        BidList bidList = new BidList();
+        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+
+        bindingResult.rejectValue("account", "error.bidList", "Account is required");
+
+
+        when(bidListService.bidListSave(1, bidList,bindingResult)).thenReturn(bidList);
+
+        ArgumentCaptor<BindingResult> bindingResultArgumentCaptor = ArgumentCaptor.forClass(BindingResult.class);
+        ArgumentCaptor<BidList> bidListArgumentCaptor = ArgumentCaptor.forClass(BidList.class);
+        ArgumentCaptor<Integer> bidListIdArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
+
+        String viewName = bidListController.updateBid(1, bidList, bindingResult, model);
+
+        assertEquals("redirect:/bidList/list", viewName);
+        verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));
+
+        verify(bidListService).bidListSave(bidListIdArgumentCaptor.capture(), bidListArgumentCaptor.capture(),bindingResultArgumentCaptor.capture());
+        assertEquals(bidList, bidListArgumentCaptor.getValue());
+        assertEquals(bindingResult, bindingResultArgumentCaptor.getValue());
+        assertEquals(1, bidListIdArgumentCaptor.getValue());
+    }
+
 }

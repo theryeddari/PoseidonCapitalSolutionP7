@@ -50,9 +50,10 @@ public class BidListController {
     }
 
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
-                             BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Bid and return list Bid
+    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) throws BidListSaveException {
+        bidList = bidListService.bidListSave(id, bidList, result);
+        System.out.println("ICI!!!!!!!!!!!!!!" + bidList.getBidListId());
+        model.addAttribute("bidList", bidList);
         return "redirect:/bidList/list";
     }
 

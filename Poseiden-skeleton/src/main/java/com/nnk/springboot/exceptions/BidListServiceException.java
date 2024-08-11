@@ -38,4 +38,10 @@ public class BidListServiceException extends Exception {
             super(FIND_BID_LIST_BY_ID);
         }
     }
+
+    public static class BidListIncoherenceBetweenObject extends BidListServiceException {
+        public BidListIncoherenceBetweenObject() {
+            super(BID_LIST_INCOHERENCE_BETWEEN_OBJET_EXCEPTION);
+        }
+    }
 }

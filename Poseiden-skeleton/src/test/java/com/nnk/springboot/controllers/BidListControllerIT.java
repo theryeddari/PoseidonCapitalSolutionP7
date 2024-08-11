@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -52,37 +53,34 @@ public class BidListControllerIT {
 
     @Test
     void validate_true() throws Exception {
-        // Créez un objet BidList avec des valeurs valides pour le test
+
         BidList bidList = new BidList();
         bidList.setAccount("user");
         bidList.setType("USER");
         bidList.setBidQuantity(10.0);
 
-        // Utilisez MockMvc pour envoyer une requête POST avec les données du formulaire
         mockMvc.perform(post("/bidList/validate")
                         .param("account", bidList.getAccount())
                         .param("type", bidList.getType())
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk()) // Vérifiez que le statut est OK
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"USER\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
     }
     @Test
     void validate_false() throws Exception {
-        // Créez un objet BidList avec des valeurs valides pour le test
         BidList bidList = new BidList();
         bidList.setType("USER");
         bidList.setBidQuantity(10.0);
 
-        // Utilisez MockMvc pour envoyer une requête POST avec les données du formulaire
         mockMvc.perform(post("/bidList/validate")
                         .param("account", bidList.getAccount())
                         .param("type", bidList.getType())
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk()) // Vérifiez que le statut est OK
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">must not be null</p>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"USER\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
@@ -95,6 +93,24 @@ public class BidListControllerIT {
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"USER\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
+    }
+
+    @Test
+    void updateBidOverloadWithIdVerification_Success() throws Exception {
+        BidList bidList = new BidList();
+        bidList.setBidListId((byte) 1);
+        bidList.setAccount("user");
+        bidList.setType("USER");
+        bidList.setBidQuantity(10.0);
+
+        mockMvc.perform(post("/bidList/update/{id}",1)
+                        .param("bidListId", String.valueOf(bidList.getBidListId()))
+                        .param("account", bidList.getAccount())
+                        .param("type", bidList.getType())
+                        .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/bidList/list"));
     }
 
 }
