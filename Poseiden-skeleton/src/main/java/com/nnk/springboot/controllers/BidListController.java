@@ -4,6 +4,8 @@ import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
 import com.nnk.springboot.services.BidListService;
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,50 +17,114 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static com.nnk.springboot.exceptions.BidListServiceException.*;
 
-
+/**
+ * Controller for managing BidList operations.
+ */
 @Controller
 public class BidListController {
+
+    private static final Logger logger = LogManager.getLogger(BidListController.class);
 
     @Autowired
     private BidListService bidListService;
 
+    /**
+     * Displays the list of bid lists.
+     *
+     * @param model the model to populate with bid lists
+     * @return the view name for the bid list
+     * @throws BidListAggregationInfoException if there is an error aggregating bid list info
+     */
     @RequestMapping("/bidList/list")
     public String home(Model model) throws BidListAggregationInfoException {
+        logger.info("Received request to list bid lists");
         BidListsResponse bidListsResponse = bidListService.bidListAggregationInfo();
         model.addAttribute("bidLists", bidListsResponse.getBidListsResponseAggregationInfoDTO());
+        logger.info("Bid lists successfully retrieved and added to the model");
         return "bidList/list";
     }
 
+    /**
+     * Displays the form for adding a new bid list.
+     *
+     * @param bidList the bid list to add
+     * @param model   the model to populate with the bid list
+     * @return the view name for adding a bid list
+     */
     @GetMapping("/bidList/add")
-    public String addBidForm(BidList bidList , Model model){
+    public String addBidForm(BidList bidList, Model model) {
+        logger.info("Received request to show add bid form");
         model.addAttribute("bidList", bidList);
+        logger.info("Add bid form displayed");
         return "bidList/add";
     }
 
+    /**
+     * Validates and saves the bid list.
+     *
+     * @param bidList the bid list to save
+     * @param result  the result of validation
+     * @param model   the model to populate with the bid list
+     * @return the view name for the add bid form or redirect to the list
+     * @throws BidListSaveException if there is an error saving the bid list
+     */
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bidList, BindingResult result, Model model) throws BidListSaveException {
+        logger.info("Received request to validate and save bid list");
         bidList = bidListService.bidListSave(bidList, result);
         model.addAttribute("bidList", bidList);
+        logger.info("Bid list successfully validated and saved");
         return "bidList/add";
     }
 
+    /**
+     * Displays the form for updating an existing bid list.
+     *
+     * @param id    the ID of the bid list to update
+     * @param model the model to populate with the bid list
+     * @return the view name for updating the bid list
+     * @throws BidListFindByIdException if there is an error finding the bid list by ID
+     */
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") int id, Model model) throws BidListFindByIdException {
+        logger.info("Received request to show update form for bid list with ID: {}", id);
         BidList bidList = bidListService.BidListFindById(id);
         model.addAttribute("bidList", bidList);
+        logger.info("Update form for bid list with ID: {} displayed", id);
         return "bidList/update";
     }
 
+    /**
+     * Updates the specified bid list.
+     *
+     * @param id      the ID of the bid list to update
+     * @param bidList the bid list data to update
+     * @param result  the result of validation
+     * @param model   the model to populate with the updated bid list
+     * @return the redirect URL for the bid list list
+     * @throws BidListSaveException if there is an error saving the updated bid list
+     */
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) throws BidListSaveException {
+        logger.info("Received request to update bid list with ID: {}", id);
         bidList = bidListService.bidListSave(id, bidList, result);
         model.addAttribute("bidList", bidList);
+        logger.info("Bid list with ID: {} successfully updated", id);
         return "redirect:/bidList/list";
     }
 
+    /**
+     * Deletes the specified bid list.
+     *
+     * @param id the ID of the bid list to delete
+     * @return the redirect URL for the bid list list
+     * @throws BidListDeleteException if there is an error deleting the bid list
+     */
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id) throws BidListDeleteException {
+        logger.info("Received request to delete bid list with ID: {}", id);
         bidListService.bidListDelete(id);
+        logger.info("Bid list with ID: {} successfully deleted", id);
         return "redirect:/bidList/list";
     }
 }

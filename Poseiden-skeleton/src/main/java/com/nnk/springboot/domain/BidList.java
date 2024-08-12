@@ -1,15 +1,16 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+
+/**
+ * Entity class representing a Bid List in the application.
+ */
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class BidList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="BidListId", unique = true, nullable = false)
+    @Column(name = "BidListId", unique = true, nullable = false)
     private Byte bidListId;
 
     @Column(name = "account", nullable = false, length = 30)
