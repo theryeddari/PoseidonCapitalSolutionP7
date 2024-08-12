@@ -2,6 +2,9 @@
 <module version="4">
   <component name="AdditionalModuleElements">
     <content url="file://$MODULE_DIR$" dumb="true">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/com/nnk/springboot/controllers/notToCompile" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/com/nnk/springboot/domain/notToCompile" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java/com/nnk/springboot/repositories/notToCompile" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/com/nnk/springboot/controllers/notToCompile" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/com/nnk/springboot/domain/notToCompile" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/com/nnk/springboot/repositories/notToCompile" />

@@ -121,7 +121,7 @@
 						<exclude>com/nnk/springboot/configs/**</exclude>
 						<exclude>com/nnk/springboot/constants/**</exclude>
 						<exclude>com/nnk/springboot/domain/**</exclude>
-						<exclude>com/nnk/springboot/security/**</exclude>
+						<exclude>com/nnk/springboot/config/security/**</exclude>
 						<exclude>**/notToCompile/*.java</exclude>
 					</excludes>
 				</configuration>

@@ -136,10 +136,25 @@ public class BidListServiceTest {
 
     }
     @Test
+    void testBidListSaveException(){
+        BidList bidList = new BidList();
+        bidList.setBidListId((byte) 1);
+        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+
+        when(bidListRepository.save(bidList)).thenThrow(new RuntimeException());
+
+        assertThrows(BidListSaveException.class, () -> bidListService.bidListSave(1,bidList,bindingResult));
+    }
+    @Test
     void testBidListDelete() throws BidListDeleteException {
         doNothing().when(bidListRepository).deleteById(1);
         bidListService.bidListDelete(1);
         verify(bidListRepository).deleteById(1);
+    }
+    @Test
+    void testBidListDeleteException(){
+        doThrow(new RuntimeException()).when(bidListRepository).deleteById(anyInt());
+        assertThrows(BidListDeleteException.class, () -> bidListService.bidListDelete(1));
     }
 }
 

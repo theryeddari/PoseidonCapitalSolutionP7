@@ -68,7 +68,7 @@ public class BidListServiceException extends Exception {
          * @param cause the cause of the exception
          */
         public BidListFindByIdException(Exception cause) {
-            super(BID_LIST_FIND_BY_ID + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+            super(BID_LIST_FIND_BY_ID_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
 
         }
     }

@@ -31,10 +31,16 @@ public class BidListControllerAdviceTest {
 
     @Test
     void handleBidListFindByIdException() {
+        String result = bidListControllerAdvice.handleBidListFindByIdException(new BidListFindByIdException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(BID_LIST_FIND_BY_ID_EXCEPTION + MORE_INFO));
+    }
+    @Test
+    void handleBidListFindById_BidListNotFoundException() {
         BidListNotFoundException bidListNotFoundException = new BidListNotFoundException();
         String result = bidListControllerAdvice.handleBidListFindByIdException(new BidListFindByIdException(bidListNotFoundException));
 
-        Assertions.assertTrue(result.contains(BID_LIST_FIND_BY_ID));
+        Assertions.assertTrue(result.contains(BID_LIST_FIND_BY_ID_EXCEPTION));
     }
 
     @Test
