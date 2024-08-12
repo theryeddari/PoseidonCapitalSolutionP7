@@ -1,6 +1,7 @@
-package com.nnk.springboot.controllers;
+package com.nnk.springboot.controllers.bidlist;
 
 
+import com.nnk.springboot.controllers.BidListControllerAdvice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

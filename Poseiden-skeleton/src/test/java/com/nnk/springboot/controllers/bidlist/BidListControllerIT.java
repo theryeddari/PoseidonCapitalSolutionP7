@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllers;
+package com.nnk.springboot.controllers.bidlist;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

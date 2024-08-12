@@ -117,7 +117,7 @@ public class BidListController {
      * Deletes the specified bid list.
      *
      * @param id the ID of the bid list to delete
-     * @return the redirect URL for the bid list list
+     * @return the redirect URL for the bid list
      * @throws BidListDeleteException if there is an error deleting the bid list
      */
     @GetMapping("/bidList/delete/{id}")

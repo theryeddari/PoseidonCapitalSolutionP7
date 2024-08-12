@@ -1,5 +1,6 @@
-package com.nnk.springboot.controllers;
+package com.nnk.springboot.controllers.bidlist;
 
+import com.nnk.springboot.controllers.BidListController;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.bidlist.BidListsResponse;
 import com.nnk.springboot.services.BidListService;

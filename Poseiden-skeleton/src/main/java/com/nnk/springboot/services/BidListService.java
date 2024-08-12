@@ -14,12 +14,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.nnk.springboot.exceptions.BidListServiceException.*;
+/**
+ * Class who manage logic about operation of Bid list
 
+ */
 @Service
 @Transactional
 public class BidListService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BidListService.class);
+    private static final Logger logger = LoggerFactory.getLogger(BidListService.class);
 
     final BidListRepository bidListRepository;
 
@@ -34,7 +37,7 @@ public class BidListService {
      * @throws BidListAggregationInfoException if there is an error retrieving the information.
      */
     public BidListsResponse bidListAggregationInfo() throws BidListAggregationInfoException {
-        LOGGER.info("Entering bidListAggregationInfo method.");
+        logger.info("Entering bidListAggregationInfo method.");
         try {
             List<BidList> bidLists = bidListRepository.findAll();
             List<BidListsResponseAggregationInfoDTO> bidListsResponseAggregationInfoDTO = bidLists.stream().map(bidList ->
@@ -44,10 +47,10 @@ public class BidListService {
                                     bidList.getType(),
                                     String.valueOf(bidList.getBidQuantity())))
                     .toList();
-            LOGGER.info("Exiting bidListAggregationInfo method successfully.");
+            logger.info("Exiting bidListAggregationInfo method successfully.");
             return new BidListsResponse(bidListsResponseAggregationInfoDTO);
         } catch (Exception e) {
-            LOGGER.error("Error in bidListAggregationInfo method.", e);
+            logger.error("Error in bidListAggregationInfo method.", e);
             throw new BidListAggregationInfoException(e);
         }
     }
@@ -61,15 +64,15 @@ public class BidListService {
      * @throws BidListSaveException if there is an error saving the bid list.
      */
     public BidList bidListSave(BidList bidList, BindingResult bindingResult) throws BidListSaveException {
-        LOGGER.info("Entering bidListSave method with bidList: {}", bidList);
+        logger.info("Entering bidListSave method with bidList: {}", bidList);
         try {
             if (!bindingResult.hasFieldErrors()) {
                 bidList = bidListRepository.save(bidList);
             }
-            LOGGER.info("Exiting bidListSave method successfully with saved bidList: {}", bidList);
+            logger.info("Exiting bidListSave method successfully with saved bidList: {}", bidList);
             return bidList;
         } catch (Exception e) {
-            LOGGER.error("Error in bidListSave method.", e);
+            logger.error("Error in bidListSave method.", e);
             throw new BidListSaveException(e);
         }
     }
@@ -82,17 +85,17 @@ public class BidListService {
      * @throws BidListFindByIdException if there is an error finding the bid list.
      */
     public BidList BidListFindById(int id) throws BidListFindByIdException {
-        LOGGER.info("Entering BidListFindById method with ID: {}", id);
+        logger.info("Entering BidListFindById method with ID: {}", id);
         try {
             Optional<BidList> bidList = bidListRepository.findById(id);
             if (bidList.isEmpty()) {
-                LOGGER.warn("Bid list with ID: {} not found.", id);
+                logger.warn("Bid list with ID: {} not found.", id);
                 throw new BidListNotFoundException();
             }
-            LOGGER.info("Exiting BidListFindById method successfully with found bidList: {}", bidList.get());
+            logger.info("Exiting BidListFindById method successfully with found bidList: {}", bidList.get());
             return bidList.get();
         } catch (Exception e) {
-            LOGGER.error("Error in BidListFindById method.", e);
+            logger.error("Error in BidListFindById method.", e);
             throw new BidListFindByIdException(e);
         }
     }
@@ -107,18 +110,18 @@ public class BidListService {
      * @throws BidListSaveException if there is an error saving the bid list.
      */
     public BidList bidListSave(int id, BidList bidList, BindingResult bindingResult) throws BidListSaveException {
-        LOGGER.info("Entering bidListSave method with ID: {} and bidList: {}", id, bidList);
+        logger.info("Entering bidListSave method with ID: {} and bidList: {}", id, bidList);
         try {
             if (id == bidList.getBidListId()) {
                 BidList savedBidList = bidListSave(bidList, bindingResult);
-                LOGGER.info("Exiting bidListSave method successfully with saved bidList: {}", savedBidList);
+                logger.info("Exiting bidListSave method successfully with saved bidList: {}", savedBidList);
                 return savedBidList;
             } else {
-                LOGGER.warn("Bid list ID: {} does not match the ID in bidList: {}", id, bidList.getBidListId());
+                logger.warn("Bid list ID: {} does not match the ID in bidList: {}", id, bidList.getBidListId());
                 throw new BidListIncoherenceBetweenObject();
             }
         } catch (Exception e) {
-            LOGGER.error("Error in bidListSave method.", e);
+            logger.error("Error in bidListSave method.", e);
             throw new BidListSaveException(e);
         }
     }
@@ -130,12 +133,12 @@ public class BidListService {
      * @throws BidListDeleteException if there is an error deleting the bid list.
      */
     public void bidListDelete(int id) throws BidListDeleteException {
-        LOGGER.info("Entering bidListDelete method with ID: {}", id);
+        logger.info("Entering bidListDelete method with ID: {}", id);
         try {
             bidListRepository.deleteById(id);
-            LOGGER.info("Exiting bidListDelete method successfully.");
+            logger.info("Exiting bidListDelete method successfully.");
         } catch (Exception e) {
-            LOGGER.error("Error in bidListDelete method.", e);
+            logger.error("Error in bidListDelete method.", e);
             throw new BidListDeleteException(e);
         }
     }
