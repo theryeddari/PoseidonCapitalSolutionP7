@@ -1,4 +1,4 @@
-package com.nnk.springboot.domain.notToCompile;
+package com.nnk.springboot.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

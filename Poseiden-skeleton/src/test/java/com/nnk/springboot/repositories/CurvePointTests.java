@@ -1,8 +1,7 @@
-package com.nnk.springboot.repositories.notToCompile;
+package com.nnk.springboot.repositories;
 
 import com.nnk.springboot.domain.CurvePoint;
 
-import com.nnk.springboot.repositories.CurvePointRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

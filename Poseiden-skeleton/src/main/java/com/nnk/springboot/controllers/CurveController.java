@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllers.notToCompile;
+package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
 import jakarta.validation.Valid;

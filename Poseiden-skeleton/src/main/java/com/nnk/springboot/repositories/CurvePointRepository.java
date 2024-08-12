@@ -1,4 +1,4 @@
-package com.nnk.springboot.repositories.notToCompile;
+package com.nnk.springboot.repositories;
 
 import com.nnk.springboot.domain.CurvePoint;
 import org.springframework.data.jpa.repository.JpaRepository;
