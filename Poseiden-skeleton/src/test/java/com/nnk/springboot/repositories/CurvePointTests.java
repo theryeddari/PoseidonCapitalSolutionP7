@@ -19,24 +19,26 @@ public class CurvePointTests {
 
 	@Test
 	public void curvePointTest() {
-		CurvePoint curvePoint = new CurvePoint(10, 10d, 30d);
+		CurvePoint curvePoint = new CurvePoint();
+		curvePoint.setTerm(10d);
+		curvePoint.setValue(30d);
 
 		// Save
 		curvePoint = curvePointRepository.save(curvePoint);
-		assertNotNull(curvePoint.getId());
-		assertTrue(curvePoint.getCurveId() == 10);
+		assertNotNull(curvePoint.getCurveId());
+        assertEquals(10, curvePoint.getTerm());
 
 		// Update
-		curvePoint.setCurveId(20);
+		curvePoint.setTerm(20d);
 		curvePoint = curvePointRepository.save(curvePoint);
-		assertTrue(curvePoint.getCurveId() == 20);
+        assertEquals(20, curvePoint.getTerm());
 
 		// Find
 		List<CurvePoint> listResult = curvePointRepository.findAll();
-		assertTrue(listResult.size() > 0);
+        assertFalse(listResult.isEmpty());
 
 		// Delete
-		Integer id = curvePoint.getId();
+		Integer id = Integer.valueOf(curvePoint.getCurveId());
 		curvePointRepository.delete(curvePoint);
 		Optional<CurvePoint> curvePointList = curvePointRepository.findById(id);
 		assertFalse(curvePointList.isPresent());
