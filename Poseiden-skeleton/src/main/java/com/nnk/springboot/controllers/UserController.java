@@ -1,7 +1,7 @@
-package com.nnk.springboot.controllers.notToCompile;
+package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.repositories.notToCompile.UserRepository;
+import com.nnk.springboot.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -60,7 +60,7 @@ public class UserController {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
-        user.setId(id);
+        user.setId(id.byteValue());
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
         return "redirect:/user/list";
