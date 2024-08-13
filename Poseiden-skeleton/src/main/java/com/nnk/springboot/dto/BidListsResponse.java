@@ -16,7 +16,6 @@ public class BidListsResponse {
 
     /**
      * Default constructor for BidListsResponse.
-     * Logs the creation of an instance of BidListsResponse.
      */
     public BidListsResponse() {
         // Lombok constructor

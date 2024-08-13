@@ -15,7 +15,6 @@ public class CurvePointResponse {
 
     /**
      * Default constructor forCurvePointResponse.
-     * Logs the creation of an instance of CurvePointResponse.
      */
     public CurvePointResponse() {
         // Lombok constructor

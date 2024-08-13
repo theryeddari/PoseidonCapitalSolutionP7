@@ -16,7 +16,6 @@ public class RatingsResponse {
 
     /**
      * Default constructor for RatingsResponse.
-     * Logs the creation of an instance of RatingsResponse.
      */
     public RatingsResponse() {
         // Lombok constructor
