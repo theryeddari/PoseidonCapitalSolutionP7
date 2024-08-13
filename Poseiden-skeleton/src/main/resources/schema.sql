@@ -50,13 +50,12 @@ CREATE TABLE if not exists Trade (
 );
 
 CREATE TABLE if not exists CurvePoint (
-                                          Id tinyint(4) NOT NULL AUTO_INCREMENT,
-                                          CurveId tinyint,
+                                          CurveId tinyint(4) NOT NULL AUTO_INCREMENT,
                                           asOfDate TIMESTAMP,
                                           term DOUBLE,
                                           value DOUBLE,
                                           creationDate TIMESTAMP,
-                                          PRIMARY KEY (Id)
+                                          PRIMARY KEY (CurveId)
 );
 
 CREATE TABLE if not exists Rating (

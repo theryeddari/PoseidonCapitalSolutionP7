@@ -17,7 +17,7 @@ public class CurvePointResponseAggregationInfoDTO {
     /**
      * The unique identifier for the curve point.
      */
-    private String id;
+    private String curveId;
 
     /**
      * The term associated with the curve point.

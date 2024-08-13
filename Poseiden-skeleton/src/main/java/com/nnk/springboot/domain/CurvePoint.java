@@ -1,6 +1,8 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +24,13 @@ public class CurvePoint {
     private Instant asOfDate;
 
     @Column(name = "term")
+    @Positive(message = "{app.positive}")
+    @NotNull(message = "{curvepoint.not-null}" )
     private Double term;
 
     @Column(name = "value")
+    @Positive(message = "{app.positive}")
+    @NotNull(message = "{curvepoint.not-null}" )
     private Double value;
 
     @Column(name = "creationDate")
