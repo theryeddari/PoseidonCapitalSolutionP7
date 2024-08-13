@@ -1,7 +1,6 @@
-package com.nnk.springboot.repositories.notToCompile;
+package com.nnk.springboot.repositories;
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.repositories.RatingRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,24 +18,28 @@ public class RatingTests {
 
 	@Test
 	public void ratingTest() {
-		Rating rating = new Rating("Moodys Rating", "Sand PRating", "Fitch Rating", 10);
+		Rating rating = new Rating();
+		rating.setMoodysRating("Moodys Rating");
+		rating.setSandPRating("Sand PRating");
+		rating.setFitchRating("Fitch Rating");
+		rating.setOrderNumber((byte) 10);
 
 		// Save
 		rating = ratingRepository.save(rating);
 		assertNotNull(rating.getId());
-		assertTrue(rating.getOrderNumber() == 10);
+        assertEquals(10, (byte) rating.getOrderNumber());
 
 		// Update
-		rating.setOrderNumber(20);
+		rating.setOrderNumber((byte) 20);
 		rating = ratingRepository.save(rating);
-		assertTrue(rating.getOrderNumber() == 20);
+        assertEquals(20, (byte) rating.getOrderNumber());
 
 		// Find
 		List<Rating> listResult = ratingRepository.findAll();
-		assertTrue(listResult.size() > 0);
+        assertFalse(listResult.isEmpty());
 
 		// Delete
-		Integer id = rating.getId();
+		Integer id = Integer.valueOf(rating.getId());
 		ratingRepository.delete(rating);
 		Optional<Rating> ratingList = ratingRepository.findById(id);
 		assertFalse(ratingList.isPresent());
