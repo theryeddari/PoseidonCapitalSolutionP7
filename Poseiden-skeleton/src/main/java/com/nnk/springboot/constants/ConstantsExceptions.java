@@ -27,4 +27,14 @@ public class ConstantsExceptions {
     public static final String RATING_NOT_FOUND_EXCEPTION = "Not found rating by id";
     public static final String RATING_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String RATING_DELETE_EXCEPTION = "An error occurred while deleting rating";
+
+    // RuleName Exception
+    public static final String RULE_NAME_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating rule name infos";
+    public static final String RULE_NAME_SAVE_EXCEPTION = "An error occurred while saving rule name infos";
+    public static final String RULE_NAME_FIND_BY_ID_EXCEPTION = "An error occurred while finding rule name by id";
+    public static final String RULE_NAME_NOT_FOUND_EXCEPTION = "Not found rule name by id";
+    public static final String RULE_NAME_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
+    public static final String RULE_NAME_DELETE_EXCEPTION = "An error occurred while deleting rule name";
+
+
 }
