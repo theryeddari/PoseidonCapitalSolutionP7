@@ -36,5 +36,11 @@ public class ConstantsExceptions {
     public static final String RULE_NAME_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String RULE_NAME_DELETE_EXCEPTION = "An error occurred while deleting rule name";
 
-
+    // Trade Exception
+    public static final String TRADE_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating trade infos";
+    public static final String TRADE_SAVE_EXCEPTION = "An error occurred while saving trade infos";
+    public static final String TRADE_FIND_BY_ID_EXCEPTION = "An error occurred while finding trade by id";
+    public static final String TRADE_NOT_FOUND_EXCEPTION = "Not found trade by id";
+    public static final String TRADE_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
+    public static final String TRADE_DELETE_EXCEPTION = "An error occurred while deleting trade";
 }
