@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.dto.bidlist.RatingsResponse;
+import com.nnk.springboot.dto.RatingsResponse;
 import com.nnk.springboot.services.RatingService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;

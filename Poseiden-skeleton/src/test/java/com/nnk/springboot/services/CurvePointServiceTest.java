@@ -1,8 +1,8 @@
 package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.dto.bidlist.CurvePointResponse;
-import com.nnk.springboot.dto.bidlist.CurvePointResponseAggregationInfoDTO;
+import com.nnk.springboot.dto.CurvePointResponse;
+import com.nnk.springboot.dto.CurvePointResponseAggregationInfoDTO;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

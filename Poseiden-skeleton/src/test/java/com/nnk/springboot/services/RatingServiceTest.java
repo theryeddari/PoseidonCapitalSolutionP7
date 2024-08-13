@@ -1,8 +1,8 @@
 package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.dto.bidlist.RatingResponseAggregationInfoDTO;
-import com.nnk.springboot.dto.bidlist.RatingsResponse;
+import com.nnk.springboot.dto.RatingResponseAggregationInfoDTO;
+import com.nnk.springboot.dto.RatingsResponse;
 import com.nnk.springboot.repositories.RatingRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

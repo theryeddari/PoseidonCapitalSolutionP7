@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.dto.bidlist.CurvePointResponse;
+import com.nnk.springboot.dto.CurvePointResponse;
 import com.nnk.springboot.services.CurveService;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;

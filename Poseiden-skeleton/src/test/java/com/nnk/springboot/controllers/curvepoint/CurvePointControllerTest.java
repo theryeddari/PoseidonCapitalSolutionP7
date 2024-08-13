@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers.curvepoint;
 
 import com.nnk.springboot.controllers.CurveController;
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.dto.bidlist.CurvePointResponse;
+import com.nnk.springboot.dto.CurvePointResponse;
 import com.nnk.springboot.exceptions.CurvePointServiceException;
 import com.nnk.springboot.services.CurveService;
 import org.junit.jupiter.api.Test;

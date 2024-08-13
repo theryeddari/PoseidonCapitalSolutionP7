@@ -1,4 +1,4 @@
-package com.nnk.springboot.dto.bidlist;
+package com.nnk.springboot.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

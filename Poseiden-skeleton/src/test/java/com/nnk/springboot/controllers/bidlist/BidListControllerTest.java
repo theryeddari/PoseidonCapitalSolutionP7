@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers.bidlist;
 
 import com.nnk.springboot.controllers.BidListController;
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.dto.bidlist.BidListsResponse;
+import com.nnk.springboot.dto.BidListsResponse;
 import com.nnk.springboot.services.BidListService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

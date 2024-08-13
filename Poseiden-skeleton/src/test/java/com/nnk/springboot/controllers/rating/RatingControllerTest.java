@@ -2,7 +2,7 @@ package com.nnk.springboot.controllers.rating;
 
 import com.nnk.springboot.controllers.RatingController;
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.dto.bidlist.RatingsResponse;
+import com.nnk.springboot.dto.RatingsResponse;
 import com.nnk.springboot.services.RatingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

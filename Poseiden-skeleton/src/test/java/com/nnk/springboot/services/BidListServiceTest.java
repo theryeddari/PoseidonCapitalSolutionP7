@@ -1,8 +1,8 @@
 package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.dto.bidlist.BidListsResponse;
-import com.nnk.springboot.dto.bidlist.BidListsResponseAggregationInfoDTO;
+import com.nnk.springboot.dto.BidListsResponse;
+import com.nnk.springboot.dto.BidListsResponseAggregationInfoDTO;
 import com.nnk.springboot.repositories.BidListRepository;
 
 import org.junit.jupiter.api.Assertions;
