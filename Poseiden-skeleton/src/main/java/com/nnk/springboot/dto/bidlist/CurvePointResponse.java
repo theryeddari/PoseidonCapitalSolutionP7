@@ -13,9 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class CurvePointResponse {
-
-    private static final Logger logger = LoggerFactory.getLogger(CurvePointResponse.class);
-
     List<CurvePointResponseAggregationInfoDTO> curvePointResponseAggregationInfoDTO;
 
     /**
@@ -23,8 +20,6 @@ public class CurvePointResponse {
      * Logs the creation of an instance of CurvePointResponse.
      */
     public CurvePointResponse() {
-        logger.debug("Creating instance of BidListsResponse.");
         // Lombok constructor
-        logger.debug("Instance of BidListsResponse created.");
     }
 }

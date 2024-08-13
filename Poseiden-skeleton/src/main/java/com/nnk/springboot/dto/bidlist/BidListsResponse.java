@@ -2,8 +2,6 @@ package com.nnk.springboot.dto.bidlist;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -14,8 +12,6 @@ import java.util.List;
 @Getter
 public class BidListsResponse {
 
-    private static final Logger logger = LoggerFactory.getLogger(BidListsResponse.class);
-
     List<BidListsResponseAggregationInfoDTO> BidListsResponseAggregationInfoDTO;
 
     /**
@@ -23,8 +19,6 @@ public class BidListsResponse {
      * Logs the creation of an instance of BidListsResponse.
      */
     public BidListsResponse() {
-        logger.debug("Creating instance of BidListsResponse.");
         // Lombok constructor
-        logger.debug("Instance of BidListsResponse created.");
     }
 }

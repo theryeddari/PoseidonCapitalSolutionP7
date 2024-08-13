@@ -41,7 +41,7 @@ public class BidListControllerAdviceTest {
         BidListNotFoundException bidListNotFoundException = new BidListNotFoundException();
         String result = bidListControllerAdvice.handleBidListFindByIdException(new BidListFindByIdException(bidListNotFoundException));
 
-        Assertions.assertTrue(result.contains(BID_LIST_FIND_BY_ID_EXCEPTION));
+        Assertions.assertTrue(result.contains(BID_LIST_NOT_FOUND_EXCEPTION));
     }
 
     @Test
