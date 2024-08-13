@@ -38,13 +38,13 @@
 			</thead>
 			<tbody>
 				<tr th:each="curvePoint : ${curvePoints}">
-					<td style="width: 10%" th:text="${curvePoint.id}"></td>
-					<td th:text="${curvePoint.id}"></td>
+					<td style="width: 10%" th:text="${curvePoint.getCurveId()}"></td>
+					<td th:text="${curvePoint.getCurveId()}"></td>
 					<td th:text="${curvePoint.term}"></td>
 					<td th:text="${curvePoint.value}"></td>
 					<td style="width: 15%" class="text-center">
-						<a th:href="@{/curvePoint/update/{id}(id=${curvePoint.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/curvePoint/delete/{id}(id=${curvePoint.id})}">Delete</a>
+						<a th:href="@{/curvePoint/update/{id}(id=${curvePoint.getCurveId()})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/curvePoint/delete/{id}(id=${curvePoint.getCurveId()})}">Delete</a>
 					</td>
 				</tr>
 			</tbody>
