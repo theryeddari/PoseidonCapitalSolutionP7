@@ -15,7 +15,7 @@ TRUNCATE TABLE users;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- Insérer des données
-INSERT INTO BidList(account, type, bidQuantity) VALUES('user', 'type', 10);
+INSERT INTO BidList(account, type, bidQuantity) VALUES('user', 'USER', 10);
 INSERT INTO curvepoint(term, value) VALUES (10, 20);
 INSERT INTO rating(moodysrating, sandprating, fitchrating, ordernumber) VALUES('moodysrating','sandprating','fitchrating', 12);
 INSERT INTO rulename(name, description, json, template, sqlstr, sqlpart) VALUES('name','description','json','template','sqlStr','sqlStr');

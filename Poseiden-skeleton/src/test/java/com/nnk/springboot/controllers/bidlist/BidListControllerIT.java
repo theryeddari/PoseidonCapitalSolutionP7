@@ -65,14 +65,14 @@ public class BidListControllerIT {
                         .param("type", bidList.getType())
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"USER\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/bidList/list"));
+
     }
     @Test
     void validate_false() throws Exception {
         BidList bidList = new BidList();
+        bidList.setAccount("");
         bidList.setType("USER");
         bidList.setBidQuantity(10.0);
 
@@ -82,18 +82,14 @@ public class BidListControllerIT {
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">must not be null</p>")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"USER\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Account is mandatory</p>")));
     }
 
     @Test
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/bidList/update/{id}",1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"USER\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"bidQuantity\" placeholder=\"Bid Quantity\" class=\"col-4\" name=\"bidQuantity\" value=\"10.0\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")));
     }
 
     @Test

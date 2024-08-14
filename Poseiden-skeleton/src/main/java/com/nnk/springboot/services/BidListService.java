@@ -3,12 +3,12 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.dto.BidListsResponse;
 import com.nnk.springboot.dto.BidListsResponseAggregationInfoDTO;
+import com.nnk.springboot.exceptions.BidListServiceException;
 import com.nnk.springboot.repositories.BidListRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,17 +58,15 @@ public class BidListService {
     /**
      * Saves a bid list entity.
      *
-     * @param bidList       the bid list to save.
-     * @param bindingResult the result of binding validation.
+     * @param bidList the bid list to save.
      * @return the saved bid list.
      * @throws BidListSaveException if there is an error saving the bid list.
      */
-    public BidList bidListSave(BidList bidList, BindingResult bindingResult) throws BidListSaveException {
+    public BidList bidListSave(BidList bidList) throws BidListSaveException {
         logger.info("Entering bidListSave method with bidList: {}", bidList);
         try {
-            if (!bindingResult.hasFieldErrors()) {
-                bidList = bidListRepository.save(bidList);
-            }
+            // Enregistrez la bid list en utilisant le repository
+            bidList = bidListRepository.save(bidList);
             logger.info("Exiting bidListSave method successfully with saved bidList: {}", bidList);
             return bidList;
         } catch (Exception e) {
@@ -101,28 +99,27 @@ public class BidListService {
     }
 
     /**
-     * Saves a bid list entity with a given ID.
+     * Update a bid list entity with a given ID.
      *
      * @param id            the ID to validate.
      * @param bidList       the bid list to save.
-     * @param bindingResult the result of binding validation.
      * @return the saved bid list.
-     * @throws BidListSaveException if there is an error saving the bid list.
+     * @throws BidListUpdateException if there is an error saving the bid list.
      */
-    public BidList bidListSave(int id, BidList bidList, BindingResult bindingResult) throws BidListSaveException {
+    public BidList bidListUpdate(int id, BidList bidList) throws BidListUpdateException {
         logger.info("Entering bidListSave method with ID: {} and bidList: {}", id, bidList);
         try {
             if (id == bidList.getBidListId()) {
-                BidList savedBidList = bidListSave(bidList, bindingResult);
+                BidList savedBidList = bidListSave(bidList);
                 logger.info("Exiting bidListSave method successfully with saved bidList: {}", savedBidList);
                 return savedBidList;
             } else {
                 logger.warn("Bid list ID: {} does not match the ID in bidList: {}", id, bidList.getBidListId());
-                throw new BidListIncoherenceBetweenObject();
+                throw new BidListIncoherenceBetweenObjectException(); // Assurez-vous que cette exception est définie
             }
         } catch (Exception e) {
             logger.error("Error in bidListSave method.", e);
-            throw new BidListSaveException(e);
+            throw new BidListServiceException.BidListUpdateException(e);
         }
     }
 

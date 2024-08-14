@@ -43,11 +43,17 @@ public class BidListControllerAdviceTest {
 
         Assertions.assertTrue(result.contains(BID_LIST_NOT_FOUND_EXCEPTION));
     }
+    @Test
+    void handleBidListUpdateException(){
+        String result = bidListControllerAdvice.handleBidListUpdateException(new BidListUpdateException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(BID_LIST_UPDATE_EXCEPTION));
+    }
 
     @Test
-    void handleBidListSaveException_WithIdVerification_Failed(){
-        BidListIncoherenceBetweenObject bidListIncoherenceBetweenObject = new BidListIncoherenceBetweenObject();
-        String result = bidListControllerAdvice.handleBidListSaveException(new BidListSaveException(bidListIncoherenceBetweenObject));
+    void handleBidListUpdateException_WithIdVerification_Failed(){
+        BidListIncoherenceBetweenObjectException bidListIncoherenceBetweenObjectException = new BidListIncoherenceBetweenObjectException();
+        String result = bidListControllerAdvice.handleBidListUpdateException(new BidListUpdateException(bidListIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(BID_LIST_INCOHERENCE_BETWEEN_OBJET_EXCEPTION));
     }

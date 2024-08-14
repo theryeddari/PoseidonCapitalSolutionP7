@@ -33,17 +33,12 @@ public class BidListControllerAdvice {
      * based on the cause of the exception.
      *
      * @param ex the {@link BidListSaveException} to handle
-     * @return the exception message or the cause message if it is a {@link BidListIncoherenceBetweenObject}
+     * @return the exception message
      */
     @ExceptionHandler(BidListSaveException.class)
     public String handleBidListSaveException(BidListSaveException ex) {
         logger.info("Handling BidListSaveException");
         logger.debug("Exception details: ", ex);
-        if (ex.getCause() instanceof BidListIncoherenceBetweenObject) {
-            String message = ex.getCause().getMessage();
-            logger.info("Returning cause message: {}", message);
-            return message;
-        }
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
@@ -61,6 +56,27 @@ public class BidListControllerAdvice {
         logger.info("Handling BidListFindByIdException");
         logger.debug("Exception details: ", ex);
         if (ex.getCause() instanceof BidListNotFoundException) {
+            String message = ex.getCause().getMessage();
+            logger.info("Returning cause message: {}", message);
+            return message;
+        }
+        String message = ex.getMessage();
+        logger.info("Returning response message: {}", message);
+        return message;
+    }
+
+    /**
+     * Handles {@link BidListUpdateException} by logging the error and returning the appropriate message
+     * based on the cause of the exception.
+     *
+     * @param ex the {@link BidListUpdateException} to handle
+     * @return the exception message or the cause message if it is a {@link BidListIncoherenceBetweenObjectException}
+     */
+    @ExceptionHandler(BidListUpdateException.class)
+    public String handleBidListUpdateException(BidListUpdateException ex) {
+        logger.info("Handling BidListUpdateException");
+        logger.debug("Exception details: ", ex);
+        if (ex.getCause() instanceof BidListIncoherenceBetweenObjectException) {
             String message = ex.getCause().getMessage();
             logger.info("Returning cause message: {}", message);
             return message;

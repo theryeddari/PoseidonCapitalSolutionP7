@@ -71,10 +71,17 @@ public class BidListController {
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bidList, BindingResult result, Model model) throws BidListSaveException {
         logger.info("Received request to validate and save bid list");
-        bidList = bidListService.bidListSave(bidList, result);
-        model.addAttribute("bidList", bidList);
+
+        if (result.hasErrors()) {
+            logger.info("Bid list validation failed");
+            model.addAttribute("bidList", bidList);
+            return "bidList/add";
+        }
+
+        bidListService.bidListSave(bidList);
         logger.info("Bid list successfully validated and saved");
-        return "bidList/add";
+
+        return "redirect:/bidList/list";
     }
 
     /**
@@ -101,15 +108,21 @@ public class BidListController {
      * @param bidList the bid list data to update
      * @param result  the result of validation
      * @param model   the model to populate with the updated bid list
-     * @return the redirect URL for the bid list list
-     * @throws BidListSaveException if there is an error saving the updated bid list
+     * @return the redirect URL for the bid list
+     * @throws BidListUpdateException if there is an error saving the updated bid list
      */
     @PostMapping("/bidList/update/{id}")
-    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) throws BidListSaveException {
+    public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) throws BidListUpdateException {
         logger.info("Received request to update bid list with ID: {}", id);
-        bidList = bidListService.bidListSave(id, bidList, result);
-        model.addAttribute("bidList", bidList);
-        logger.info("Bid list with ID: {} successfully updated", id);
+
+        if (result.hasErrors()) {
+            logger.info("Bid list update validation failed for ID: {}", id);
+            model.addAttribute("bidList", bidList);
+            return "bidList/update";
+        }
+            bidListService.bidListUpdate(id, bidList);
+            logger.info("Bid list with ID: {} successfully updated", id);
+
         return "redirect:/bidList/list";
     }
 

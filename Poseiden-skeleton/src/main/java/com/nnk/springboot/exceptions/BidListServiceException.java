@@ -90,12 +90,12 @@ public class BidListServiceException extends Exception {
     /**
      * Exception thrown when there is an incoherence between BidList objects.
      */
-    public static class BidListIncoherenceBetweenObject extends BidListServiceException {
+    public static class BidListIncoherenceBetweenObjectException extends BidListServiceException {
 
         /**
-         * Constructs a new BidListIncoherenceBetweenObject.
+         * Constructs a new BidListIncoherenceBetweenObjectException.
          */
-        public BidListIncoherenceBetweenObject() {
+        public BidListIncoherenceBetweenObjectException() {
             super(BID_LIST_INCOHERENCE_BETWEEN_OBJET_EXCEPTION);
         }
     }
@@ -112,6 +112,12 @@ public class BidListServiceException extends Exception {
          */
         public BidListDeleteException(Exception cause) {
             super(BID_LIST_DELETE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+        }
+    }
+
+    public static class BidListUpdateException extends BidListServiceException {
+        public BidListUpdateException(Exception cause) {
+            super(BID_LIST_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
 }

@@ -11,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,27 +58,24 @@ public class BidListServiceTest {
     }
 
     @Test
-    void testBidListSave_BindingSuccess() throws BidListSaveException {
+    void testBidListSave() throws BidListSaveException {
         BidList bidList = new BidList();
-        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
         when(bidListRepository.save(bidList)).thenReturn(bidList);
 
-        bidListService.bidListSave(bidList,bindingResult);
+        bidListService.bidListSave(bidList);
 
         verify(bidListRepository, times(1)).save(bidList);
     }
 
     @Test
-    void testBidListSave_BindingError() throws BidListSaveException {
+    void testBidListSaveException() {
         BidList bidList = new BidList();
-        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
+        when(bidListRepository.save(bidList)).thenThrow(new RuntimeException());
 
-        bindingResult.rejectValue("account", "error.bidList", "Account is required");
+        assertThrows(BidListSaveException.class, () -> bidListService.bidListSave(bidList));
 
-        bidListService.bidListSave(bidList,bindingResult);
-
-        verify(bidListRepository, never()).save(bidList);
     }
+
 
     @Test
     void testBidListFindById() throws BidListFindByIdException {
@@ -107,43 +102,40 @@ public class BidListServiceTest {
         assertEquals(BidListNotFoundException.class, exception.getCause().getClass());
     }
     @Test
-    void testBidListSaveOverloadWithIdVerification_Success() throws BidListSaveException {
+    void testBidListUpdateOverloadWithIdVerification_Success() throws BidListUpdateException {
 
         BidList bidList = new BidList();
         bidList.setBidListId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
         when(bidListRepository.save(bidList)).thenReturn(bidList);
 
-        bidListService.bidListSave(1,bidList,bindingResult);
+        bidListService.bidListUpdate(1,bidList);
 
         verify(bidListRepository, times(1)).save(bidList);
 
     }
 
     @Test
-    void testBidListSaveOverloadWithIdVerification_Failed() {
+    void testBidListUpdateOverloadWithIdVerification_Failed() {
 
         BidList bidList = new BidList();
         bidList.setBidListId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
-        Exception exception = assertThrows(BidListSaveException.class, () -> bidListService.bidListSave(2,bidList,bindingResult));
+        Exception exception = assertThrows(BidListUpdateException.class, () -> bidListService.bidListUpdate(2,bidList));
 
-        assertEquals(BidListIncoherenceBetweenObject.class, exception.getCause().getClass());
+        assertEquals(BidListIncoherenceBetweenObjectException.class, exception.getCause().getClass());
 
         verify(bidListRepository, never()).save(bidList);
 
     }
     @Test
-    void testBidListSaveException(){
+    void testBidListUpdateException(){
         BidList bidList = new BidList();
         bidList.setBidListId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
         when(bidListRepository.save(bidList)).thenThrow(new RuntimeException());
 
-        assertThrows(BidListSaveException.class, () -> bidListService.bidListSave(1,bidList,bindingResult));
+        assertThrows(BidListUpdateException.class, () -> bidListService.bidListUpdate(1,bidList));
     }
     @Test
     void testBidListDelete() throws BidListDeleteException {

@@ -11,6 +11,7 @@ public class ConstantsExceptions {
     public static final String BID_LIST_NOT_FOUND_EXCEPTION = "Not found bid list by id";
     public static final String BID_LIST_INCOHERENCE_BETWEEN_OBJET_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String BID_LIST_DELETE_EXCEPTION = "An error occurred while deleting bid list";
+    public static final String BID_LIST_UPDATE_EXCEPTION = "An error occurred while updating bid list";
 
     //CurvePoint Exception
     public static final String CURVE_POINT_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating curve point infos";
