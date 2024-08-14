@@ -44,11 +44,6 @@ public class RuleNameControllerAdvice {
     public String handleRuleNameSaveException(RuleNameSaveException ex) {
         logger.info("Handling RuleNameSaveException");
         logger.debug("Exception details: ", ex);
-        if (ex.getCause() instanceof RuleNameIncoherenceBetweenObjectException) {
-            String message = ex.getCause().getMessage();
-            logger.info("Returning cause message: {}", message);
-            return message;
-        }
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;

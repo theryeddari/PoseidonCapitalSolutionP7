@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static com.nnk.springboot.exceptions.TradeServiceException.*;
 
+/**
+ * Controller for managing Trade operations.
+ */
 @Controller
 public class TradeController {
 
@@ -30,6 +33,7 @@ public class TradeController {
      *
      * @param model the model to populate with trades
      * @return the view name for the trade list
+     * @throws TradeAggregationInfoException if there is an error aggregating trade info
      */
     @RequestMapping("/trade/list")
     public String home(Model model) throws TradeAggregationInfoException {
@@ -62,17 +66,21 @@ public class TradeController {
      * @param result the result of validation
      * @param model the model to populate with the trade
      * @return the view name for the add trade form or redirect to the list
+     * @throws TradeSaveException if there is an error saving the trade
      */
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) throws TradeSaveException {
         logger.info("Received request to validate and save trade");
+
         if (result.hasErrors()) {
             logger.info("Trade validation failed");
             model.addAttribute("trade", trade);
             return "trade/add";
         }
+
         tradeService.tradeSave(trade);
         logger.info("Trade successfully validated and saved");
+
         return "redirect:/trade/list";
     }
 
@@ -82,6 +90,7 @@ public class TradeController {
      * @param id the ID of the trade to update
      * @param model the model to populate with the trade
      * @return the view name for updating the trade
+     * @throws TradeFindByIdException if there is an error finding the trade by ID
      */
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws TradeFindByIdException {
@@ -100,17 +109,22 @@ public class TradeController {
      * @param result the result of validation
      * @param model the model to populate with the updated trade
      * @return the redirect URL for the trade list
+     * @throws TradeUpdateException if there is an error updating the trade
      */
     @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade, BindingResult result, Model model) throws TradeSaveException {
+    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
+                              BindingResult result, Model model) throws TradeUpdateException {
         logger.info("Received request to update trade with ID: {}", id);
+
         if (result.hasErrors()) {
-            logger.info("Trade validation failed");
+            logger.info("Trade update validation failed for ID: {}", id);
             model.addAttribute("trade", trade);
             return "trade/update";
         }
-        tradeService.tradeSave(id,trade);
+
+        tradeService.tradeUpdate(id, trade);
         logger.info("Trade with ID: {} successfully updated", id);
+
         return "redirect:/trade/list";
     }
 
@@ -119,6 +133,7 @@ public class TradeController {
      *
      * @param id the ID of the trade to delete
      * @return the redirect URL for the trade list
+     * @throws TradeDeleteException if there is an error deleting the trade
      */
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id) throws TradeDeleteException {

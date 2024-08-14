@@ -5,7 +5,6 @@ import com.nnk.springboot.dto.TradeResponse;
 import com.nnk.springboot.dto.TradeResponseAggregationInfoDTO;
 import com.nnk.springboot.exceptions.TradeServiceException.*;
 import com.nnk.springboot.repositories.TradeRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,14 +38,14 @@ public class TradeServiceTest {
         List<Trade> trades = List.of(trade);
         when(tradeRepository.findAll()).thenReturn(trades);
 
-        TradeResponse tradeResponse = tradeService.tradeAggregationInfo();
+        TradeResponse response = tradeService.tradeAggregationInfo();
 
-        List<TradeResponseAggregationInfoDTO> tradeResponseAggregationInfoDTO = tradeResponse.getTradeResponseAggregationInfoDTO();
+        List<TradeResponseAggregationInfoDTO> dtos = response.getTradeResponseAggregationInfoDTO();
 
-        assertEquals(String.valueOf(trade.getTradeId()), tradeResponseAggregationInfoDTO.getFirst().getTradeId());
-        assertEquals(trade.getAccount(), tradeResponseAggregationInfoDTO.getFirst().getAccount());
-        assertEquals(trade.getType(), tradeResponseAggregationInfoDTO.getFirst().getType());
-        assertEquals(String.valueOf(trade.getBuyQuantity()), tradeResponseAggregationInfoDTO.getFirst().getBuyQuantity());
+        assertEquals("1", dtos.getFirst().getTradeId());
+        assertEquals("Trade Account", dtos.getFirst().getAccount());
+        assertEquals("Type", dtos.getFirst().getType());
+        assertEquals("10.0", dtos.getFirst().getBuyQuantity());
     }
 
     @Test
@@ -56,14 +55,27 @@ public class TradeServiceTest {
         assertThrows(TradeAggregationInfoException.class, () -> tradeService.tradeAggregationInfo());
     }
 
+    @Test
+    void testTradeSave_Success() throws TradeSaveException {
+        Trade trade = new Trade();
+        when(tradeRepository.save(trade)).thenReturn(trade);
+
+        tradeService.tradeSave(trade);
+
+        verify(tradeRepository, times(1)).save(trade);
+    }
+
+    @Test
+    void testTradeSaveException() {
+        Trade trade = new Trade();
+        when(tradeRepository.save(trade)).thenThrow(new RuntimeException());
+        assertThrows(TradeSaveException.class, () -> tradeService.tradeSave(trade));
+    }
 
     @Test
     void testTradeFindById() throws TradeFindByIdException {
         Trade trade = new Trade();
         trade.setTradeId((byte) 1);
-        trade.setAccount("Trade Account");
-        trade.setType("Type");
-        trade.setBuyQuantity(10D);
 
         when(tradeRepository.findById(1)).thenReturn(Optional.of(trade));
 
@@ -73,45 +85,10 @@ public class TradeServiceTest {
     }
 
     @Test
-    void testTradeFindById_TradeNotFoundException() {
+    void testTradeFindById_Exception() {
         when(tradeRepository.findById(1)).thenReturn(Optional.empty());
 
-        Exception exception = Assertions.assertThrows(TradeFindByIdException.class, () -> tradeService.tradeFindById(1));
-        assertEquals(TradeNotFoundException.class, exception.getCause().getClass());
-    }
-
-    @Test
-    void testTradeSaveOverloadWithIdVerification_Success() throws TradeSaveException {
-        Trade trade = new Trade();
-        trade.setTradeId((byte) 1);
-
-        when(tradeRepository.save(trade)).thenReturn(trade);
-
-        tradeService.tradeSave(1, trade);
-
-        verify(tradeRepository, times(1)).save(trade);
-    }
-
-    @Test
-    void testTradeSaveOverloadWithIdVerification_Failed() {
-        Trade trade = new Trade();
-        trade.setTradeId((byte) 1);
-
-        Exception exception = assertThrows(TradeSaveException.class, () -> tradeService.tradeSave(2, trade));
-
-        assertEquals(TradeIncoherenceBetweenObject.class, exception.getCause().getClass());
-
-        verify(tradeRepository, never()).save(trade);
-    }
-
-    @Test
-    void testTradeSaveException() {
-        Trade trade = new Trade();
-        trade.setTradeId((byte) 1);
-
-        when(tradeRepository.save(trade)).thenThrow(new RuntimeException());
-
-        assertThrows(TradeSaveException.class, () -> tradeService.tradeSave(1, trade));
+        assertThrows(TradeFindByIdException.class, () -> tradeService.tradeFindById(1));
     }
 
     @Test
@@ -122,7 +99,7 @@ public class TradeServiceTest {
     }
 
     @Test
-    void testTradeDeleteException() {
+    void testTradeDelete_Exception() {
         doThrow(new RuntimeException()).when(tradeRepository).deleteById(anyInt());
         assertThrows(TradeDeleteException.class, () -> tradeService.tradeDelete(1));
     }

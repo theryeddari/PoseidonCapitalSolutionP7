@@ -1,11 +1,16 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.exceptions.TradeServiceException.TradeAggregationInfoException;
+import com.nnk.springboot.exceptions.TradeServiceException.TradeSaveException;
+import com.nnk.springboot.exceptions.TradeServiceException.TradeUpdateException;
+import com.nnk.springboot.exceptions.TradeServiceException.TradeFindByIdException;
+import com.nnk.springboot.exceptions.TradeServiceException.TradeDeleteException;
+import com.nnk.springboot.exceptions.TradeServiceException.TradeIncoherenceBetweenObjectException;
+import com.nnk.springboot.exceptions.TradeServiceException.TradeNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import static com.nnk.springboot.exceptions.TradeServiceException.*;
 
 @ControllerAdvice
 public class TradeControllerAdvice {
@@ -22,7 +27,6 @@ public class TradeControllerAdvice {
     public String handleTradeAggregationInfoException(TradeAggregationInfoException ex) {
         logger.info("Handling TradeAggregationInfoException");
         logger.debug("Exception details: ", ex);
-        // TODO: Complete logic for Controller Advice response and adapt template to manage it
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
@@ -33,13 +37,29 @@ public class TradeControllerAdvice {
      * based on the cause of the exception.
      *
      * @param ex the {@link TradeSaveException} to handle
-     * @return the exception message or the cause message if it is a {@link TradeIncoherenceBetweenObject}
+     * @return the exception message or the cause message if it is a {@link TradeIncoherenceBetweenObjectException}
      */
     @ExceptionHandler(TradeSaveException.class)
     public String handleTradeSaveException(TradeSaveException ex) {
         logger.info("Handling TradeSaveException");
         logger.debug("Exception details: ", ex);
-        if (ex.getCause() instanceof TradeIncoherenceBetweenObject) {
+        String message = ex.getMessage();
+        logger.info("Returning response message: {}", message);
+        return message;
+    }
+
+    /**
+     * Handles {@link TradeUpdateException} by logging the error and returning the appropriate message
+     * based on the cause of the exception.
+     *
+     * @param ex the {@link TradeUpdateException} to handle
+     * @return the exception message or the cause message if it is a {@link TradeIncoherenceBetweenObjectException}
+     */
+    @ExceptionHandler(TradeUpdateException.class)
+    public String handleTradeUpdateException(TradeUpdateException ex) {
+        logger.info("Handling TradeUpdateException");
+        logger.debug("Exception details: ", ex);
+        if (ex.getCause() instanceof TradeIncoherenceBetweenObjectException) {
             String message = ex.getCause().getMessage();
             logger.info("Returning cause message: {}", message);
             return message;
@@ -80,7 +100,6 @@ public class TradeControllerAdvice {
     public String handleTradeDeleteException(TradeDeleteException ex) {
         logger.info("Handling TradeDeleteException");
         logger.debug("Exception details: ", ex);
-        // TODO: Complete logic for Controller Advice response and adapt template to manage it
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;

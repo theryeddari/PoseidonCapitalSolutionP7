@@ -87,12 +87,12 @@ public class TradeServiceException extends Exception {
     /**
      * Exception thrown when there is an incoherence between Trade objects.
      */
-    public static class TradeIncoherenceBetweenObject extends TradeServiceException {
+    public static class TradeIncoherenceBetweenObjectException extends TradeServiceException {
 
         /**
-         * Constructs a new TradeIncoherenceBetweenObject.
+         * Constructs a new TradeIncoherenceBetweenObjectException.
          */
-        public TradeIncoherenceBetweenObject() {
+        public TradeIncoherenceBetweenObjectException() {
             super(TRADE_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION);
         }
     }
@@ -109,6 +109,21 @@ public class TradeServiceException extends Exception {
          */
         public TradeDeleteException(Exception cause) {
             super(TRADE_DELETE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+        }
+    }
+
+    /**
+     * Exception thrown when there is an error updating a Trade.
+     */
+    public static class TradeUpdateException extends TradeServiceException {
+
+        /**
+         * Constructs a new TradeUpdateException with the specified cause.
+         *
+         * @param cause the cause of the exception
+         */
+        public TradeUpdateException(Exception cause) {
+            super(TRADE_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
 }

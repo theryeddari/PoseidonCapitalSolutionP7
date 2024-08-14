@@ -42,11 +42,6 @@ public class RatingControllerAdvice {
     public String handleRatingSaveException(RatingSaveException ex) {
         logger.info("Handling RatingSaveException");
         logger.debug("Exception details: ", ex);
-        if (ex.getCause() instanceof RatingIncoherenceBetweenObjectException) {
-            String message = ex.getCause().getMessage();
-            logger.info("Returning cause message: {}", message);
-            return message;
-        }
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;

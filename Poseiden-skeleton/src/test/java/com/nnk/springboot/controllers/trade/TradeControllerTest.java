@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers.trade;
 import com.nnk.springboot.controllers.TradeController;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.dto.TradeResponse;
+import com.nnk.springboot.exceptions.TradeServiceException.*;
 import com.nnk.springboot.services.TradeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
-import static com.nnk.springboot.exceptions.TradeServiceException.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -21,13 +21,13 @@ import static org.mockito.Mockito.*;
 public class TradeControllerTest {
 
     @InjectMocks
-    TradeController tradeController;
+    private TradeController tradeController;
 
     @Mock
-    TradeService tradeService;
+    private TradeService tradeService;
 
     @Mock
-    Model model;
+    private Model model;
 
     @Test
     void testHome() throws TradeAggregationInfoException {
@@ -38,15 +38,14 @@ public class TradeControllerTest {
         String viewName = tradeController.home(model);
 
         verify(tradeService, times(1)).tradeAggregationInfo();
-
         assertEquals("trade/list", viewName);
-
         verify(model, times(1)).addAttribute(eq("trades"), eq(tradeResponse.getTradeResponseAggregationInfoDTO()));
     }
 
     @Test
     void testAddTradeForm() {
         Trade trade = new Trade();
+
         String viewName = tradeController.addTradeForm(trade, model);
 
         assertEquals("trade/add", viewName);
@@ -78,7 +77,7 @@ public class TradeControllerTest {
 
         assertEquals("trade/add", viewName);
         verify(model, times(1)).addAttribute(eq("trade"), eq(trade));
-
+        verify(tradeService, never()).tradeSave(trade);
     }
 
     @Test
@@ -91,24 +90,25 @@ public class TradeControllerTest {
         String viewName = tradeController.showUpdateForm(1, model);
 
         verify(tradeService, times(1)).tradeFindById(1);
-
         assertEquals("trade/update", viewName);
         verify(model, times(1)).addAttribute(eq("trade"), eq(trade));
     }
 
     @Test
-    void testUpdateTrade_ValidateTrue() throws TradeSaveException {
+    void testUpdateTrade_True() throws TradeUpdateException {
         Trade trade = new Trade();
         BindingResult bindingResult = new BeanPropertyBindingResult(trade, "trade");
+
+        doNothing().when(tradeService).tradeUpdate(1, trade);
 
         String viewName = tradeController.updateTrade(1, trade, bindingResult, model);
 
         assertEquals("redirect:/trade/list", viewName);
-        verify(tradeService, times(1)).tradeSave(1, trade);
+        verify(tradeService, times(1)).tradeUpdate(1, trade);
     }
 
     @Test
-    void testUpdateTrade_ValidateFalse() throws TradeSaveException {
+    void testUpdateTrade_False() throws TradeUpdateException {
         Trade trade = new Trade();
         BindingResult bindingResult = new BeanPropertyBindingResult(trade, "trade");
 
@@ -118,7 +118,7 @@ public class TradeControllerTest {
 
         assertEquals("trade/update", viewName);
         verify(model, times(1)).addAttribute(eq("trade"), eq(trade));
-
+        verify(tradeService, never()).tradeUpdate(1, trade);
     }
 
     @Test

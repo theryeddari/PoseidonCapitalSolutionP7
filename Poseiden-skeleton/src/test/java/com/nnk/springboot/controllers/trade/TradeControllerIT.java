@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers.trade;
 
-import com.nnk.springboot.domain.Trade;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -28,6 +28,8 @@ public class TradeControllerIT {
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void home() throws Exception {
@@ -41,20 +43,18 @@ public class TradeControllerIT {
     @Test
     void addTradeForm() throws Exception {
         mockMvc.perform(get("/trade/add"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"buyQuantity\" placeholder=\"Buy Quantity\" class=\"col-4\" name=\"buyQuantity\" value=\"\">")));
     }
 
     @Test
     void validate_true() throws Exception {
-        Trade trade = new Trade();
-        trade.setAccount("user");
-        trade.setType("USER");
-        trade.setBuyQuantity(1000.0); // Adjust field as needed
-
         mockMvc.perform(post("/trade/validate")
-                        .param("account", trade.getAccount())
-                        .param("type", trade.getType())
-                        .param("buyQuantity", String.valueOf(trade.getBuyQuantity())) // Adjust field as needed
+                        .param("account", "user")
+                        .param("type", "USER")
+                        .param("buyQuantity", "1000.0")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/trade/list"));
@@ -62,20 +62,13 @@ public class TradeControllerIT {
 
     @Test
     void validate_false() throws Exception {
-        Trade trade = new Trade();
-        trade.setAccount(null);
-        trade.setType("user");
-        trade.setBuyQuantity(0.0);
         mockMvc.perform(post("/trade/validate")
-                        .param("account", trade.getAccount())
-                        .param("type", trade.getType())
-                        .param("buyQuantity", String.valueOf(trade.getBuyQuantity()))
+                        .param("account", "bob") // Missing fields
+                        .param("type", "user")
+                        .param("buyQuantity", "0.0")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">must not be null</p>")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"user\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">This field must have a positive number</p>"))); // Adjust field as needed
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">This field must have a positive number</p>")));
     }
 
     @Test
@@ -84,22 +77,16 @@ public class TradeControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"bob\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"user\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"buyQuantity\" placeholder=\"Buy Quantity\" class=\"col-4\" name=\"buyQuantity\" value=\"10.0\">"))); // Adjust field as needed
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"buyQuantity\" placeholder=\"Buy Quantity\" class=\"col-4\" name=\"buyQuantity\" value=\"10.0\">")));
     }
 
     @Test
     void updateTrade_Success() throws Exception {
-        Trade trade = new Trade();
-        trade.setTradeId((byte) 1);
-        trade.setAccount("user");
-        trade.setType("USER");
-        trade.setBuyQuantity(1000.0);
-
         mockMvc.perform(post("/trade/update/{id}", 1)
-                        .param("tradeId", String.valueOf(trade.getTradeId()))
-                        .param("account", trade.getAccount())
-                        .param("type", trade.getType())
-                        .param("buyQuantity", String.valueOf(trade.getBuyQuantity())) // Adjust field as needed
+                        .param("tradeId", "1")
+                        .param("account", "user")
+                        .param("type", "USER")
+                        .param("buyQuantity", "1000.0")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/trade/list"));

@@ -1,13 +1,13 @@
 package com.nnk.springboot.controllers.trade;
 
 import com.nnk.springboot.controllers.TradeControllerAdvice;
+import com.nnk.springboot.exceptions.TradeServiceException.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.nnk.springboot.constants.ConstantsExceptions.*;
-import static com.nnk.springboot.exceptions.TradeServiceException.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TradeControllerAdviceTest {
@@ -47,8 +47,8 @@ public class TradeControllerAdviceTest {
 
     @Test
     void handleTradeSaveException_WithIdVerification_Failed() {
-        TradeIncoherenceBetweenObject tradeIncoherenceBetweenObject = new TradeIncoherenceBetweenObject();
-        String result = tradeControllerAdvice.handleTradeSaveException(new TradeSaveException(tradeIncoherenceBetweenObject));
+        TradeIncoherenceBetweenObjectException tradeIncoherenceBetweenObjectException = new TradeIncoherenceBetweenObjectException();
+        String result = tradeControllerAdvice.handleTradeSaveException(new TradeSaveException(tradeIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(TRADE_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION));
     }
