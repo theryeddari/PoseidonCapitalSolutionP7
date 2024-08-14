@@ -1,6 +1,5 @@
 package com.nnk.springboot.controllers.curvepoint;
 
-
 import com.nnk.springboot.controllers.CurveControllerAdvice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,8 +21,9 @@ public class CurvePointControllerAdviceTest {
 
         Assertions.assertTrue(result.contains(CURVE_POINT_AGGREGATION_INFO_EXCEPTION + MORE_INFO));
     }
+
     @Test
-    void handleBidListSaveException() {
+    void handleCurvePointSaveException() {
         RuntimeException runtimeException = new RuntimeException();
         String result = curveControllerAdvice.handleCurvePointSaveException(new CurvePointSaveException(runtimeException));
 
@@ -36,6 +36,7 @@ public class CurvePointControllerAdviceTest {
 
         Assertions.assertTrue(result.contains(CURVE_POINT_FIND_BY_ID_EXCEPTION + MORE_INFO));
     }
+
     @Test
     void handleCurvePointFindById_CurvePointNotFoundException() {
         CurvePointNotFoundException curvePointNotFoundException = new CurvePointNotFoundException();
@@ -45,15 +46,22 @@ public class CurvePointControllerAdviceTest {
     }
 
     @Test
-    void handleCurvePointSaveException_WithIdVerification_Failed(){
-        CurvePointIncoherenceBetweenObject curvePointIncoherenceBetweenObject = new CurvePointIncoherenceBetweenObject();
-        String result = curveControllerAdvice.handleCurvePointSaveException(new CurvePointSaveException(curvePointIncoherenceBetweenObject));
+    void handleCurvePointUpdateException() {
+        String result = curveControllerAdvice.handleCurvePointUpdateException(new CurvePointUpdateException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(CURVE_POINT_UPDATE_EXCEPTION));
+    }
+
+    @Test
+    void handleCurvePointUpdateException_WithIdVerification_Failed() {
+        CurvePointIncoherenceBetweenObjectException curvePointIncoherenceBetweenObjectException = new CurvePointIncoherenceBetweenObjectException();
+        String result = curveControllerAdvice.handleCurvePointUpdateException(new CurvePointUpdateException(curvePointIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(CURVE_POINT_INCOHERENCE_BETWEEN_OBJET_EXCEPTION));
     }
 
     @Test
-    void handleBidListDeleteException(){
+    void handleCurvePointDeleteException() {
         CurvePointDeleteException curvePointDeleteException = new CurvePointDeleteException(new RuntimeException());
         String result = curveControllerAdvice.handleCurvePointDeleteException(curvePointDeleteException);
 

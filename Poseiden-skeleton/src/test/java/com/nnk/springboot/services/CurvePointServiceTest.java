@@ -10,22 +10,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
 
 import static com.nnk.springboot.exceptions.CurvePointServiceException.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CurvePointServiceTest {
 
     @InjectMocks
-    CurveService curveService;
+    CurvePointService curvePointService;
 
     @Mock
     CurvePointRepository curvePointRepository;
@@ -40,118 +37,106 @@ public class CurvePointServiceTest {
         List<CurvePoint> curvePoints = List.of(curvePoint);
         when(curvePointRepository.findAll()).thenReturn(curvePoints);
 
-        CurvePointResponse curvePointResponse = curveService.curvePointAggregationInfo();
+        CurvePointResponse curvePointResponse = curvePointService.curvePointAggregationInfo();
 
-        List<CurvePointResponseAggregationInfoDTO> curvePointResponseAggregationInfoDTOS = curvePointResponse.getCurvePointResponseAggregationInfoDTO();
+        List<CurvePointResponseAggregationInfoDTO> curvePointResponseAggregationInfoDTOs = curvePointResponse.getCurvePointResponseAggregationInfoDTO();
 
-        assertEquals(String.valueOf(curvePoint.getCurveId()), curvePointResponseAggregationInfoDTOS.getFirst().getCurveId());
-        assertEquals(String.valueOf(curvePoint.getTerm()), curvePointResponseAggregationInfoDTOS.getFirst().getTerm());
-        assertEquals(String.valueOf(curvePoint.getValue()), curvePointResponseAggregationInfoDTOS.getFirst().getValue());
-
+        assertEquals(String.valueOf(curvePoint.getCurveId()), curvePointResponseAggregationInfoDTOs.getFirst().getCurveId());
+        assertEquals(String.valueOf(curvePoint.getTerm()), curvePointResponseAggregationInfoDTOs.getFirst().getTerm());
+        assertEquals(String.valueOf(curvePoint.getValue()), curvePointResponseAggregationInfoDTOs.getFirst().getValue());
     }
 
     @Test
-    void testCurvePointAggregationInfo_Failed(){
+    void testCurvePointAggregationInfo_Failed() {
         when(curvePointRepository.findAll()).thenThrow(new RuntimeException());
 
-        assertThrows(CurvePointAggregationInfoException.class, () -> curveService.curvePointAggregationInfo());
+        assertThrows(CurvePointAggregationInfoException.class, () -> curvePointService.curvePointAggregationInfo());
     }
 
     @Test
-    void testCurvePointSave_BindingSuccess() throws CurvePointSaveException {
+    void testCurvePointSave() throws CurvePointSaveException {
         CurvePoint curvePoint = new CurvePoint();
-        BindingResult bindingResult = new BeanPropertyBindingResult(curvePoint, "curvePoint");
         when(curvePointRepository.save(curvePoint)).thenReturn(curvePoint);
 
-        curveService.curvePointSave(curvePoint,bindingResult);
+        curvePointService.curvePointSave(curvePoint);
 
         verify(curvePointRepository, times(1)).save(curvePoint);
     }
 
     @Test
-    void testCurvePointSave_BindingError() throws CurvePointSaveException {
+    void testCurvePointSaveException() {
         CurvePoint curvePoint = new CurvePoint();
-        BindingResult bindingResult = new BeanPropertyBindingResult(curvePoint, "curvePoint");
+        when(curvePointRepository.save(curvePoint)).thenThrow(new RuntimeException());
 
-        bindingResult.rejectValue("term", "error.curvePoint", "Account is required");
-
-        curveService.curvePointSave(curvePoint,bindingResult);
-
-        verify(curvePointRepository, never()).save(curvePoint);
+        assertThrows(CurvePointSaveException.class, () -> curvePointService.curvePointSave(curvePoint));
     }
 
     @Test
     void testCurvePointFindById() throws CurvePointFindByIdException {
         CurvePoint curvePoint = new CurvePoint();
-
         curvePoint.setCurveId((byte) 1);
         curvePoint.setTerm(10d);
         curvePoint.setValue(20d);
 
         when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
 
-        CurvePoint response = curveService.CurvePointFindById(1);
+        CurvePoint response = curvePointService.curvePointFindById(1);
 
         assertEquals(1, (byte) response.getCurveId());
     }
 
     @Test
     void testCurvePointFindById_CurvePointNotFoundException() {
-
         when(curvePointRepository.findById(1)).thenReturn(Optional.empty());
 
-        Exception exception = Assertions.assertThrows(CurvePointFindByIdException.class, () -> curveService.CurvePointFindById(1));
+        Exception exception = Assertions.assertThrows(CurvePointFindByIdException.class, () -> curvePointService.curvePointFindById(1));
         assertEquals(CurvePointNotFoundException.class, exception.getCause().getClass());
     }
-    @Test
-    void testCurvePointSaveOverloadWithIdVerification_Success() throws CurvePointSaveException {
 
+    @Test
+    void testCurvePointUpdateOverloadWithIdVerification_Success() throws CurvePointUpdateException {
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setCurveId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(curvePoint, "curvePoint");
 
         when(curvePointRepository.save(curvePoint)).thenReturn(curvePoint);
 
-        curveService.curvePointSave(1,curvePoint,bindingResult);
+        curvePointService.curvePointUpdate(1, curvePoint);
 
         verify(curvePointRepository, times(1)).save(curvePoint);
-
     }
 
     @Test
-    void testCurvePointSaveOverloadWithIdVerification_Failed() {
-
+    void testCurvePointUpdateOverloadWithIdVerification_Failed() {
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setCurveId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(curvePoint, "curvePoint");
 
-        Exception exception = assertThrows(CurvePointSaveException.class, () -> curveService.curvePointSave(2,curvePoint,bindingResult));
+        Exception exception = assertThrows(CurvePointUpdateException.class, () -> curvePointService.curvePointUpdate(2, curvePoint));
 
-        assertEquals(CurvePointIncoherenceBetweenObject.class, exception.getCause().getClass());
+        assertEquals(CurvePointIncoherenceBetweenObjectException.class, exception.getCause().getClass());
 
         verify(curvePointRepository, never()).save(curvePoint);
-
     }
+
     @Test
-    void testCurvePointSaveException(){
+    void testCurvePointUpdateException() {
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setCurveId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(curvePoint, "curvePoint");
 
         when(curvePointRepository.save(curvePoint)).thenThrow(new RuntimeException());
 
-        assertThrows(CurvePointSaveException.class, () -> curveService.curvePointSave(1,curvePoint,bindingResult));
+        assertThrows(CurvePointUpdateException.class, () -> curvePointService.curvePointUpdate(1, curvePoint));
     }
+
     @Test
     void testCurvePointDelete() throws CurvePointDeleteException {
         doNothing().when(curvePointRepository).deleteById(1);
-        curveService.curvePointDelete(1);
+        curvePointService.curvePointDelete(1);
         verify(curvePointRepository).deleteById(1);
     }
+
     @Test
-    void testCurvePointDeleteException(){
+    void testCurvePointDeleteException() {
         doThrow(new RuntimeException()).when(curvePointRepository).deleteById(anyInt());
-        assertThrows(CurvePointDeleteException.class, () -> curveService.curvePointDelete(1));
+        assertThrows(CurvePointDeleteException.class, () -> curvePointService.curvePointDelete(1));
     }
 }
-

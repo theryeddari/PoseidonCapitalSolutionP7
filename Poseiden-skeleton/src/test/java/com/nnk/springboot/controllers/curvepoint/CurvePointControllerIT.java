@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @WithMockUser(username = "user", roles = "USER")
 @Transactional
-public class CurveControllerIT {
+public class CurvePointControllerIT {
 
     @Autowired
     MockMvc mockMvc;
@@ -34,66 +34,62 @@ public class CurveControllerIT {
 
     @Test
     void home() throws Exception {
-
         mockMvc.perform(get("/curvePoint/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>1</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>10.0</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>20.0</td>")));
     }
-    @Test
-    void addCurveForm() throws Exception {
 
+    @Test
+    void addCurvePointForm() throws Exception {
         mockMvc.perform(get("/curvePoint/add"))
                 .andExpect(status().isOk());
     }
 
     @Test
     void validate_true() throws Exception {
-
         CurvePoint curvePoint = new CurvePoint();
-        curvePoint.setTerm(10d);
-        curvePoint.setValue(20D);
+        curvePoint.setTerm(10.0);
+        curvePoint.setValue(20.0);
 
         mockMvc.perform(post("/curvePoint/validate")
                         .param("term", String.valueOf(curvePoint.getTerm()))
                         .param("value", String.valueOf(curvePoint.getValue()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"term\" placeholder=\"Term\" class=\"col-4\" name=\"term\" value=\"10.0\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"value\" placeholder=\"Value\" class=\"col-4\" name=\"value\" value=\"20.0\">")));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/curvePoint/list"));
     }
+
     @Test
     void validate_false() throws Exception {
         CurvePoint curvePoint = new CurvePoint();
-        curvePoint.setValue(20D);
+        curvePoint.setValue(20.0);
 
         mockMvc.perform(post("/curvePoint/validate")
                         .param("term", "")
                         .param("value", String.valueOf(curvePoint.getValue()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"term\" placeholder=\"Term\" class=\"col-4\" name=\"term\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"value\" placeholder=\"Value\" class=\"col-4\" name=\"value\" value=\"20.0\">")));
-
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">This Field can&#39;t be null</p>")));
     }
 
     @Test
     void showUpdateForm() throws Exception {
-        mockMvc.perform(get("/curvePoint/update/{id}",1))
+        mockMvc.perform(get("/curvePoint/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"term\" placeholder=\"Term\" class=\"col-4\" name=\"term\" value=\"10.0\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"value\" placeholder=\"Value\" class=\"col-4\" name=\"value\" value=\"20.0\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"term\" placeholder=\"Term\" class=\"col-4\" name=\"term\" value=\"10.0\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"value\" placeholder=\"Value\" class=\"col-4\" name=\"value\" value=\"20.0\">")));
     }
 
     @Test
-    void updateBidOverloadWithIdVerification_Success() throws Exception {
+    void updateCurvePointWithIdVerification_Success() throws Exception {
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setCurveId((byte) 1);
-        curvePoint.setTerm(10d);
-        curvePoint.setValue(20D);
+        curvePoint.setTerm(10.0);
+        curvePoint.setValue(20.0);
 
-        mockMvc.perform(post("/curvePoint/update/{id}",1)
+        mockMvc.perform(post("/curvePoint/update/{id}", 1)
                         .param("curveId", String.valueOf(curvePoint.getCurveId()))
                         .param("term", String.valueOf(curvePoint.getTerm()))
                         .param("value", String.valueOf(curvePoint.getValue()))
@@ -101,12 +97,11 @@ public class CurveControllerIT {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/curvePoint/list"));
     }
+
     @Test
-    void deleteBid() throws Exception {
-        mockMvc.perform(get("/curvePoint/delete/{id}",1))
+    void deleteCurvePoint() throws Exception {
+        mockMvc.perform(get("/curvePoint/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/curvePoint/list"));
-
     }
-
 }

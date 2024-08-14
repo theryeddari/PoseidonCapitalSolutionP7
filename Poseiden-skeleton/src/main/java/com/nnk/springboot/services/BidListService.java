@@ -103,16 +103,14 @@ public class BidListService {
      *
      * @param id            the ID to validate.
      * @param bidList       the bid list to save.
-     * @return the saved bid list.
      * @throws BidListUpdateException if there is an error saving the bid list.
      */
-    public BidList bidListUpdate(int id, BidList bidList) throws BidListUpdateException {
+    public void bidListUpdate(int id, BidList bidList) throws BidListUpdateException {
         logger.info("Entering bidListSave method with ID: {} and bidList: {}", id, bidList);
         try {
             if (id == bidList.getBidListId()) {
                 BidList savedBidList = bidListSave(bidList);
                 logger.info("Exiting bidListSave method successfully with saved bidList: {}", savedBidList);
-                return savedBidList;
             } else {
                 logger.warn("Bid list ID: {} does not match the ID in bidList: {}", id, bidList.getBidListId());
                 throw new BidListIncoherenceBetweenObjectException(); // Assurez-vous que cette exception est définie

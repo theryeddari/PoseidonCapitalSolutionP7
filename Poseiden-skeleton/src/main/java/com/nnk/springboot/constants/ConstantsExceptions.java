@@ -20,6 +20,7 @@ public class ConstantsExceptions {
     public static final String CURVE_POINT_NOT_FOUND_EXCEPTION = "Not Found curve point by id";
     public static final String CURVE_POINT_INCOHERENCE_BETWEEN_OBJET_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String CURVE_POINT_DELETE_EXCEPTION = "An error occurred while deleting curve point by id";
+    public static String CURVE_POINT_UPDATE_EXCEPTION = "An error occurred while updating curve point";
 
     //Rating Exception
     public static final String RATING_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating rating infos";

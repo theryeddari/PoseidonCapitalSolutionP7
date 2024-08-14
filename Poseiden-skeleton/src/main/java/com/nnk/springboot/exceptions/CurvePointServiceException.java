@@ -90,12 +90,12 @@ public class CurvePointServiceException extends Exception {
     /**
      * Exception thrown when there is an incoherence between CurvePoint objects.
      */
-    public static class CurvePointIncoherenceBetweenObject extends CurvePointServiceException {
+    public static class CurvePointIncoherenceBetweenObjectException extends CurvePointServiceException {
 
         /**
-         * Constructs a new CurvePointIncoherenceBetweenObject.
+         * Constructs a new CurvePointIncoherenceBetweenObjectException.
          */
-        public CurvePointIncoherenceBetweenObject() {
+        public CurvePointIncoherenceBetweenObjectException() {
             super(CURVE_POINT_INCOHERENCE_BETWEEN_OBJET_EXCEPTION);
         }
     }
@@ -112,6 +112,13 @@ public class CurvePointServiceException extends Exception {
          */
         public CurvePointDeleteException(Exception cause) {
             super(CURVE_POINT_DELETE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+        }
+    }
+
+    public static class CurvePointUpdateException extends CurvePointServiceException {
+        public CurvePointUpdateException(Exception cause) {
+            super(CURVE_POINT_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+
         }
     }
 }

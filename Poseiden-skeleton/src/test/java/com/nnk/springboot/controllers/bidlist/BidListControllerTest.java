@@ -102,7 +102,7 @@ public class BidListControllerTest {
         BidList bidList = new BidList();
         BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
-        when(bidListService.bidListUpdate(1,bidList)).thenReturn(bidList);
+        doNothing().when(bidListService).bidListUpdate(1,bidList);
 
         String viewName = bidListController.updateBid(1, bidList, bindingResult, model);
 

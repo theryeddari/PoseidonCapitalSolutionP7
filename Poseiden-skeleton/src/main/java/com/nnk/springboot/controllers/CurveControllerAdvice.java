@@ -34,13 +34,22 @@ public class CurveControllerAdvice {
      * based on the cause of the exception.
      *
      * @param ex the {@link CurvePointSaveException} to handle
-     * @return the exception message or the cause message if it is a {@link CurvePointIncoherenceBetweenObject}
+     * @return the exception message or the cause message if it is a {@link CurvePointIncoherenceBetweenObjectException}
      */
     @ExceptionHandler(CurvePointSaveException.class)
     public String handleCurvePointSaveException(CurvePointSaveException ex) {
         logger.info("Handling CurvePointSaveException");
         logger.debug("Exception details: ", ex);
-        if (ex.getCause() instanceof CurvePointIncoherenceBetweenObject) {
+        String message = ex.getMessage();
+        logger.info("Returning response message: {}", message);
+        return message;
+    }
+
+    @ExceptionHandler(CurvePointUpdateException.class)
+    public String handleCurvePointUpdateException(CurvePointUpdateException ex) {
+        logger.info("Handling CurvePointSaveException");
+        logger.debug("Exception details: ", ex);
+        if (ex.getCause() instanceof CurvePointIncoherenceBetweenObjectException) {
             String message = ex.getCause().getMessage();
             logger.info("Returning cause message: {}", message);
             return message;
