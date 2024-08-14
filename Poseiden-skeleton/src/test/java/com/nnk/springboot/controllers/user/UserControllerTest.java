@@ -58,6 +58,8 @@ public class UserControllerTest {
         User user = new User();
         BindingResult bindingResult = new BeanPropertyBindingResult(user, "user");
 
+        when(userService.userSave(user)).thenReturn(user);
+
         String viewName = userController.validate(user, bindingResult, model);
 
         assertEquals("redirect:/user/list", viewName);
