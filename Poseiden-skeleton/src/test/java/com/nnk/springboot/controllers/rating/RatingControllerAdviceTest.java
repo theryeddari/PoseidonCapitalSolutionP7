@@ -46,9 +46,16 @@ public class RatingControllerAdviceTest {
     }
 
     @Test
-    void handleRatingSaveException_WithIdVerification_Failed() {
+    void handleRatingUpdateException() {
+        String result = ratingControllerAdvice.handleRatingUpdateException(new RatingUpdateException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(RATING_UPDATE_EXCEPTION));
+    }
+
+    @Test
+    void handleRatingUpdateException_WithIdVerification_Failed() {
         RatingIncoherenceBetweenObjectException ratingIncoherenceBetweenObjectException = new RatingIncoherenceBetweenObjectException();
-        String result = ratingControllerAdvice.handleRatingSaveException(new RatingSaveException(ratingIncoherenceBetweenObjectException));
+        String result = ratingControllerAdvice.handleRatingUpdateException(new RatingUpdateException(ratingIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(RATING_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION));
     }

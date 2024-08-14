@@ -53,6 +53,27 @@ public class RatingControllerAdvice {
     }
 
     /**
+     * Handles {@link RatingUpdateException} by logging the error and returning the appropriate message
+     * based on the cause of the exception.
+     *
+     * @param ex the {@link RatingUpdateException} to handle
+     * @return the exception message or the cause message if it is a {@link RatingIncoherenceBetweenObjectException}
+     */
+    @ExceptionHandler(RatingUpdateException.class)
+    public String handleRatingUpdateException(RatingUpdateException ex) {
+        logger.info("Handling RatingUpdateException");
+        logger.debug("Exception details: ", ex);
+        if (ex.getCause() instanceof RatingIncoherenceBetweenObjectException) {
+            String message = ex.getCause().getMessage();
+            logger.info("Returning cause message: {}", message);
+            return message;
+        }
+        String message = ex.getMessage();
+        logger.info("Returning response message: {}", message);
+        return message;
+    }
+
+    /**
      * Handles {@link RatingFindByIdException} by logging the error and returning the appropriate message
      * based on the cause of the exception.
      *

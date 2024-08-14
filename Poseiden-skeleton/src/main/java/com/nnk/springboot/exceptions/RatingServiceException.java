@@ -111,8 +111,16 @@ public class RatingServiceException extends Exception {
         }
     }
 
+    /**
+     * Exception thrown when there is an error update a Rating.
+     */
     public static class RatingUpdateException extends RatingServiceException {
 
+        /**
+         * Constructs a new RatingUpdateException with the specified cause.
+         *
+         * @param cause the cause of the exception
+         */
         public RatingUpdateException(Exception cause) {
             super(RATING_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
 

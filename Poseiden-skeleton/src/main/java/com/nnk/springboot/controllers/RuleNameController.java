@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static com.nnk.springboot.exceptions.RuleNameServiceException.*;
 
+/**
+ * Controller for managing RuleName operations.
+ */
 @Controller
 public class RuleNameController {
 
@@ -36,7 +39,7 @@ public class RuleNameController {
     public String home(Model model) throws RuleNameAggregationInfoException {
         logger.info("Received request to list rule names");
         RuleNameResponse ruleNameResponse = ruleNameService.ruleNameAggregationInfo();
-        model.addAttribute("ruleNames", ruleNameResponse.getRuleNameResponseResponseAggregationInfoDTO());
+        model.addAttribute("ruleNames", ruleNameResponse.getRuleNameResponseAggregationInfoDTO());
         logger.info("Rule names successfully retrieved and added to the model");
         return "ruleName/list";
     }
@@ -49,10 +52,10 @@ public class RuleNameController {
      * @return the view name for adding a rule name
      */
     @GetMapping("/ruleName/add")
-    public String addRuleForm(RuleName ruleName, Model model) {
-        logger.info("Received request to show add rule form");
+    public String addRuleNameForm(RuleName ruleName, Model model) {
+        logger.info("Received request to show add rule name form");
         model.addAttribute("ruleName", ruleName);
-        logger.info("Add rule form displayed");
+        logger.info("Add rule name form displayed");
         return "ruleName/add";
     }
 
@@ -62,16 +65,23 @@ public class RuleNameController {
      * @param ruleName the rule name to save
      * @param result   the result of validation
      * @param model    the model to populate with the rule name
-     * @return the view name for the add rule form or redirect to the list
+     * @return the view name for the add rule name form or redirect to the list
      * @throws RuleNameSaveException if there is an error saving the rule name
      */
     @PostMapping("/ruleName/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) throws RuleNameSaveException {
         logger.info("Received request to validate and save rule name");
-        ruleName = ruleNameService.ruleNameSave(ruleName, result);
-        model.addAttribute("ruleName", ruleName);
+
+        if (result.hasErrors()) {
+            logger.info("Rule name validation failed");
+            model.addAttribute("ruleName", ruleName);
+            return "ruleName/add";
+        }
+
+        ruleNameService.ruleNameSave(ruleName);
         logger.info("Rule name successfully validated and saved");
-        return "ruleName/add";
+
+        return "redirect:/ruleName/list";
     }
 
     /**
@@ -94,20 +104,27 @@ public class RuleNameController {
     /**
      * Updates the specified rule name.
      *
-     * @param id      the ID of the rule name to update
+     * @param id       the ID of the rule name to update
      * @param ruleName the rule name data to update
-     * @param result  the result of validation
-     * @param model   the model to populate with the updated rule name
+     * @param result   the result of validation
+     * @param model    the model to populate with the updated rule name
      * @return the redirect URL for the rule name list
-     * @throws RuleNameSaveException if there is an error saving the updated rule name
+     * @throws RuleNameUpdateException if there is an error updating the rule name
      */
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
-                                 BindingResult result, Model model) throws RuleNameSaveException {
+                                 BindingResult result, Model model) throws RuleNameUpdateException {
         logger.info("Received request to update rule name with ID: {}", id);
-        ruleName = ruleNameService.ruleNameSave(id, ruleName, result);
-        model.addAttribute("ruleName", ruleName);
+
+        if (result.hasErrors()) {
+            logger.info("Rule name update validation failed for ID: {}", id);
+            model.addAttribute("ruleName", ruleName);
+            return "ruleName/update";
+        }
+
+        ruleNameService.ruleNameUpdate(id, ruleName);
         logger.info("Rule name with ID: {} successfully updated", id);
+
         return "redirect:/ruleName/list";
     }
 

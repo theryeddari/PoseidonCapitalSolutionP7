@@ -3,10 +3,10 @@ package com.nnk.springboot.controllers.rulename;
 import com.nnk.springboot.controllers.RuleNameController;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameResponse;
+import com.nnk.springboot.exceptions.RuleNameServiceException.*;
 import com.nnk.springboot.services.RuleNameService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
-import static com.nnk.springboot.exceptions.RuleNameServiceException.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -40,14 +39,14 @@ public class RuleNameControllerTest {
 
         verify(ruleNameService, times(1)).ruleNameAggregationInfo();
         assertEquals("ruleName/list", viewName);
-        verify(model, times(1)).addAttribute(eq("ruleNames"), eq(ruleNameResponse.getRuleNameResponseResponseAggregationInfoDTO()));
+        verify(model, times(1)).addAttribute(eq("ruleNames"), eq(ruleNameResponse.getRuleNameResponseAggregationInfoDTO()));
     }
 
     @Test
     void testAddRuleForm() {
         RuleName ruleName = new RuleName();
 
-        String viewName = ruleNameController.addRuleForm(ruleName, model);
+        String viewName = ruleNameController.addRuleNameForm(ruleName, model);
 
         assertEquals("ruleName/add", viewName);
         verify(model, times(1)).addAttribute(eq("ruleName"), eq(ruleName));
@@ -58,12 +57,13 @@ public class RuleNameControllerTest {
         RuleName ruleName = new RuleName();
         BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
 
-        when(ruleNameService.ruleNameSave(any(RuleName.class), eq(bindingResult))).thenReturn(ruleName);
+        when(ruleNameService.ruleNameSave(ruleName)).thenReturn(ruleName);
 
         String viewName = ruleNameController.validate(ruleName, bindingResult, model);
 
-        assertEquals("ruleName/add", viewName);
-        verify(model, times(1)).addAttribute(eq("ruleName"), eq(ruleName));
+        assertEquals("redirect:/ruleName/list", viewName);
+        verify(ruleNameService, times(1)).ruleNameSave(ruleName);
+        verify(model, never()).addAttribute(eq("ruleName"), eq(ruleName));
     }
 
     @Test
@@ -73,19 +73,11 @@ public class RuleNameControllerTest {
 
         bindingResult.rejectValue("name", "error.ruleName", "Name is required");
 
-        when(ruleNameService.ruleNameSave(any(RuleName.class), eq(bindingResult))).thenReturn(ruleName);
-
-        ArgumentCaptor<BindingResult> bindingResultArgumentCaptor = ArgumentCaptor.forClass(BindingResult.class);
-        ArgumentCaptor<RuleName> ruleNameArgumentCaptor = ArgumentCaptor.forClass(RuleName.class);
-
         String viewName = ruleNameController.validate(ruleName, bindingResult, model);
 
         assertEquals("ruleName/add", viewName);
         verify(model, times(1)).addAttribute(eq("ruleName"), eq(ruleName));
-
-        verify(ruleNameService).ruleNameSave(ruleNameArgumentCaptor.capture(), bindingResultArgumentCaptor.capture());
-        assertEquals(ruleName, ruleNameArgumentCaptor.getValue());
-        assertEquals(bindingResult, bindingResultArgumentCaptor.getValue());
+        verify(ruleNameService, never()).ruleNameSave(ruleName);
     }
 
     @Test
@@ -103,40 +95,30 @@ public class RuleNameControllerTest {
     }
 
     @Test
-    void testUpdateRuleName_True() throws RuleNameSaveException {
+    void testUpdateRuleName_True() throws RuleNameUpdateException {
         RuleName ruleName = new RuleName();
         BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
 
-        when(ruleNameService.ruleNameSave(any(Integer.class), any(RuleName.class), eq(bindingResult))).thenReturn(ruleName);
+        doNothing().when(ruleNameService).ruleNameUpdate(1, ruleName);
 
         String viewName = ruleNameController.updateRuleName(1, ruleName, bindingResult, model);
 
         assertEquals("redirect:/ruleName/list", viewName);
-        verify(model, times(1)).addAttribute(eq("ruleName"), eq(ruleName));
+        verify(ruleNameService, times(1)).ruleNameUpdate(1, ruleName);
     }
 
     @Test
-    void testUpdateRuleName_False() throws RuleNameSaveException {
+    void testUpdateRuleName_False() throws RuleNameUpdateException {
         RuleName ruleName = new RuleName();
         BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
 
         bindingResult.rejectValue("name", "error.ruleName", "Name is required");
 
-        when(ruleNameService.ruleNameSave(any(Integer.class), any(RuleName.class), eq(bindingResult))).thenReturn(ruleName);
-
-        ArgumentCaptor<BindingResult> bindingResultArgumentCaptor = ArgumentCaptor.forClass(BindingResult.class);
-        ArgumentCaptor<RuleName> ruleNameArgumentCaptor = ArgumentCaptor.forClass(RuleName.class);
-        ArgumentCaptor<Integer> ruleNameIdArgumentCaptor = ArgumentCaptor.forClass(Integer.class);
-
         String viewName = ruleNameController.updateRuleName(1, ruleName, bindingResult, model);
 
-        assertEquals("redirect:/ruleName/list", viewName);
+        assertEquals("ruleName/update", viewName);
         verify(model, times(1)).addAttribute(eq("ruleName"), eq(ruleName));
-
-        verify(ruleNameService).ruleNameSave(ruleNameIdArgumentCaptor.capture(), ruleNameArgumentCaptor.capture(), bindingResultArgumentCaptor.capture());
-        assertEquals(ruleName, ruleNameArgumentCaptor.getValue());
-        assertEquals(bindingResult, bindingResultArgumentCaptor.getValue());
-        assertEquals(1, ruleNameIdArgumentCaptor.getValue());
+        verify(ruleNameService, never()).ruleNameUpdate(1, ruleName);
     }
 
     @Test

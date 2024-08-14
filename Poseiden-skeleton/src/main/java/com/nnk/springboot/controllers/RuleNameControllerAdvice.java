@@ -1,12 +1,16 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameAggregationInfoException;
+import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameSaveException;
+import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameUpdateException;
+import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameFindByIdException;
+import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameDeleteException;
+import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameIncoherenceBetweenObjectException;
+import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import static com.nnk.springboot.exceptions.RuleNameServiceException.*;
 
 @ControllerAdvice
 public class RuleNameControllerAdvice {
@@ -34,13 +38,34 @@ public class RuleNameControllerAdvice {
      * based on the cause of the exception.
      *
      * @param ex the {@link RuleNameSaveException} to handle
-     * @return the exception message or the cause message if it is a {@link RuleNameIncoherenceBetweenObject}
+     * @return the exception message or the cause message if it is a {@link RuleNameIncoherenceBetweenObjectException}
      */
     @ExceptionHandler(RuleNameSaveException.class)
     public String handleRuleNameSaveException(RuleNameSaveException ex) {
         logger.info("Handling RuleNameSaveException");
         logger.debug("Exception details: ", ex);
-        if (ex.getCause() instanceof RuleNameIncoherenceBetweenObject) {
+        if (ex.getCause() instanceof RuleNameIncoherenceBetweenObjectException) {
+            String message = ex.getCause().getMessage();
+            logger.info("Returning cause message: {}", message);
+            return message;
+        }
+        String message = ex.getMessage();
+        logger.info("Returning response message: {}", message);
+        return message;
+    }
+
+    /**
+     * Handles {@link RuleNameUpdateException} by logging the error and returning the appropriate message
+     * based on the cause of the exception.
+     *
+     * @param ex the {@link RuleNameUpdateException} to handle
+     * @return the exception message or the cause message if it is a {@link RuleNameIncoherenceBetweenObjectException}
+     */
+    @ExceptionHandler(RuleNameUpdateException.class)
+    public String handleRuleNameUpdateException(RuleNameUpdateException ex) {
+        logger.info("Handling RuleNameUpdateException");
+        logger.debug("Exception details: ", ex);
+        if (ex.getCause() instanceof RuleNameIncoherenceBetweenObjectException) {
             String message = ex.getCause().getMessage();
             logger.info("Returning cause message: {}", message);
             return message;

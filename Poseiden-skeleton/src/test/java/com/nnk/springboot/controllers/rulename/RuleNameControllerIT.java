@@ -27,10 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RuleNameControllerIT {
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @Test
     void home() throws Exception {
@@ -38,61 +38,52 @@ public class RuleNameControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>name</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>description</td>")));
-
     }
 
     @Test
-    void addRuleForm() throws Exception {
+    void addRuleNameForm() throws Exception {
         mockMvc.perform(get("/ruleName/add"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"name\" placeholder=\"Name\" class=\"col-4\" name=\"name\" value=\"\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"name\" placeholder=\"Name\" class=\"col-4\" name=\"name\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"description\" placeholder=\"Description\" class=\"col-4\" name=\"description\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"json\" placeholder=\"Json\" class=\"col-4\" name=\"json\" value=\"\">")));
     }
 
     @Test
     void validate_true() throws Exception {
-        RuleName ruleName = new RuleName();
-        ruleName.setName("Example Rule");
-        ruleName.setDescription("Example Description");
-        ruleName.setJson("Example JSON");
-
         mockMvc.perform(post("/ruleName/validate")
-                        .param("name", ruleName.getName())
-                        .param("description", ruleName.getDescription())
-                        .param("json", ruleName.getJson())
+                        .param("name", "Example Rule")
+                        .param("description", "Example Description")
+                        .param("json", "Example JSON")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"name\" placeholder=\"Name\" class=\"col-4\" name=\"name\" value=\"Example Rule\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"description\" placeholder=\"Description\" class=\"col-4\" name=\"description\" value=\"Example Description\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"json\" placeholder=\"Json\" class=\"col-4\" name=\"json\" value=\"Example JSON\">")));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/ruleName/list"));
     }
 
-//    @Test
-//    void validate_false() throws Exception {
-//        mockMvc.perform(post("/ruleName/validate")
-//                        .param("name", "") // Missing mandatory fields
-//                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-//                .andExpect(status().isOk())
-//                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">must not be empty</p>")));
-//    }
+    @Test
+    void validate_false() throws Exception {
+        mockMvc.perform(post("/ruleName/validate")
+                        .param("name", "") // Missing fields
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">must not be blank</p>")));
+    }
 
     @Test
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/ruleName/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"name\" placeholder=\"Name\" class=\"col-4\" name=\"name\" value=\"name\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"name\" placeholder=\"Name\" class=\"col-4\" name=\"name\" value=\"name\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"description\" placeholder=\"Description\" class=\"col-4\" name=\"description\" value=\"description\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"json\" placeholder=\"Json\" class=\"col-4\" name=\"json\" value=\"json\">")));
     }
 
     @Test
     void updateRuleName_Success() throws Exception {
-        RuleName ruleName = new RuleName();
-        ruleName.setName("Updated Rule");
-        ruleName.setDescription("Updated Description");
-        ruleName.setJson("Updated JSON");
-
         mockMvc.perform(post("/ruleName/update/{id}", 1)
-                        .param("name", ruleName.getName())
-                        .param("description", ruleName.getDescription())
-                        .param("json", ruleName.getJson())
+                        .param("name", "Updated Rule")
+                        .param("description", "Updated Description")
+                        .param("json", "Updated JSON")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/ruleName/list"));

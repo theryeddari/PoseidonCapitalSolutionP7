@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameResponse;
 import com.nnk.springboot.dto.RuleNameResponseAggregationInfoDTO;
+import com.nnk.springboot.exceptions.RatingServiceException;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import com.nnk.springboot.exceptions.RuleNameServiceException.*;
 import org.junit.jupiter.api.Assertions;
@@ -24,10 +25,10 @@ import static org.mockito.Mockito.*;
 public class RuleNameServiceTest {
 
     @InjectMocks
-    RuleNameService ruleNameService;
+    private RuleNameService ruleNameService;
 
     @Mock
-    RuleNameRepository ruleNameRepository;
+    private RuleNameRepository ruleNameRepository;
 
     @Test
     void testRuleNameAggregationInfo() throws RuleNameAggregationInfoException {
@@ -45,7 +46,7 @@ public class RuleNameServiceTest {
 
         RuleNameResponse response = ruleNameService.ruleNameAggregationInfo();
 
-        List<RuleNameResponseAggregationInfoDTO> dtos = response.getRuleNameResponseResponseAggregationInfoDTO();
+        List<RuleNameResponseAggregationInfoDTO> dtos = response.getRuleNameResponseAggregationInfoDTO();
 
         assertEquals("1", dtos.getFirst().getId());
         assertEquals("Rule1", dtos.getFirst().getName());
@@ -64,26 +65,20 @@ public class RuleNameServiceTest {
     }
 
     @Test
-    void testRuleNameSave_BindingSuccess() throws RuleNameSaveException {
+    void testRuleNameSave_Success() throws RuleNameSaveException {
         RuleName ruleName = new RuleName();
-        BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
         when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
 
-        ruleNameService.ruleNameSave(ruleName, bindingResult);
+        ruleNameService.ruleNameSave(ruleName);
 
         verify(ruleNameRepository, times(1)).save(ruleName);
     }
 
     @Test
-    void testRuleNameSave_BindingError() throws RuleNameSaveException {
+    void testRuleNameSaveException() throws RuleNameSaveException {
         RuleName ruleName = new RuleName();
-        BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
-
-        bindingResult.rejectValue("name", "error.ruleName", "Name is required");
-
-        ruleNameService.ruleNameSave(ruleName, bindingResult);
-
-        verify(ruleNameRepository, never()).save(ruleName);
+        when(ruleNameRepository.save(ruleName)).thenThrow(new RuntimeException());
+        assertThrows(RuleNameSaveException.class, () -> ruleNameService.ruleNameSave(ruleName));
     }
 
     @Test
@@ -99,48 +94,10 @@ public class RuleNameServiceTest {
     }
 
     @Test
-    void testRuleNameFindById_RuleNameNotFoundException() {
+    void testRuleNameFindById_Exception() {
         when(ruleNameRepository.findById(1)).thenReturn(Optional.empty());
 
-        Exception exception = Assertions.assertThrows(RuleNameFindByIdException.class, () -> ruleNameService.ruleNameFindById(1));
-        assertEquals(RuleNameNotFoundException.class, exception.getCause().getClass());
-    }
-
-    @Test
-    void testRuleNameSaveOverloadWithIdVerification_Success() throws RuleNameSaveException {
-        RuleName ruleName = new RuleName();
-        ruleName.setId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
-
-        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
-
-        ruleNameService.ruleNameSave(1, ruleName, bindingResult);
-
-        verify(ruleNameRepository, times(1)).save(ruleName);
-    }
-
-    @Test
-    void testRuleNameSaveOverloadWithIdVerification_Failed() {
-        RuleName ruleName = new RuleName();
-        ruleName.setId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
-
-        Exception exception = assertThrows(RuleNameSaveException.class, () -> ruleNameService.ruleNameSave(2, ruleName, bindingResult));
-
-        assertEquals(RuleNameIncoherenceBetweenObject.class, exception.getCause().getClass());
-
-        verify(ruleNameRepository, never()).save(ruleName);
-    }
-
-    @Test
-    void testRuleNameSaveException() {
-        RuleName ruleName = new RuleName();
-        ruleName.setId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(ruleName, "ruleName");
-
-        when(ruleNameRepository.save(ruleName)).thenThrow(new RuntimeException());
-
-        assertThrows(RuleNameSaveException.class, () -> ruleNameService.ruleNameSave(1, ruleName, bindingResult));
+        assertThrows(RuleNameFindByIdException.class, () -> ruleNameService.ruleNameFindById(1));
     }
 
     @Test
@@ -151,7 +108,7 @@ public class RuleNameServiceTest {
     }
 
     @Test
-    void testRuleNameDeleteException() {
+    void testRuleNameDelete_Exception() {
         doThrow(new RuntimeException()).when(ruleNameRepository).deleteById(anyInt());
         assertThrows(RuleNameDeleteException.class, () -> ruleNameService.ruleNameDelete(1));
     }

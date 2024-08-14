@@ -87,12 +87,12 @@ public class RuleNameServiceException extends Exception {
     /**
      * Exception thrown when there is an incoherence between RuleName objects.
      */
-    public static class RuleNameIncoherenceBetweenObject extends RuleNameServiceException {
+    public static class RuleNameIncoherenceBetweenObjectException extends RuleNameServiceException {
 
         /**
-         * Constructs a new RuleNameIncoherenceBetweenObject.
+         * Constructs a new RuleNameIncoherenceBetweenObjectException.
          */
-        public RuleNameIncoherenceBetweenObject() {
+        public RuleNameIncoherenceBetweenObjectException() {
             super(RULE_NAME_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION);
         }
     }
@@ -109,6 +109,21 @@ public class RuleNameServiceException extends Exception {
          */
         public RuleNameDeleteException(Exception cause) {
             super(RULE_NAME_DELETE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+        }
+    }
+
+    /**
+     * Exception thrown when there is an error deleting a RuleName.
+     */
+    public static class RuleNameUpdateException extends RuleNameServiceException {
+
+        /**
+         * Constructs a new RuleNameDeleteException with the specified cause.
+         *
+         * @param cause the cause of the exception
+         */
+        public RuleNameUpdateException(Exception cause) {
+            super(RULE_NAME_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 public class RuleNameResponse {
 
-    List<RuleNameResponseAggregationInfoDTO> ruleNameResponseResponseAggregationInfoDTO;
+    List<RuleNameResponseAggregationInfoDTO> ruleNameResponseAggregationInfoDTO;
 
     /**
      * Default constructor for RuleNameResponse.

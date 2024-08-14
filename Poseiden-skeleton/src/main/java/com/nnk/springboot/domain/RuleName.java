@@ -1,6 +1,7 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class RuleName {
 
     @Size(max = 125)
     @Column(name = "name", length = 125)
+    @NotBlank
     private String name;
 
     @Size(max = 125)

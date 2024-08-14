@@ -38,6 +38,7 @@ public class ConstantsExceptions {
     public static final String RULE_NAME_NOT_FOUND_EXCEPTION = "Not found rule name by id";
     public static final String RULE_NAME_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String RULE_NAME_DELETE_EXCEPTION = "An error occurred while deleting rule name";
+    public static final String RULE_NAME_UPDATE_EXCEPTION = "An error occurred while updating rule name";
 
     // Trade Exception
     public static final String TRADE_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating trade infos";

@@ -1,13 +1,13 @@
 package com.nnk.springboot.controllers.rulename;
 
 import com.nnk.springboot.controllers.RuleNameControllerAdvice;
+import com.nnk.springboot.exceptions.RuleNameServiceException.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.nnk.springboot.constants.ConstantsExceptions.*;
-import static com.nnk.springboot.exceptions.RuleNameServiceException.*;
 
 @ExtendWith(MockitoExtension.class)
 public class RuleNameControllerAdviceTest {
@@ -46,9 +46,16 @@ public class RuleNameControllerAdviceTest {
     }
 
     @Test
-    void handleRuleNameSaveException_WithIdVerification_Failed() {
-        RuleNameIncoherenceBetweenObject ruleNameIncoherenceBetweenObject = new RuleNameIncoherenceBetweenObject();
-        String result = ruleNameControllerAdvice.handleRuleNameSaveException(new RuleNameSaveException(ruleNameIncoherenceBetweenObject));
+    void handleRuleNameUpdateException() {
+        String result = ruleNameControllerAdvice.handleRuleNameUpdateException(new RuleNameUpdateException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(RULE_NAME_UPDATE_EXCEPTION));
+    }
+
+    @Test
+    void handleRuleNameUpdateException_WithIdVerification_Failed() {
+        RuleNameIncoherenceBetweenObjectException ruleNameIncoherenceBetweenObjectException = new RuleNameIncoherenceBetweenObjectException();
+        String result = ruleNameControllerAdvice.handleRuleNameUpdateException(new RuleNameUpdateException(ruleNameIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(RULE_NAME_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION));
     }
