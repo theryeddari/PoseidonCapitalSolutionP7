@@ -101,16 +101,15 @@ public class TradeService {
      *
      * @param id             the ID to validate.
      * @param trade          the trade to save.
-     * @return the saved trade.
      * @throws TradeSaveException if there is an error saving the trade.
      */
-    public Trade tradeSave(int id, Trade trade) throws TradeSaveException {
+    public void tradeSave(int id, Trade trade) throws TradeSaveException {
         logger.info("Entering tradeSave method with ID: {} and trade: {}", id, trade);
         try {
             if (id == trade.getTradeId()) {
                 Trade savedTrade = tradeSave(trade);
                 logger.info("Exiting tradeSave method successfully with saved trade: {}", savedTrade);
-                return savedTrade;
+
             } else {
                 logger.warn("Trade ID: {} does not match the ID in trade: {}", id, trade.getTradeId());
                 throw new TradeIncoherenceBetweenObject();

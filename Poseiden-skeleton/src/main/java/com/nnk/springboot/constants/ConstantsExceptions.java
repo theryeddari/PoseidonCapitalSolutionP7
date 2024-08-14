@@ -43,4 +43,13 @@ public class ConstantsExceptions {
     public static final String TRADE_NOT_FOUND_EXCEPTION = "Not found trade by id";
     public static final String TRADE_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String TRADE_DELETE_EXCEPTION = "An error occurred while deleting trade";
+
+    // User Exception
+    public static final String USER_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating user infos";
+    public static final String USER_SAVE_EXCEPTION = "An error occurred while saving user infos";
+    public static final String USER_FIND_BY_ID_EXCEPTION = "An error occurred while finding user by id";
+    public static final String USER_NOT_FOUND_EXCEPTION = "Not found user by id";
+    public static final String USER_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
+    public static final String USER_DELETE_EXCEPTION = "An error occurred while deleting user";
+
 }

@@ -101,8 +101,6 @@ public class TradeControllerTest {
         Trade trade = new Trade();
         BindingResult bindingResult = new BeanPropertyBindingResult(trade, "trade");
 
-        when(tradeService.tradeSave(1, trade)).thenReturn(trade);
-
         String viewName = tradeController.updateTrade(1, trade, bindingResult, model);
 
         assertEquals("redirect:/trade/list", viewName);

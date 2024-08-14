@@ -1,0 +1,64 @@
+package com.nnk.springboot.controllers.user;
+
+
+import com.nnk.springboot.controllers.UserControllerAdvice;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static com.nnk.springboot.constants.ConstantsExceptions.*;
+import static com.nnk.springboot.exceptions.UserServiceException.*;
+
+@ExtendWith(MockitoExtension.class)
+public class UserControllerAdviceTest {
+
+    UserControllerAdvice userControllerAdvice = new UserControllerAdvice();
+
+    @Test
+    void handleUserAggregationInfoException() {
+        RuntimeException runtimeException = new RuntimeException();
+        String result = userControllerAdvice.handleUserAggregationInfoException(new UserAggregationInfoException(runtimeException));
+
+        Assertions.assertTrue(result.contains(USER_AGGREGATION_INFO_EXCEPTION));
+    }
+
+    @Test
+    void handleUserSaveException() {
+        RuntimeException runtimeException = new RuntimeException();
+        String result = userControllerAdvice.handleUserSaveException(new UserSaveException(runtimeException));
+
+        Assertions.assertTrue(result.contains(USER_SAVE_EXCEPTION));
+    }
+
+    @Test
+    void handleUserFindByIdException() {
+        String result = userControllerAdvice.handleUserFindByIdException(new UserFindByIdException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(USER_FIND_BY_ID_EXCEPTION));
+    }
+
+    @Test
+    void handleUserFindByIdException_WithUserNotFoundException() {
+        UserNotFoundException userNotFoundException = new UserNotFoundException();
+        String result = userControllerAdvice.handleUserFindByIdException(new UserFindByIdException(userNotFoundException));
+
+        Assertions.assertTrue(result.contains(USER_NOT_FOUND_EXCEPTION));
+    }
+
+    @Test
+    void handleUserSaveException_WithIdVerification_Failed() {
+        UserIncoherenceBetweenObjectException userIncoherenceBetweenObjectException = new UserIncoherenceBetweenObjectException();
+        String result = userControllerAdvice.handleUserSaveException(new UserSaveException(userIncoherenceBetweenObjectException));
+
+        Assertions.assertTrue(result.contains(USER_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION));
+    }
+
+    @Test
+    void handleUserDeleteException() {
+        UserDeleteException userDeleteException = new UserDeleteException(new RuntimeException());
+        String result = userControllerAdvice.handleUserDeleteException(userDeleteException);
+
+        Assertions.assertTrue(result.contains(USER_DELETE_EXCEPTION));
+    }
+}
