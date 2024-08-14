@@ -4,13 +4,12 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingResponseAggregationInfoDTO;
 import com.nnk.springboot.dto.RatingsResponse;
 import com.nnk.springboot.repositories.RatingRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,9 +39,9 @@ public class RatingServiceTest {
         List<Rating> ratings = List.of(rating);
         when(ratingRepository.findAll()).thenReturn(ratings);
 
-        RatingsResponse ratingsResponse = ratingService.ratingAggregationInfo();
+        RatingsResponse ratingResponse = ratingService.ratingAggregationInfo();
 
-        List<RatingResponseAggregationInfoDTO> ratingResponseDTOs = ratingsResponse.getRatingResponseResponseAggregationInfoDTO();
+        List<RatingResponseAggregationInfoDTO> ratingResponseDTOs = ratingResponse.getRatingResponseAggregationInfoDTO();
 
         assertEquals(String.valueOf(rating.getId()), ratingResponseDTOs.getFirst().getId());
         assertEquals(rating.getMoodysRating(), ratingResponseDTOs.getFirst().getMoodysRating());
@@ -59,26 +58,21 @@ public class RatingServiceTest {
     }
 
     @Test
-    void testRatingSave_BindingSuccess() throws RatingSaveException {
+    void testRatingSave() throws RatingSaveException {
         Rating rating = new Rating();
-        BindingResult bindingResult = new BeanPropertyBindingResult(rating, "rating");
         when(ratingRepository.save(rating)).thenReturn(rating);
 
-        ratingService.ratingSave(rating, bindingResult);
+        ratingService.ratingSave(rating);
 
         verify(ratingRepository, times(1)).save(rating);
     }
 
     @Test
-    void testRatingSave_BindingError() throws RatingSaveException {
+    void testRatingSaveException() {
         Rating rating = new Rating();
-        BindingResult bindingResult = new BeanPropertyBindingResult(rating, "rating");
+        when(ratingRepository.save(rating)).thenThrow(new RuntimeException());
 
-        bindingResult.rejectValue("moodysRating", "error.rating", "Moodys Rating is required");
-
-        ratingService.ratingSave(rating, bindingResult);
-
-        verify(ratingRepository, never()).save(rating);
+        assertThrows(RatingSaveException.class, () -> ratingService.ratingSave(rating));
     }
 
     @Test
@@ -99,42 +93,42 @@ public class RatingServiceTest {
     void testRatingFindById_RatingNotFoundException() {
         when(ratingRepository.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(RatingFindByIdException.class, () -> ratingService.ratingFindById(1));
+        Exception exception = Assertions.assertThrows(RatingFindByIdException.class, () -> ratingService.ratingFindById(1));
+        assertEquals(RatingNotFoundException.class, exception.getCause().getClass());
     }
 
     @Test
-    void testRatingSaveOverloadWithIdVerification_Success() throws RatingSaveException {
+    void testRatingUpdateOverloadWithIdVerification_Success() throws RatingUpdateException {
         Rating rating = new Rating();
         rating.setId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(rating, "rating");
 
         when(ratingRepository.save(rating)).thenReturn(rating);
 
-        ratingService.ratingSave(1, rating, bindingResult);
+        ratingService.ratingUpdate(1, rating);
 
         verify(ratingRepository, times(1)).save(rating);
     }
 
     @Test
-    void testRatingSaveOverloadWithIdVerification_Failed() {
+    void testRatingUpdateOverloadWithIdVerification_Failed() {
         Rating rating = new Rating();
         rating.setId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(rating, "rating");
 
-        assertThrows(RatingSaveException.class, () -> ratingService.ratingSave(2, rating, bindingResult));
+        Exception exception = assertThrows(RatingUpdateException.class, () -> ratingService.ratingUpdate(2, rating));
+
+        assertEquals(RatingIncoherenceBetweenObjectException.class, exception.getCause().getClass());
 
         verify(ratingRepository, never()).save(rating);
     }
 
     @Test
-    void testRatingSaveException() {
+    void testRatingUpdateException() {
         Rating rating = new Rating();
         rating.setId((byte) 1);
-        BindingResult bindingResult = new BeanPropertyBindingResult(rating, "rating");
 
         when(ratingRepository.save(rating)).thenThrow(new RuntimeException());
 
-        assertThrows(RatingSaveException.class, () -> ratingService.ratingSave(1, rating, bindingResult));
+        assertThrows(RatingUpdateException.class, () -> ratingService.ratingUpdate(1, rating));
     }
 
     @Test

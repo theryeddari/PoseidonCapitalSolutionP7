@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 public class RatingsResponse {
 
-    List<RatingResponseAggregationInfoDTO> RatingResponseResponseAggregationInfoDTO;
+    List<RatingResponseAggregationInfoDTO> RatingResponseAggregationInfoDTO;
 
     /**
      * Default constructor for RatingsResponse.

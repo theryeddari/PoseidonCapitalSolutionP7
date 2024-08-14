@@ -38,8 +38,8 @@ public class RatingController {
     @RequestMapping("/rating/list")
     public String home(Model model) throws RatingAggregationInfoException {
         logger.info("Received request to list ratings");
-        RatingsResponse ratingsResponse = ratingService.ratingAggregationInfo();
-        model.addAttribute("ratings", ratingsResponse.getRatingResponseResponseAggregationInfoDTO());
+        RatingsResponse ratingResponse = ratingService.ratingAggregationInfo();
+        model.addAttribute("ratings", ratingResponse.getRatingResponseAggregationInfoDTO());
         logger.info("Ratings successfully retrieved and added to the model");
         return "rating/list";
     }
@@ -71,10 +71,17 @@ public class RatingController {
     @PostMapping("/rating/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) throws RatingSaveException {
         logger.info("Received request to validate and save rating");
-        rating = ratingService.ratingSave(rating, result);
-        model.addAttribute("rating", rating);
+
+        if (result.hasErrors()) {
+            logger.info("Rating validation failed");
+            model.addAttribute("rating", rating);
+            return "rating/add";
+        }
+
+        ratingService.ratingSave(rating);
         logger.info("Rating successfully validated and saved");
-        return "rating/add";
+
+        return "redirect:/rating/list";
     }
 
     /**
@@ -102,15 +109,22 @@ public class RatingController {
      * @param result  the result of validation
      * @param model   the model to populate with the updated rating
      * @return the redirect URL for the rating list
-     * @throws RatingSaveException if there is an error saving the updated rating
+     * @throws RatingUpdateException if there is an error saving the updated rating
      */
     @PostMapping("/rating/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
-                               BindingResult result, Model model) throws RatingSaveException {
+                               BindingResult result, Model model) throws RatingUpdateException {
         logger.info("Received request to update rating with ID: {}", id);
-        rating = ratingService.ratingSave(id, rating, result);
-        model.addAttribute("rating", rating);
+
+        if (result.hasErrors()) {
+            logger.info("Rating update validation failed for ID: {}", id);
+            model.addAttribute("rating", rating);
+            return "rating/update";
+        }
+
+        ratingService.ratingUpdate(id, rating);
         logger.info("Rating with ID: {} successfully updated", id);
+
         return "redirect:/rating/list";
     }
 

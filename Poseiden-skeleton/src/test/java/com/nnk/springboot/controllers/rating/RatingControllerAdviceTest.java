@@ -47,8 +47,8 @@ public class RatingControllerAdviceTest {
 
     @Test
     void handleRatingSaveException_WithIdVerification_Failed() {
-        RatingIncoherenceBetweenObject ratingIncoherenceBetweenObject = new RatingIncoherenceBetweenObject();
-        String result = ratingControllerAdvice.handleRatingSaveException(new RatingSaveException(ratingIncoherenceBetweenObject));
+        RatingIncoherenceBetweenObjectException ratingIncoherenceBetweenObjectException = new RatingIncoherenceBetweenObjectException();
+        String result = ratingControllerAdvice.handleRatingSaveException(new RatingSaveException(ratingIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(RATING_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION));
     }

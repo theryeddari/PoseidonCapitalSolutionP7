@@ -86,12 +86,12 @@ public class RatingServiceException extends Exception {
     /**
      * Exception thrown when there is an incoherence between Rating objects.
      */
-    public static class RatingIncoherenceBetweenObject extends RatingServiceException {
+    public static class RatingIncoherenceBetweenObjectException extends RatingServiceException {
 
         /**
-         * Constructs a new RatingIncoherenceBetweenObject.
+         * Constructs a new RatingIncoherenceBetweenObjectException.
          */
-        public RatingIncoherenceBetweenObject() {
+        public RatingIncoherenceBetweenObjectException() {
             super(RATING_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION);
         }
     }
@@ -108,6 +108,14 @@ public class RatingServiceException extends Exception {
          */
         public RatingDeleteException(Exception cause) {
             super(RATING_DELETE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+        }
+    }
+
+    public static class RatingUpdateException extends RatingServiceException {
+
+        public RatingUpdateException(Exception cause) {
+            super(RATING_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+
         }
     }
 }
