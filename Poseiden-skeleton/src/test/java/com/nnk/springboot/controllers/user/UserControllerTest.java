@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers.user;
 import com.nnk.springboot.controllers.UserController;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserResponse;
+import com.nnk.springboot.exceptions.UserServiceException.*;
 import com.nnk.springboot.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
-import static com.nnk.springboot.exceptions.UserServiceException.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -21,13 +21,13 @@ import static org.mockito.Mockito.*;
 public class UserControllerTest {
 
     @InjectMocks
-    UserController userController;
+    private UserController userController;
 
     @Mock
-    UserService userService;
+    private UserService userService;
 
     @Mock
-    Model model;
+    private Model model;
 
     @Test
     void testHome() throws UserAggregationInfoException {
@@ -38,15 +38,14 @@ public class UserControllerTest {
         String viewName = userController.home(model);
 
         verify(userService, times(1)).userAggregationInfo();
-
         assertEquals("user/list", viewName);
-
         verify(model, times(1)).addAttribute(eq("users"), eq(userResponse.getUserResponseAggregationInfoDTO()));
     }
 
     @Test
     void testAddUserForm() {
         User user = new User();
+
         String viewName = userController.addUserForm(user, model);
 
         assertEquals("user/add", viewName);
@@ -78,6 +77,7 @@ public class UserControllerTest {
 
         assertEquals("user/add", viewName);
         verify(model, times(1)).addAttribute(eq("user"), eq(user));
+        verify(userService, never()).userSave(user);
     }
 
     @Test
@@ -85,20 +85,21 @@ public class UserControllerTest {
         User user = new User();
         user.setId((byte) 1);
 
-        when(userService.getUserById(1)).thenReturn(user);
+        when(userService.userFindById(1)).thenReturn(user);
 
         String viewName = userController.showUpdateForm(1, model);
 
-        verify(userService, times(1)).getUserById(1);
-
+        verify(userService, times(1)).userFindById(1);
         assertEquals("user/update", viewName);
         verify(model, times(1)).addAttribute(eq("user"), eq(user));
     }
 
     @Test
-    void testUpdateUser_ValidateTrue() throws UserSaveException {
+    void testUpdateUser_True() throws UserUpdateException {
         User user = new User();
         BindingResult bindingResult = new BeanPropertyBindingResult(user, "user");
+
+        doNothing().when(userService).userUpdate(1, user);
 
         String viewName = userController.updateUser(1, user, bindingResult, model);
 
@@ -107,7 +108,7 @@ public class UserControllerTest {
     }
 
     @Test
-    void testUpdateUser_ValidateFalse() throws UserSaveException {
+    void testUpdateUser_False() throws UserUpdateException {
         User user = new User();
         BindingResult bindingResult = new BeanPropertyBindingResult(user, "user");
 
@@ -117,15 +118,16 @@ public class UserControllerTest {
 
         assertEquals("user/update", viewName);
         verify(model, times(1)).addAttribute(eq("user"), eq(user));
+        verify(userService, never()).userUpdate(1, user);
     }
 
     @Test
     void testDeleteUser() throws UserDeleteException {
-        doNothing().when(userService).deleteUser(1);
+        doNothing().when(userService).userDelete(1);
 
         String viewName = userController.deleteUser(1);
 
-        verify(userService, times(1)).deleteUser(1);
+        verify(userService, times(1)).userDelete(1);
         assertEquals("redirect:/user/list", viewName);
     }
 }

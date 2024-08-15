@@ -56,5 +56,6 @@ public class ConstantsExceptions {
     public static final String USER_NOT_FOUND_EXCEPTION = "Not found user by id";
     public static final String USER_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String USER_DELETE_EXCEPTION = "An error occurred while deleting user";
+    public static final String USER_UPDATE_EXCEPTION = "An error occurred while updating trade ";
 
 }

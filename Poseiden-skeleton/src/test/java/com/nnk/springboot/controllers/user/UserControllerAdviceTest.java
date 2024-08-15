@@ -1,14 +1,13 @@
 package com.nnk.springboot.controllers.user;
 
-
 import com.nnk.springboot.controllers.UserControllerAdvice;
+import com.nnk.springboot.exceptions.UserServiceException.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.nnk.springboot.constants.ConstantsExceptions.*;
-import static com.nnk.springboot.exceptions.UserServiceException.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserControllerAdviceTest {
@@ -20,7 +19,7 @@ public class UserControllerAdviceTest {
         RuntimeException runtimeException = new RuntimeException();
         String result = userControllerAdvice.handleUserAggregationInfoException(new UserAggregationInfoException(runtimeException));
 
-        Assertions.assertTrue(result.contains(USER_AGGREGATION_INFO_EXCEPTION));
+        Assertions.assertTrue(result.contains(USER_AGGREGATION_INFO_EXCEPTION + MORE_INFO));
     }
 
     @Test
@@ -28,18 +27,18 @@ public class UserControllerAdviceTest {
         RuntimeException runtimeException = new RuntimeException();
         String result = userControllerAdvice.handleUserSaveException(new UserSaveException(runtimeException));
 
-        Assertions.assertTrue(result.contains(USER_SAVE_EXCEPTION));
+        Assertions.assertTrue(result.contains(USER_SAVE_EXCEPTION + MORE_INFO));
     }
 
     @Test
     void handleUserFindByIdException() {
         String result = userControllerAdvice.handleUserFindByIdException(new UserFindByIdException(new RuntimeException()));
 
-        Assertions.assertTrue(result.contains(USER_FIND_BY_ID_EXCEPTION));
+        Assertions.assertTrue(result.contains(USER_FIND_BY_ID_EXCEPTION + MORE_INFO));
     }
 
     @Test
-    void handleUserFindByIdException_WithUserNotFoundException() {
+    void handleUserFindByIdException_UserNotFoundException() {
         UserNotFoundException userNotFoundException = new UserNotFoundException();
         String result = userControllerAdvice.handleUserFindByIdException(new UserFindByIdException(userNotFoundException));
 
@@ -59,6 +58,6 @@ public class UserControllerAdviceTest {
         UserDeleteException userDeleteException = new UserDeleteException(new RuntimeException());
         String result = userControllerAdvice.handleUserDeleteException(userDeleteException);
 
-        Assertions.assertTrue(result.contains(USER_DELETE_EXCEPTION));
+        Assertions.assertTrue(result.contains(USER_DELETE_EXCEPTION + MORE_INFO));
     }
 }

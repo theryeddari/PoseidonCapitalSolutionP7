@@ -111,4 +111,19 @@ public class UserServiceException extends Exception {
             super(USER_DELETE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
+
+    /**
+     * Exception thrown when there is an error updating a User.
+     */
+    public static class UserUpdateException extends UserServiceException {
+
+        /**
+         * Constructs a new UserUpdateException with the specified cause.
+         *
+         * @param cause the cause of the exception
+         */
+        public UserUpdateException(Exception cause) {
+            super(USER_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
+        }
+    }
 }

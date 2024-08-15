@@ -86,7 +86,7 @@ public class UserController {
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws UserFindByIdException {
         logger.info("Received request to show update form for user with ID: {}", id);
-        User user = userService.getUserById(id);
+        User user = userService.userFindById(id);
         model.addAttribute("user", user);
         logger.info("Update form for user with ID: {} displayed", id);
         return "user/update";
@@ -102,7 +102,7 @@ public class UserController {
      * @return the redirect URL for the user list
      */
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) throws UserSaveException {
+    public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) throws UserUpdateException {
         logger.info("Received request to update user with ID: {}", id);
         if (result.hasErrors()) {
             logger.info("User validation failed");
@@ -123,7 +123,7 @@ public class UserController {
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) throws UserDeleteException {
         logger.info("Received request to delete user with ID: {}", id);
-        userService.deleteUser(id);
+        userService.userDelete(id);
         logger.info("User with ID: {} successfully deleted", id);
         return "redirect:/user/list";
     }

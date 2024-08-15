@@ -3,9 +3,9 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserResponse;
 import com.nnk.springboot.dto.UserResponseAggregationInfoDTO;
+import com.nnk.springboot.exceptions.UserServiceException;
 import com.nnk.springboot.exceptions.UserServiceException.*;
 import com.nnk.springboot.repositories.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,14 +43,14 @@ public class UserServiceTest {
         List<User> users = List.of(user);
         when(userRepository.findAll()).thenReturn(users);
 
-        UserResponse userResponse = userService.userAggregationInfo();
+        UserResponse response = userService.userAggregationInfo();
 
-        List<UserResponseAggregationInfoDTO> userResponseAggregationInfoDTO = userResponse.getUserResponseAggregationInfoDTO();
+        List<UserResponseAggregationInfoDTO> dtos = response.getUserResponseAggregationInfoDTO();
 
-        assertEquals(String.valueOf(user.getId()), userResponseAggregationInfoDTO.getFirst().getId());
-        assertEquals(user.getUsername(), userResponseAggregationInfoDTO.getFirst().getUsername());
-        assertEquals(user.getFullname(), userResponseAggregationInfoDTO.getFirst().getFullname());
-        assertEquals(user.getRole(), userResponseAggregationInfoDTO.getFirst().getRole());
+        assertEquals("1", dtos.getFirst().getId());
+        assertEquals("user", dtos.getFirst().getUsername());
+        assertEquals("Full Name", dtos.getFirst().getFullname());
+        assertEquals("Role", dtos.getFirst().getRole());
     }
 
     @Test
@@ -58,28 +58,6 @@ public class UserServiceTest {
         when(userRepository.findAll()).thenThrow(new RuntimeException());
 
         assertThrows(UserAggregationInfoException.class, () -> userService.userAggregationInfo());
-    }
-
-    @Test
-    void testGetUserById() throws UserFindByIdException {
-        User user = new User();
-        user.setId((byte) 1);
-        user.setUsername("user");
-
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-
-        User response = userService.getUserById(1);
-
-        assertEquals((byte) 1, response.getId());
-        assertEquals("user", response.getUsername());
-    }
-
-    @Test
-    void testGetUserById_UserNotFoundException() {
-        when(userRepository.findById(1)).thenReturn(Optional.empty());
-
-        Exception exception = Assertions.assertThrows(UserFindByIdException.class, () -> userService.getUserById(1));
-        assertEquals(UserNotFoundException.class, exception.getCause().getClass());
     }
 
     @Test
@@ -109,7 +87,28 @@ public class UserServiceTest {
     }
 
     @Test
-    void testUserUpdate_Success() throws UserSaveException {
+    void testGetUserById() throws UserFindByIdException {
+        User user = new User();
+        user.setId((byte) 1);
+        user.setUsername("user");
+
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+
+        User response = userService.userFindById(1);
+
+        assertEquals((byte) 1, response.getId());
+        assertEquals("user", response.getUsername());
+    }
+
+    @Test
+    void testGetUserById_Exception() {
+        when(userRepository.findById(1)).thenReturn(Optional.empty());
+
+        assertThrows(UserFindByIdException.class, () -> userService.userFindById(1));
+    }
+
+    @Test
+    void testUserUpdate_Success() throws UserUpdateException {
         User user = new User();
         user.setId((byte) 1);
 
@@ -124,8 +123,8 @@ public class UserServiceTest {
         User user = new User();
         user.setId((byte) 1);
 
-        Exception exception = assertThrows(UserSaveException.class, () -> userService.userUpdate(2, user));
-        assertEquals(UserIncoherenceBetweenObjectException.class, exception.getCause().getClass());
+       Exception exception = assertThrows(UserUpdateException.class, () -> userService.userUpdate(2, user));
+        assertEquals(UserIncoherenceBetweenObjectException.class,exception.getCause().getClass());
     }
 
     @Test
@@ -135,14 +134,14 @@ public class UserServiceTest {
 
         when(userRepository.save(user)).thenThrow(new RuntimeException());
 
-        assertThrows(UserSaveException.class, () -> userService.userUpdate(1, user));
+        assertThrows(UserUpdateException.class, () -> userService.userUpdate(1, user));
     }
 
     @Test
     void testDeleteUser() throws UserDeleteException {
         doNothing().when(userRepository).deleteById(1);
 
-        userService.deleteUser(1);
+        userService.userDelete(1);
 
         verify(userRepository, times(1)).deleteById(1);
     }
@@ -151,6 +150,6 @@ public class UserServiceTest {
     void testDeleteUser_Exception() {
         doThrow(new RuntimeException()).when(userRepository).deleteById(1);
 
-        assertThrows(UserDeleteException.class, () -> userService.deleteUser(1));
+        assertThrows(UserDeleteException.class, () -> userService.userDelete(1));
     }
 }

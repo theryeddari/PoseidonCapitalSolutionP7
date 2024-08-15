@@ -1,6 +1,5 @@
 package com.nnk.springboot.controllers.user;
 
-import com.nnk.springboot.domain.User;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -38,20 +37,19 @@ public class UserControllerIT {
     @Test
     void addUserForm() throws Exception {
         mockMvc.perform(get("/user/add"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"username\" placeholder=\"User Name\" class=\"col-4\" name=\"username\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"fullname\" placeholder=\"Full Name\" class=\"col-4\" name=\"fullname\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"password\" id=\"password\" placeholder=\"Password\" class=\"col-4\" name=\"password\" value=\"\">")));
     }
 
     @Test
     void validateUser_true() throws Exception {
-        User user = new User();
-        user.setUsername("newUser");
-        user.setFullname("New User");
-        user.setPassword("Passw0rd!"); // Assume validation 8 char maj min special char
-
         mockMvc.perform(post("/user/validate")
-                        .param("username", user.getUsername())
-                        .param("fullname", user.getFullname())
-                        .param("password", user.getPassword())
+                        .param("username", "newUser")
+                        .param("fullname", "New User")
+                        .param("password", "Passw0rd!")
+                        .param("role", "USER")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/user/list"));
@@ -59,36 +57,32 @@ public class UserControllerIT {
 
     @Test
     void validateUser_false() throws Exception {
-        // Simulate validation errors
         mockMvc.perform(post("/user/validate")
-                        .param("username", "")
+                        .param("username", "") // Missing fields
                         .param("fullname", "User")
-                        .param("password", "")
+                        .param("password", "Passw0rd")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Username is mandatory</p>")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Password is mandatory<br />&quot;Password must be at least 8 characters long, include at least one uppercase letter, one digit, and one special character&quot;</p>")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">&quot;Password must be at least 8 characters long, include at least one uppercase letter, one digit, and one special character&quot;</p>")));
     }
 
     @Test
     void showUpdateForm() throws Exception {
-        // Suppose you have a user in your test database with ID 1
         mockMvc.perform(get("/user/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"username\" placeholder=\"User Name\" class=\"col-4\" name=\"username\" value=\"admin\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"username\" placeholder=\"User Name\" class=\"col-4\" name=\"username\" value=\"admin\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"fullname\" placeholder=\"Full Name\" class=\"col-4\" name=\"fullname\" value=\"Administrator\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"password\" id=\"password\" placeholder=\"Password\" class=\"col-4\" name=\"password\" value=\"\">")));
     }
 
     @Test
     void updateUser_Success() throws Exception {
-        User user = new User();
-        user.setUsername("updatedUser");
-        user.setFullname("Updated User");
-        user.setPassword("UpdatePassw0rd!");
-
         mockMvc.perform(post("/user/update/{id}", 1)
-                        .param("username", user.getUsername())
-                        .param("fullname", user.getFullname())
-                        .param("password", user.getPassword())
+                        .param("username", "updatedUser")
+                        .param("fullname", "Updated User")
+                        .param("password", "UpdatePassw0rd!")
+                        .param("role", "USER")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/user/list"));
@@ -96,7 +90,6 @@ public class UserControllerIT {
 
     @Test
     void deleteUser() throws Exception {
-        // Suppose you have a user in your test database with ID 1
         mockMvc.perform(get("/user/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/user/list"));
