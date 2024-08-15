@@ -7,8 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * This controller handles requests related to login operations.
- *
+ * This controller handles requests related to log in operations.
  * It uses Spring Security to manage authentication and authorization.
  * The / and /login endpoints are mapped to this controller to return the login page.
  *
@@ -19,14 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  * Spring Security configuration is expected to be set up in a configuration class to secure the endpoints.
  * For detailed security setup, refer to the Spring Security documentation.
- *
  * Logging is implemented to monitor the application's behavior and catch errors.
  *
  */
 @Controller
-public class LoginController {
+public class AuthController {
 
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     /**
      * Handles GET requests to the root URL ("/") and returns the login page view.
@@ -52,5 +50,19 @@ public class LoginController {
         logger.info("Accessing login page with error: {}", error);
         model.addAttribute("error", error);
         return "login";
+    }
+
+    /**
+     * Handles GET requests to the "/403" URL with an optional error parameter.
+     * Adds the error message to the model and returns the forbidden page view.
+     *
+     * @param error the error message to be displayed on the login page.
+     * @param model the model to which the error message is added.
+     * @return the name of the 403 forbidden page view.
+     */
+    @GetMapping("/403")
+    public String error(String error, Model model) {
+        model.addAttribute("error", error);
+        return "403";
     }
 }

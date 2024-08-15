@@ -1,6 +1,6 @@
 package com.nnk.springboot.controllers.login;
 
-import com.nnk.springboot.controllers.LoginController;
+import com.nnk.springboot.controllers.AuthController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,10 +13,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
-public class LoginControllerTest {
+public class AuthControllerTest {
 
     @InjectMocks
-    private LoginController loginController;
+    private AuthController authController;
 
     @Mock
     private Model model;
@@ -26,7 +26,7 @@ public class LoginControllerTest {
     @Test
     public void testLoginPageErrorValidateWithoutError() {
         // Call the method to test without error parameter
-        String viewName = loginController.loginPageErrorValidate(null, model);
+        String viewName = authController.loginPageErrorValidate(null, model);
 
         // Assert that the view name is "login"
         assertEquals("login", viewName);
@@ -38,7 +38,7 @@ public class LoginControllerTest {
     @Test
     public void testLoginPageErrorValidateWithError() {
         // Call the method to test with error parameter
-        String viewName = loginController.loginPageErrorValidate("true", model);
+        String viewName = authController.loginPageErrorValidate("true", model);
 
         // Assert that the view name is "login"
         assertEquals("login", viewName);
