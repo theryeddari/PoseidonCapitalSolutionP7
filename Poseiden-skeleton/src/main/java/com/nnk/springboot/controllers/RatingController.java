@@ -35,7 +35,7 @@ public class RatingController {
      * @return the view name for the rating list
      * @throws RatingAggregationInfoException if there is an error aggregating rating info
      */
-    @RequestMapping("/rating/list")
+    @RequestMapping("/home/rating/list")
     public String home(Model model) throws RatingAggregationInfoException {
         logger.info("Received request to list ratings");
         RatingsResponse ratingResponse = ratingService.ratingAggregationInfo();

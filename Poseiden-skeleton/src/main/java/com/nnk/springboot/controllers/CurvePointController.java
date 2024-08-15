@@ -35,7 +35,7 @@ public class CurvePointController {
      * @return the view name for the curve point list
      * @throws CurvePointAggregationInfoException if there is an error aggregating curve point info
      */
-    @RequestMapping("/curvePoint/list")
+    @RequestMapping("home/curvePoint/list")
     public String home(Model model) throws CurvePointAggregationInfoException {
         logger.info("Received request to list curve points");
         CurvePointResponse curvePointResponse = curvePointService.curvePointAggregationInfo();

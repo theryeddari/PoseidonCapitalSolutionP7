@@ -31,7 +31,7 @@ public class UserController {
      * @param model the model to populate with users
      * @return the view name for the user list
      */
-    @RequestMapping("/user/list")
+    @RequestMapping("/home/admin/user/list")
     public String home(Model model) throws UserAggregationInfoException {
         logger.info("Received request to list users");
         UserResponse userResponse = userService.userAggregationInfo();

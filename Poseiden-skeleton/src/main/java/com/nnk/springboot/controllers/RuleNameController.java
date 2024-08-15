@@ -35,7 +35,7 @@ public class RuleNameController {
      * @return the view name for the rule name list
      * @throws RuleNameAggregationInfoException if there is an error aggregating rule name info
      */
-    @RequestMapping("/ruleName/list")
+    @RequestMapping("/home/ruleName/list")
     public String home(Model model) throws RuleNameAggregationInfoException {
         logger.info("Received request to list rule names");
         RuleNameResponse ruleNameResponse = ruleNameService.ruleNameAggregationInfo();

@@ -35,7 +35,7 @@ public class TradeController {
      * @return the view name for the trade list
      * @throws TradeAggregationInfoException if there is an error aggregating trade info
      */
-    @RequestMapping("/trade/list")
+    @RequestMapping("home/trade/list")
     public String home(Model model) throws TradeAggregationInfoException {
         logger.info("Received request to list trades");
         TradeResponse tradeResponse = tradeService.tradeAggregationInfo();

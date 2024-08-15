@@ -35,7 +35,7 @@ public class BidListController {
      * @return the view name for the bid list
      * @throws BidListAggregationInfoException if there is an error aggregating bid list info
      */
-    @RequestMapping("/bidList/list")
+    @RequestMapping("/home/bidList/list")
     public String home(Model model) throws BidListAggregationInfoException {
         logger.info("Received request to list bid lists");
         BidListsResponse bidListsResponse = bidListService.bidListAggregationInfo();
