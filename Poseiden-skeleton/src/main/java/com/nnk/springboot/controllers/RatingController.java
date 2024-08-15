@@ -81,7 +81,7 @@ public class RatingController {
         ratingService.ratingSave(rating);
         logger.info("Rating successfully validated and saved");
 
-        return "redirect:/rating/list";
+        return "redirect:/home/rating/list";
     }
 
     /**
@@ -125,7 +125,7 @@ public class RatingController {
         ratingService.ratingUpdate(id, rating);
         logger.info("Rating with ID: {} successfully updated", id);
 
-        return "redirect:/rating/list";
+        return "redirect:/home/rating/list";
     }
 
     /**
@@ -140,6 +140,6 @@ public class RatingController {
         logger.info("Received request to delete rating with ID: {}", id);
         ratingService.ratingDelete(id);
         logger.info("Rating with ID: {} successfully deleted", id);
-        return "redirect:/rating/list";
+        return "redirect:/home/rating/list";
     }
 }

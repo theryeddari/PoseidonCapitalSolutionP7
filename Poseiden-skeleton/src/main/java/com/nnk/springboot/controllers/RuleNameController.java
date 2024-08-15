@@ -81,7 +81,7 @@ public class RuleNameController {
         ruleNameService.ruleNameSave(ruleName);
         logger.info("Rule name successfully validated and saved");
 
-        return "redirect:/ruleName/list";
+        return "redirect:/home/ruleName/list";
     }
 
     /**
@@ -125,7 +125,7 @@ public class RuleNameController {
         ruleNameService.ruleNameUpdate(id, ruleName);
         logger.info("Rule name with ID: {} successfully updated", id);
 
-        return "redirect:/ruleName/list";
+        return "redirect:/home/ruleName/list";
     }
 
     /**
@@ -140,6 +140,6 @@ public class RuleNameController {
         logger.info("Received request to delete rule name with ID: {}", id);
         ruleNameService.ruleNameDelete(id);
         logger.info("Rule name with ID: {} successfully deleted", id);
-        return "redirect:/ruleName/list";
+        return "redirect:/home/ruleName/list";
     }
 }

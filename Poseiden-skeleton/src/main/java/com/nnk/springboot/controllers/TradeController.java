@@ -81,7 +81,7 @@ public class TradeController {
         tradeService.tradeSave(trade);
         logger.info("Trade successfully validated and saved");
 
-        return "redirect:/trade/list";
+        return "redirect:/home/trade/list";
     }
 
     /**
@@ -125,7 +125,7 @@ public class TradeController {
         tradeService.tradeUpdate(id, trade);
         logger.info("Trade with ID: {} successfully updated", id);
 
-        return "redirect:/trade/list";
+        return "redirect:/home/trade/list";
     }
 
     /**
@@ -140,6 +140,6 @@ public class TradeController {
         logger.info("Received request to delete trade with ID: {}", id);
         tradeService.tradeDelete(id);
         logger.info("Trade with ID: {} successfully deleted", id);
-        return "redirect:/trade/list";
+        return "redirect:/home/trade/list";
     }
 }

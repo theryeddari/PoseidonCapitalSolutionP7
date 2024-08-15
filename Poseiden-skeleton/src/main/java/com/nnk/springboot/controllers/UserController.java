@@ -73,7 +73,7 @@ public class UserController {
         }
         userService.userSave(user);
         logger.info("User successfully validated and saved");
-        return "redirect:/user/list";
+        return "redirect:/home/admin/user/list";
     }
 
     /**
@@ -111,7 +111,7 @@ public class UserController {
         }
         userService.userUpdate(id, user);
         logger.info("User with ID: {} successfully updated", id);
-        return "redirect:/user/list";
+        return "redirect:/home/admin/user/list";
     }
 
     /**
@@ -125,6 +125,6 @@ public class UserController {
         logger.info("Received request to delete user with ID: {}", id);
         userService.userDelete(id);
         logger.info("User with ID: {} successfully deleted", id);
-        return "redirect:/user/list";
+        return "redirect:/home/admin/user/list";
     }
 }

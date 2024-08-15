@@ -81,7 +81,7 @@ public class CurvePointController {
         curvePointService.curvePointSave(curvePoint);
         logger.info("Curve point successfully validated and saved");
 
-        return "redirect:/curvePoint/list";
+        return "redirect:/home/curvePoint/list";
     }
 
     /**
@@ -124,7 +124,7 @@ public class CurvePointController {
         curvePointService.curvePointUpdate(id, curvePoint);
         logger.info("Curve point with ID: {} successfully updated", id);
 
-        return "redirect:/curvePoint/list";
+        return "redirect:/home/curvePoint/list";
     }
 
     /**
@@ -139,6 +139,6 @@ public class CurvePointController {
         logger.info("Received request to delete curve point with ID: {}", id);
         curvePointService.curvePointDelete(id);
         logger.info("Curve point with ID: {} successfully deleted", id);
-        return "redirect:/curvePoint/list";
+        return "redirect:/home/curvePoint/list";
     }
 }

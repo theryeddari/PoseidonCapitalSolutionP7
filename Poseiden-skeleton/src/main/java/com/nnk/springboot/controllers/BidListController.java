@@ -81,7 +81,7 @@ public class BidListController {
         bidListService.bidListSave(bidList);
         logger.info("Bid list successfully validated and saved");
 
-        return "redirect:/bidList/list";
+        return "redirect:/home/bidList/list";
     }
 
     /**
@@ -123,7 +123,7 @@ public class BidListController {
             bidListService.bidListUpdate(id, bidList);
             logger.info("Bid list with ID: {} successfully updated", id);
 
-        return "redirect:/bidList/list";
+        return "redirect:/home/bidList/list";
     }
 
     /**
@@ -138,6 +138,6 @@ public class BidListController {
         logger.info("Received request to delete bid list with ID: {}", id);
         bidListService.bidListDelete(id);
         logger.info("Bid list with ID: {} successfully deleted", id);
-        return "redirect:/bidList/list";
+        return "redirect:/home/bidList/list";
     }
 }
