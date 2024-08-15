@@ -82,7 +82,7 @@ public class BidListService {
      * @return the found bid list.
      * @throws BidListFindByIdException if there is an error finding the bid list.
      */
-    public BidList BidListFindById(int id) throws BidListFindByIdException {
+    public BidList bidListFindById(int id) throws BidListFindByIdException {
         logger.info("Entering BidListFindById method with ID: {}", id);
         try {
             Optional<BidList> bidList = bidListRepository.findById(id);

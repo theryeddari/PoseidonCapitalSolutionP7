@@ -87,11 +87,11 @@ public class BidListControllerTest {
         BidList bidList = new BidList();
         bidList.setBidListId((byte) 1);
 
-        when(bidListService.BidListFindById(1)).thenReturn(bidList);
+        when(bidListService.bidListFindById(1)).thenReturn(bidList);
 
         String viewName = bidListController.showUpdateForm(1, model);
 
-        verify(bidListService, times(1)).BidListFindById(1);
+        verify(bidListService, times(1)).bidListFindById(1);
 
         assertEquals("bidList/update", viewName);
         verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));

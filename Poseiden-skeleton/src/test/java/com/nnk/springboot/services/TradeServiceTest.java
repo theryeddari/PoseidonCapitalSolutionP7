@@ -60,20 +60,22 @@ public class TradeServiceTest {
         Trade trade = new Trade();
         when(tradeRepository.save(trade)).thenReturn(trade);
 
-        tradeService.tradeSave(trade);
+        Trade savedTrade = tradeService.tradeSave(trade);
 
+        assertEquals(trade, savedTrade);
         verify(tradeRepository, times(1)).save(trade);
     }
 
     @Test
-    void testTradeSaveException() {
+    void testTradeSave_Exception() {
         Trade trade = new Trade();
         when(tradeRepository.save(trade)).thenThrow(new RuntimeException());
+
         assertThrows(TradeSaveException.class, () -> tradeService.tradeSave(trade));
     }
 
     @Test
-    void testTradeFindById() throws TradeFindByIdException {
+    void testGetTradeById() throws TradeFindByIdException {
         Trade trade = new Trade();
         trade.setTradeId((byte) 1);
 
@@ -85,22 +87,55 @@ public class TradeServiceTest {
     }
 
     @Test
-    void testTradeFindById_Exception() {
+    void testGetTradeById_Exception() {
         when(tradeRepository.findById(1)).thenReturn(Optional.empty());
 
         assertThrows(TradeFindByIdException.class, () -> tradeService.tradeFindById(1));
     }
 
     @Test
-    void testTradeDelete() throws TradeDeleteException {
-        doNothing().when(tradeRepository).deleteById(1);
-        tradeService.tradeDelete(1);
-        verify(tradeRepository).deleteById(1);
+    void testTradeUpdate_Success() throws TradeUpdateException {
+        Trade trade = new Trade();
+        trade.setTradeId((byte) 1);
+
+        when(tradeRepository.save(trade)).thenReturn(trade);
+        tradeService.tradeUpdate(1, trade);
+
+        verify(tradeRepository, times(1)).save(trade);
     }
 
     @Test
-    void testTradeDelete_Exception() {
-        doThrow(new RuntimeException()).when(tradeRepository).deleteById(anyInt());
+    void testTradeUpdate_IDMismatch() {
+        Trade trade = new Trade();
+        trade.setTradeId((byte) 1);
+
+        Exception exception = assertThrows(TradeUpdateException.class, () -> tradeService.tradeUpdate(2, trade));
+        assertEquals(TradeIncoherenceBetweenObjectException.class, exception.getCause().getClass());
+    }
+
+    @Test
+    void testTradeUpdate_Exception() {
+        Trade trade = new Trade();
+        trade.setTradeId((byte) 1);
+
+        when(tradeRepository.save(trade)).thenThrow(new RuntimeException());
+
+        assertThrows(TradeUpdateException.class, () -> tradeService.tradeUpdate(1, trade));
+    }
+
+    @Test
+    void testDeleteTrade() throws TradeDeleteException {
+        doNothing().when(tradeRepository).deleteById(1);
+
+        tradeService.tradeDelete(1);
+
+        verify(tradeRepository, times(1)).deleteById(1);
+    }
+
+    @Test
+    void testDeleteTrade_Exception() {
+        doThrow(new RuntimeException()).when(tradeRepository).deleteById(1);
+
         assertThrows(TradeDeleteException.class, () -> tradeService.tradeDelete(1));
     }
 }

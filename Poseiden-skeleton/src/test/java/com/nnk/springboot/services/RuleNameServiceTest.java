@@ -3,22 +3,19 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.dto.RuleNameResponse;
 import com.nnk.springboot.dto.RuleNameResponseAggregationInfoDTO;
-import com.nnk.springboot.exceptions.RatingServiceException;
-import com.nnk.springboot.repositories.RuleNameRepository;
 import com.nnk.springboot.exceptions.RuleNameServiceException.*;
-import org.junit.jupiter.api.Assertions;
+import com.nnk.springboot.repositories.RuleNameRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,7 +45,7 @@ public class RuleNameServiceTest {
 
         List<RuleNameResponseAggregationInfoDTO> dtos = response.getRuleNameResponseAggregationInfoDTO();
 
-        assertEquals("1", dtos.getFirst().getId());
+        assertEquals("1", dtos.getFirst().getId()); // Note the change from getFirst() to get(0)
         assertEquals("Rule1", dtos.getFirst().getName());
         assertEquals("Description1", dtos.getFirst().getDescription());
         assertEquals("Json1", dtos.getFirst().getJson());
@@ -67,17 +64,20 @@ public class RuleNameServiceTest {
     @Test
     void testRuleNameSave_Success() throws RuleNameSaveException {
         RuleName ruleName = new RuleName();
+
         when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
 
-        ruleNameService.ruleNameSave(ruleName);
+        RuleName savedRuleName = ruleNameService.ruleNameSave(ruleName);
 
+        assertEquals(ruleName, savedRuleName);
         verify(ruleNameRepository, times(1)).save(ruleName);
     }
 
     @Test
-    void testRuleNameSaveException() throws RuleNameSaveException {
+    void testRuleNameSave_Exception() {
         RuleName ruleName = new RuleName();
         when(ruleNameRepository.save(ruleName)).thenThrow(new RuntimeException());
+
         assertThrows(RuleNameSaveException.class, () -> ruleNameService.ruleNameSave(ruleName));
     }
 
@@ -101,15 +101,48 @@ public class RuleNameServiceTest {
     }
 
     @Test
+    void testRuleNameUpdate_Success() throws RuleNameUpdateException {
+        RuleName ruleName = new RuleName();
+        ruleName.setId((byte) 1);
+
+        when(ruleNameRepository.save(ruleName)).thenReturn(ruleName);
+        ruleNameService.ruleNameUpdate(1, ruleName);
+
+        verify(ruleNameRepository, times(1)).save(ruleName);
+    }
+
+    @Test
+    void testRuleNameUpdate_IDMismatch() {
+        RuleName ruleName = new RuleName();
+        ruleName.setId((byte) 1);
+
+        Exception exception = assertThrows(RuleNameUpdateException.class, () -> ruleNameService.ruleNameUpdate(2, ruleName));
+        assertEquals(RuleNameIncoherenceBetweenObjectException.class, exception.getCause().getClass());
+    }
+
+    @Test
+    void testRuleNameUpdate_Exception() {
+        RuleName ruleName = new RuleName();
+        ruleName.setId((byte) 1);
+
+        when(ruleNameRepository.save(ruleName)).thenThrow(new RuntimeException());
+
+        assertThrows(RuleNameUpdateException.class, () -> ruleNameService.ruleNameUpdate(1, ruleName));
+    }
+
+    @Test
     void testRuleNameDelete() throws RuleNameDeleteException {
         doNothing().when(ruleNameRepository).deleteById(1);
+
         ruleNameService.ruleNameDelete(1);
-        verify(ruleNameRepository).deleteById(1);
+
+        verify(ruleNameRepository, times(1)).deleteById(1);
     }
 
     @Test
     void testRuleNameDelete_Exception() {
-        doThrow(new RuntimeException()).when(ruleNameRepository).deleteById(anyInt());
+        doThrow(new RuntimeException()).when(ruleNameRepository).deleteById(1);
+
         assertThrows(RuleNameDeleteException.class, () -> ruleNameService.ruleNameDelete(1));
     }
 }

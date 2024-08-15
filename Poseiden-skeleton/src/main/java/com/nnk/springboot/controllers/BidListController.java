@@ -95,7 +95,7 @@ public class BidListController {
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") int id, Model model) throws BidListFindByIdException {
         logger.info("Received request to show update form for bid list with ID: {}", id);
-        BidList bidList = bidListService.BidListFindById(id);
+        BidList bidList = bidListService.bidListFindById(id);
         model.addAttribute("bidList", bidList);
         logger.info("Update form for bid list with ID: {} displayed", id);
         return "bidList/update";

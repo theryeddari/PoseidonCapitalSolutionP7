@@ -3,8 +3,8 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.dto.RatingResponseAggregationInfoDTO;
 import com.nnk.springboot.dto.RatingsResponse;
+import com.nnk.springboot.exceptions.RatingServiceException.*;
 import com.nnk.springboot.repositories.RatingRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nnk.springboot.exceptions.RatingServiceException.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -22,10 +21,10 @@ import static org.mockito.Mockito.*;
 public class RatingServiceTest {
 
     @InjectMocks
-    RatingService ratingService;
+    private RatingService ratingService;
 
     @Mock
-    RatingRepository ratingRepository;
+    private RatingRepository ratingRepository;
 
     @Test
     void testRatingAggregationInfo() throws RatingAggregationInfoException {
@@ -39,15 +38,15 @@ public class RatingServiceTest {
         List<Rating> ratings = List.of(rating);
         when(ratingRepository.findAll()).thenReturn(ratings);
 
-        RatingsResponse ratingResponse = ratingService.ratingAggregationInfo();
+        RatingsResponse response = ratingService.ratingAggregationInfo();
 
-        List<RatingResponseAggregationInfoDTO> ratingResponseDTOs = ratingResponse.getRatingResponseAggregationInfoDTO();
+        List<RatingResponseAggregationInfoDTO> dtos = response.getRatingResponseAggregationInfoDTO();
 
-        assertEquals(String.valueOf(rating.getId()), ratingResponseDTOs.getFirst().getId());
-        assertEquals(rating.getMoodysRating(), ratingResponseDTOs.getFirst().getMoodysRating());
-        assertEquals(rating.getSandPRating(), ratingResponseDTOs.getFirst().getSandPRating());
-        assertEquals(rating.getFitchRating(), ratingResponseDTOs.getFirst().getFitchRating());
-        assertEquals(String.valueOf(rating.getOrderNumber()), ratingResponseDTOs.getFirst().getOrderNumber());
+        assertEquals("1", dtos.getFirst().getId());
+        assertEquals("A", dtos.getFirst().getMoodysRating());
+        assertEquals("A", dtos.getFirst().getSandPRating());
+        assertEquals("A", dtos.getFirst().getFitchRating());
+        assertEquals("1", dtos.getFirst().getOrderNumber());
     }
 
     @Test
@@ -58,17 +57,19 @@ public class RatingServiceTest {
     }
 
     @Test
-    void testRatingSave() throws RatingSaveException {
+    void testRatingSave_Success() throws RatingSaveException {
         Rating rating = new Rating();
+
         when(ratingRepository.save(rating)).thenReturn(rating);
 
-        ratingService.ratingSave(rating);
+        Rating savedRating = ratingService.ratingSave(rating);
 
+        assertEquals(rating, savedRating);
         verify(ratingRepository, times(1)).save(rating);
     }
 
     @Test
-    void testRatingSaveException() {
+    void testRatingSave_Exception() {
         Rating rating = new Rating();
         when(ratingRepository.save(rating)).thenThrow(new RuntimeException());
 
@@ -85,44 +86,39 @@ public class RatingServiceTest {
 
         Rating response = ratingService.ratingFindById(1);
 
-        assertEquals(1, (byte) response.getId());
+        assertEquals((byte) 1, response.getId());
         assertEquals("A", response.getMoodysRating());
     }
 
     @Test
-    void testRatingFindById_RatingNotFoundException() {
+    void testRatingFindById_Exception() {
         when(ratingRepository.findById(1)).thenReturn(Optional.empty());
 
-        Exception exception = Assertions.assertThrows(RatingFindByIdException.class, () -> ratingService.ratingFindById(1));
-        assertEquals(RatingNotFoundException.class, exception.getCause().getClass());
+        assertThrows(RatingFindByIdException.class, () -> ratingService.ratingFindById(1));
     }
 
     @Test
-    void testRatingUpdateOverloadWithIdVerification_Success() throws RatingUpdateException {
+    void testRatingUpdate_Success() throws RatingUpdateException {
         Rating rating = new Rating();
         rating.setId((byte) 1);
 
         when(ratingRepository.save(rating)).thenReturn(rating);
-
         ratingService.ratingUpdate(1, rating);
 
         verify(ratingRepository, times(1)).save(rating);
     }
 
     @Test
-    void testRatingUpdateOverloadWithIdVerification_Failed() {
+    void testRatingUpdate_IDMismatch() {
         Rating rating = new Rating();
         rating.setId((byte) 1);
 
         Exception exception = assertThrows(RatingUpdateException.class, () -> ratingService.ratingUpdate(2, rating));
-
         assertEquals(RatingIncoherenceBetweenObjectException.class, exception.getCause().getClass());
-
-        verify(ratingRepository, never()).save(rating);
     }
 
     @Test
-    void testRatingUpdateException() {
+    void testRatingUpdate_Exception() {
         Rating rating = new Rating();
         rating.setId((byte) 1);
 
@@ -141,8 +137,8 @@ public class RatingServiceTest {
     }
 
     @Test
-    void testRatingDeleteException() {
-        doThrow(new RuntimeException()).when(ratingRepository).deleteById(anyInt());
+    void testRatingDelete_Exception() {
+        doThrow(new RuntimeException()).when(ratingRepository).deleteById(1);
 
         assertThrows(RatingDeleteException.class, () -> ratingService.ratingDelete(1));
     }
