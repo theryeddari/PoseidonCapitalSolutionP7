@@ -46,9 +46,16 @@ public class TradeControllerAdviceTest {
     }
 
     @Test
-    void handleTradeSaveException_WithIdVerification_Failed() {
+    void handleTradeUpdateException() {
+        String result = tradeControllerAdvice.handleTradeUpdateException(new TradeUpdateException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(TRADE_UPDATE_EXCEPTION));
+    }
+
+    @Test
+    void handleTradeUpdateException_WithIdVerification_Failed() {
         TradeIncoherenceBetweenObjectException tradeIncoherenceBetweenObjectException = new TradeIncoherenceBetweenObjectException();
-        String result = tradeControllerAdvice.handleTradeSaveException(new TradeSaveException(tradeIncoherenceBetweenObjectException));
+        String result = tradeControllerAdvice.handleTradeUpdateException(new TradeUpdateException(tradeIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(TRADE_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION));
     }

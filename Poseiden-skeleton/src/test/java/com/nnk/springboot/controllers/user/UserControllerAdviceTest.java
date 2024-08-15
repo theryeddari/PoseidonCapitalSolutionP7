@@ -46,9 +46,16 @@ public class UserControllerAdviceTest {
     }
 
     @Test
-    void handleUserSaveException_WithIdVerification_Failed() {
+    void handleUserUpdateException() { // Modification ici pour correspondre à la classe modèle
+        String result = userControllerAdvice.handleUserUpdateException(new UserUpdateException(new RuntimeException()));
+
+        Assertions.assertTrue(result.contains(USER_UPDATE_EXCEPTION));
+    }
+
+    @Test
+    void handleUserUpdateException_WithIdVerification_Failed() { // Modification ici pour correspondre à la classe modèle
         UserIncoherenceBetweenObjectException userIncoherenceBetweenObjectException = new UserIncoherenceBetweenObjectException();
-        String result = userControllerAdvice.handleUserSaveException(new UserSaveException(userIncoherenceBetweenObjectException));
+        String result = userControllerAdvice.handleUserUpdateException(new UserUpdateException(userIncoherenceBetweenObjectException));
 
         Assertions.assertTrue(result.contains(USER_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION));
     }

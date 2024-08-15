@@ -22,10 +22,11 @@ public class BidListControllerAdvice {
     public String handleBidListAggregationInfoException(BidListAggregationInfoException ex) {
         logger.info("Handling BidListAggregationInfoException");
         logger.debug("Exception details: ", ex);
-        //TODO: complete logic Controller Advice response and adapt template to manage it
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -42,6 +43,8 @@ public class BidListControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -63,6 +66,8 @@ public class BidListControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -84,6 +89,8 @@ public class BidListControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -96,9 +103,10 @@ public class BidListControllerAdvice {
     public String handleBidListDeleteException(BidListDeleteException ex) {
         logger.info("Handling BidListDeleteException");
         logger.debug("Exception details: ", ex);
-        //TODO: complete logic Controller Advice response and adapt template to manage it
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 }

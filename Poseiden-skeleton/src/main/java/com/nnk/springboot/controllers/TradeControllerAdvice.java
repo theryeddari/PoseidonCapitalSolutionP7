@@ -30,6 +30,8 @@ public class TradeControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -46,6 +48,8 @@ public class TradeControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -67,6 +71,8 @@ public class TradeControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -88,6 +94,8 @@ public class TradeControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -103,5 +111,7 @@ public class TradeControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 }

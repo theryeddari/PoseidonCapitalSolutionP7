@@ -25,10 +25,11 @@ public class RatingControllerAdvice {
     public String handleRatingAggregationInfoException(RatingAggregationInfoException ex) {
         logger.info("Handling RatingAggregationInfoException");
         logger.debug("Exception details: ", ex);
-        // TODO: complete logic Controller Advice response and adapt template to manage it
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -45,6 +46,8 @@ public class RatingControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -66,6 +69,8 @@ public class RatingControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -87,6 +92,8 @@ public class RatingControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -103,5 +110,7 @@ public class RatingControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 }

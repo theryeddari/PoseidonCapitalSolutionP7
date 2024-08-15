@@ -27,10 +27,11 @@ public class RuleNameControllerAdvice {
     public String handleRuleNameAggregationInfoException(RuleNameAggregationInfoException ex) {
         logger.info("Handling RuleNameAggregationInfoException");
         logger.debug("Exception details: ", ex);
-        // TODO: Complete logic for handling aggregation info exceptions
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -47,6 +48,8 @@ public class RuleNameControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -68,6 +71,8 @@ public class RuleNameControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -89,6 +94,8 @@ public class RuleNameControllerAdvice {
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 
     /**
@@ -101,9 +108,10 @@ public class RuleNameControllerAdvice {
     public String handleRuleNameDeleteException(RuleNameDeleteException ex) {
         logger.info("Handling RuleNameDeleteException");
         logger.debug("Exception details: ", ex);
-        // TODO: Complete logic for handling delete exceptions
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;
+        //TODO: complete logic Controller Advice error response for template (future release, del BindingResult todo it(block throw Validation exception))
+
     }
 }
