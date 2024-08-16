@@ -9,8 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
@@ -20,7 +20,6 @@ public class AuthControllerTest {
 
     @Mock
     private Model model;
-
 
 
     @Test

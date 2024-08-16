@@ -1,12 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameAggregationInfoException;
-import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameSaveException;
-import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameUpdateException;
-import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameFindByIdException;
-import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameDeleteException;
-import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameIncoherenceBetweenObjectException;
-import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameNotFoundException;
+import com.nnk.springboot.exceptions.RuleNameServiceException.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;

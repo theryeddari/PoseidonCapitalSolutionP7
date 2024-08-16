@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import static com.nnk.springboot.exceptions.BidListServiceException.*;
+import static com.nnk.springboot.exceptions.BidListServiceException.BidListNotFoundException;
 import static com.nnk.springboot.exceptions.CurvePointServiceException.*;
 
 @ControllerAdvice

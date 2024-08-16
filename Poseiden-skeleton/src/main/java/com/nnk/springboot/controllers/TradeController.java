@@ -62,9 +62,9 @@ public class TradeController {
     /**
      * Validates and saves the trade.
      *
-     * @param trade the trade to save
+     * @param trade  the trade to save
      * @param result the result of validation
-     * @param model the model to populate with the trade
+     * @param model  the model to populate with the trade
      * @return the view name for the add trade form or redirect to the list
      * @throws TradeSaveException if there is an error saving the trade
      */
@@ -87,7 +87,7 @@ public class TradeController {
     /**
      * Displays the form for updating an existing trade.
      *
-     * @param id the ID of the trade to update
+     * @param id    the ID of the trade to update
      * @param model the model to populate with the trade
      * @return the view name for updating the trade
      * @throws TradeFindByIdException if there is an error finding the trade by ID
@@ -104,10 +104,10 @@ public class TradeController {
     /**
      * Updates the specified trade.
      *
-     * @param id the ID of the trade to update
-     * @param trade the trade data to update
+     * @param id     the ID of the trade to update
+     * @param trade  the trade data to update
      * @param result the result of validation
-     * @param model the model to populate with the updated trade
+     * @param model  the model to populate with the updated trade
      * @return the redirect URL for the trade list
      * @throws TradeUpdateException if there is an error updating the trade
      */

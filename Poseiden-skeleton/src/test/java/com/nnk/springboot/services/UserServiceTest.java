@@ -137,8 +137,8 @@ public class UserServiceTest {
         User user = new User();
         user.setId((byte) 1);
 
-       Exception exception = assertThrows(UserUpdateException.class, () -> userService.userUpdate(2, user));
-        assertEquals(UserIncoherenceBetweenObjectException.class,exception.getCause().getClass());
+        Exception exception = assertThrows(UserUpdateException.class, () -> userService.userUpdate(2, user));
+        assertEquals(UserIncoherenceBetweenObjectException.class, exception.getCause().getClass());
     }
 
     @Test

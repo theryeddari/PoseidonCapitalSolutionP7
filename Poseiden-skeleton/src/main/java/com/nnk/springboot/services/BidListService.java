@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.nnk.springboot.exceptions.BidListServiceException.*;
+
 /**
  * Class who manage logic about operation of Bid list
-
  */
 @Service
 @Transactional
@@ -101,8 +101,8 @@ public class BidListService {
     /**
      * Update a bid list entity with a given ID.
      *
-     * @param id            the ID to validate.
-     * @param bidList       the bid list to save.
+     * @param id      the ID to validate.
+     * @param bidList the bid list to save.
      * @throws BidListUpdateException if there is an error saving the bid list.
      */
     public void bidListUpdate(int id, BidList bidList) throws BidListUpdateException {

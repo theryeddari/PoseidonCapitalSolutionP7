@@ -135,7 +135,6 @@ public class UserServiceException extends Exception {
 
         /**
          * Constructs a new UsernameAlreadyExistException.
-         *
          */
 
         public UsernameAlreadyExistException() {

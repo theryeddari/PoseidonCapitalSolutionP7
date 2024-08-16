@@ -1,12 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.exceptions.TradeServiceException.TradeAggregationInfoException;
-import com.nnk.springboot.exceptions.TradeServiceException.TradeSaveException;
-import com.nnk.springboot.exceptions.TradeServiceException.TradeUpdateException;
-import com.nnk.springboot.exceptions.TradeServiceException.TradeFindByIdException;
-import com.nnk.springboot.exceptions.TradeServiceException.TradeDeleteException;
-import com.nnk.springboot.exceptions.TradeServiceException.TradeIncoherenceBetweenObjectException;
-import com.nnk.springboot.exceptions.TradeServiceException.TradeNotFoundException;
+import com.nnk.springboot.exceptions.TradeServiceException.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;

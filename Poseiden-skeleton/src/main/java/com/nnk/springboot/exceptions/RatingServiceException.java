@@ -1,4 +1,5 @@
 package com.nnk.springboot.exceptions;
+
 import static com.nnk.springboot.constants.ConstantsExceptions.*;
 
 /**

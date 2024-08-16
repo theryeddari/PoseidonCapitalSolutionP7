@@ -22,6 +22,7 @@ public class BidListControllerAdviceTest {
 
         Assertions.assertTrue(result.contains(BID_LIST_AGGREGATION_INFO_EXCEPTION + MORE_INFO));
     }
+
     @Test
     void handleBidListSaveException() {
         RuntimeException runtimeException = new RuntimeException();
@@ -36,6 +37,7 @@ public class BidListControllerAdviceTest {
 
         Assertions.assertTrue(result.contains(BID_LIST_FIND_BY_ID_EXCEPTION + MORE_INFO));
     }
+
     @Test
     void handleBidListFindById_BidListNotFoundException() {
         BidListNotFoundException bidListNotFoundException = new BidListNotFoundException();
@@ -43,15 +45,16 @@ public class BidListControllerAdviceTest {
 
         Assertions.assertTrue(result.contains(BID_LIST_NOT_FOUND_EXCEPTION));
     }
+
     @Test
-    void handleBidListUpdateException(){
+    void handleBidListUpdateException() {
         String result = bidListControllerAdvice.handleBidListUpdateException(new BidListUpdateException(new RuntimeException()));
 
         Assertions.assertTrue(result.contains(BID_LIST_UPDATE_EXCEPTION));
     }
 
     @Test
-    void handleBidListUpdateException_WithIdVerification_Failed(){
+    void handleBidListUpdateException_WithIdVerification_Failed() {
         BidListIncoherenceBetweenObjectException bidListIncoherenceBetweenObjectException = new BidListIncoherenceBetweenObjectException();
         String result = bidListControllerAdvice.handleBidListUpdateException(new BidListUpdateException(bidListIncoherenceBetweenObjectException));
 
@@ -59,7 +62,7 @@ public class BidListControllerAdviceTest {
     }
 
     @Test
-    void handleBidListDeleteException(){
+    void handleBidListDeleteException() {
         BidListDeleteException bidListDeleteException = new BidListDeleteException(new RuntimeException());
         String result = bidListControllerAdvice.handleBidListDeleteException(bidListDeleteException);
 

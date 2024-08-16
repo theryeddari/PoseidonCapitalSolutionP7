@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
-      lang="fr">
+<html lang="fr" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-      <title>Spring Boot</title>
+    <title>Spring Boot</title>
 </head>
 <body>
-   <h3>Access Denied Exception</h3>
-   <div>
-	    Logged in user: <b th:inline="text"  class="user" sec:authentication="name"></b>
-	    <form th:action="@{/app-logout}" method="POST">
-            <input type="submit" value="Logout"/> ou retourner au menu <a href="/home">Home</a>
-        </form>
+<h3>Access Denied Exception</h3>
+<div>
+    Logged in user: <b class="user" sec:authentication="name" th:inline="text"></b>
+    <form method="POST" th:action="@{/app-logout}">
+        <input type="submit" value="Logout"/> ou retourner au menu <a href="/home">Home</a>
+    </form>
 
-   </div> 	 
-    <p class="error" th:text="${errorMsg}">Error</p>
+</div>
+<p class="error" th:text="${errorMsg}">Error</p>
 </body>
 </html>   

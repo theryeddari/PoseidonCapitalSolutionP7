@@ -120,8 +120,8 @@ public class BidListController {
             model.addAttribute("bidList", bidList);
             return "bidList/update";
         }
-            bidListService.bidListUpdate(id, bidList);
-            logger.info("Bid list with ID: {} successfully updated", id);
+        bidListService.bidListUpdate(id, bidList);
+        logger.info("Bid list with ID: {} successfully updated", id);
 
         return "redirect:/home/bidList/list";
     }

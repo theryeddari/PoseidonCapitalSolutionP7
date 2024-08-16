@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders;
+import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders;
-import org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -62,11 +62,11 @@ public class AuthControllerIT {
     @Test
     public void testAccessProtectedPageAfterLogin() throws Exception {
         // Successful login
-       MvcResult loginSuccessAdmin = mockMvc.perform(SecurityMockMvcRequestBuilders.formLogin("/login")
+        MvcResult loginSuccessAdmin = mockMvc.perform(SecurityMockMvcRequestBuilders.formLogin("/login")
                         .user("admin")
                         .password("password"))
-               .andExpect(SecurityMockMvcResultMatchers.authenticated())
-               .andReturn();
+                .andExpect(SecurityMockMvcResultMatchers.authenticated())
+                .andReturn();
         // get previous session cookie to continue to be connect as admin
 
         MockHttpSession sessionAdmin = (MockHttpSession) loginSuccessAdmin.getRequest().getSession();

@@ -101,7 +101,7 @@ public class RuleNameService {
     /**
      * Updates a rule name entity with a given ID.
      *
-     * @param id the ID to validate.
+     * @param id       the ID to validate.
      * @param ruleName the rule name to update.
      * @throws RuleNameServiceException.RuleNameUpdateException if there is an error updating the rule name.
      */

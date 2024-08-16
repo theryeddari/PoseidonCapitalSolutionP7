@@ -20,8 +20,6 @@ public class ConstantsExceptions {
     public static final String CURVE_POINT_NOT_FOUND_EXCEPTION = "Not Found curve point by id";
     public static final String CURVE_POINT_INCOHERENCE_BETWEEN_OBJET_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String CURVE_POINT_DELETE_EXCEPTION = "An error occurred while deleting curve point by id";
-    public static String CURVE_POINT_UPDATE_EXCEPTION = "An error occurred while updating curve point";
-
     //Rating Exception
     public static final String RATING_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating rating infos";
     public static final String RATING_SAVE_EXCEPTION = "An error occurred while saving rating infos";
@@ -29,8 +27,7 @@ public class ConstantsExceptions {
     public static final String RATING_NOT_FOUND_EXCEPTION = "Not found rating by id";
     public static final String RATING_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String RATING_DELETE_EXCEPTION = "An error occurred while deleting rating";
-    public static final String RATING_UPDATE_EXCEPTION = "An error occurred while updating rating " ;
-
+    public static final String RATING_UPDATE_EXCEPTION = "An error occurred while updating rating ";
     // RuleName Exception
     public static final String RULE_NAME_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating rule name infos";
     public static final String RULE_NAME_SAVE_EXCEPTION = "An error occurred while saving rule name infos";
@@ -39,7 +36,6 @@ public class ConstantsExceptions {
     public static final String RULE_NAME_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String RULE_NAME_DELETE_EXCEPTION = "An error occurred while deleting rule name";
     public static final String RULE_NAME_UPDATE_EXCEPTION = "An error occurred while updating rule name";
-
     // Trade Exception
     public static final String TRADE_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating trade infos";
     public static final String TRADE_SAVE_EXCEPTION = "An error occurred while saving trade infos";
@@ -48,7 +44,6 @@ public class ConstantsExceptions {
     public static final String TRADE_INCOHERENCE_BETWEEN_OBJECT_EXCEPTION = "An error occurred while checking the identifier of the object to save and that to theoretically save";
     public static final String TRADE_DELETE_EXCEPTION = "An error occurred while deleting trade";
     public static final String TRADE_UPDATE_EXCEPTION = "An error occurred while updating trade ";
-
     // User Exception
     public static final String USER_AGGREGATION_INFO_EXCEPTION = "An error occurred while aggregating user infos";
     public static final String USER_SAVE_EXCEPTION = "An error occurred while saving user infos";
@@ -58,5 +53,6 @@ public class ConstantsExceptions {
     public static final String USER_DELETE_EXCEPTION = "An error occurred while deleting user";
     public static final String USER_UPDATE_EXCEPTION = "An error occurred while updating trade ";
     public static final String USERNAME_ALREADY_EXIST_EXCEPTION = "An error occured while save User because Username already exist, change it";
+    public static String CURVE_POINT_UPDATE_EXCEPTION = "An error occurred while updating curve point";
 
 }

@@ -17,7 +17,7 @@ import static com.nnk.springboot.exceptions.BidListServiceException.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension .class)
+@ExtendWith(MockitoExtension.class)
 public class BidListControllerTest {
 
     @InjectMocks
@@ -45,9 +45,9 @@ public class BidListControllerTest {
     }
 
     @Test
-    void testAddBidForm(){
+    void testAddBidForm() {
         BidList bidList = new BidList();
-        String viewName = bidListController.addBidForm(bidList,model);
+        String viewName = bidListController.addBidForm(bidList, model);
 
         assertEquals("bidList/add", viewName);
         verify(model, times(1)).addAttribute(eq("bidList"), eq(bidList));
@@ -102,7 +102,7 @@ public class BidListControllerTest {
         BidList bidList = new BidList();
         BindingResult bindingResult = new BeanPropertyBindingResult(bidList, "bidList");
 
-        doNothing().when(bidListService).bidListUpdate(1,bidList);
+        doNothing().when(bidListService).bidListUpdate(1, bidList);
 
         String viewName = bidListController.updateBid(1, bidList, bindingResult, model);
 

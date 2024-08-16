@@ -68,7 +68,9 @@ public class UserService {
     public User userSave(User user) throws UserSaveException {
         logger.info("Entering userSave method with user: {}", user);
         try {
-            if(user.getId() == null && (userRepository.existsByUsername(user.getUsername()))) { throw new UserServiceException.UsernameAlreadyExistException(); }
+            if (user.getId() == null && (userRepository.existsByUsername(user.getUsername()))) {
+                throw new UserServiceException.UsernameAlreadyExistException();
+            }
             user.setPassword(encoder.encode(user.getPassword()));
             user = userRepository.save(user);
             logger.info("Exiting userSave method successfully with saved user: {}", user);
@@ -105,7 +107,7 @@ public class UserService {
     /**
      * Updates a user entity with a given ID.
      *
-     * @param id the ID to validate.
+     * @param id   the ID to validate.
      * @param user the user to update.
      * @throws UserUpdateException if there is an error updating the user.
      */

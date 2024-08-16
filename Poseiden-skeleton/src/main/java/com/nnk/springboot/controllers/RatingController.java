@@ -104,10 +104,10 @@ public class RatingController {
     /**
      * Updates the specified rating.
      *
-     * @param id      the ID of the rating to update
-     * @param rating  the rating data to update
-     * @param result  the result of validation
-     * @param model   the model to populate with the updated rating
+     * @param id     the ID of the rating to update
+     * @param rating the rating data to update
+     * @param result the result of validation
+     * @param model  the model to populate with the updated rating
      * @return the redirect URL for the rating list
      * @throws RatingUpdateException if there is an error saving the updated rating
      */

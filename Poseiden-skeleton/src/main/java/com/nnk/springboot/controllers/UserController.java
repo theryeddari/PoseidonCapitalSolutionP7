@@ -43,7 +43,7 @@ public class UserController {
     /**
      * Displays the form for adding a new user.
      *
-     * @param user the user to add
+     * @param user  the user to add
      * @param model the model to populate with the user
      * @return the view name for adding a user
      */
@@ -58,9 +58,9 @@ public class UserController {
     /**
      * Validates and saves the user.
      *
-     * @param user the user to save
+     * @param user   the user to save
      * @param result the result of validation
-     * @param model the model to populate with the user
+     * @param model  the model to populate with the user
      * @return the view name for the add user form or redirect to the list
      */
     @PostMapping("/user/validate")
@@ -79,7 +79,7 @@ public class UserController {
     /**
      * Displays the form for updating an existing user.
      *
-     * @param id the ID of the user to update
+     * @param id    the ID of the user to update
      * @param model the model to populate with the user
      * @return the view name for updating the user
      */
@@ -95,10 +95,10 @@ public class UserController {
     /**
      * Updates the specified user.
      *
-     * @param id the ID of the user to update
-     * @param user the user data to update
+     * @param id     the ID of the user to update
+     * @param user   the user data to update
      * @param result the result of validation
-     * @param model the model to populate with the updated user
+     * @param model  the model to populate with the updated user
      * @return the redirect URL for the user list
      */
     @PostMapping("/user/update/{id}")

@@ -99,7 +99,7 @@ public class RatingService {
     /**
      * Updates a rating entity with a given ID.
      *
-     * @param id the ID to validate.
+     * @param id     the ID to validate.
      * @param rating the rating to update.
      * @throws RatingServiceException.RatingUpdateException if there is an error updating the rating.
      */

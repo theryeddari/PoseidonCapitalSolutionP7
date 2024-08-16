@@ -98,7 +98,7 @@ public class TradeService {
     /**
      * Updates a trade entity with a given ID.
      *
-     * @param id the ID to validate.
+     * @param id    the ID to validate.
      * @param trade the trade to update.
      * @throws TradeServiceException.TradeUpdateException if there is an error updating the trade.
      */

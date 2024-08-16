@@ -1,11 +1,10 @@
 package com.nnk.springboot.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This controller handles requests related to log in operations.
@@ -16,11 +15,10 @@ import org.apache.logging.log4j.Logger;
  * The {@code loginPage} method returns the login view.
  * The {@code loginPageErrorValidate} method returns the login view with an error message if login validation fails.
  * </p>
- *
+ * <p>
  * Spring Security configuration is expected to be set up in a configuration class to secure the endpoints.
  * For detailed security setup, refer to the Spring Security documentation.
  * Logging is implemented to monitor the application's behavior and catch errors.
- *
  */
 @Controller
 public class AuthController {

@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers.bidlist;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.nnk.springboot.domain.BidList;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
@@ -9,14 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,6 +41,7 @@ public class BidListControllerIT {
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>USER</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>10.0</td>")));
     }
+
     @Test
     void addBidForm() throws Exception {
 
@@ -69,6 +66,7 @@ public class BidListControllerIT {
                 .andExpect(header().string("Location", "/home/bidList/list"));
 
     }
+
     @Test
     void validate_false() throws Exception {
         BidList bidList = new BidList();
@@ -87,7 +85,7 @@ public class BidListControllerIT {
 
     @Test
     void showUpdateForm() throws Exception {
-        mockMvc.perform(get("/bidList/update/{id}",1))
+        mockMvc.perform(get("/bidList/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")));
     }
@@ -100,7 +98,7 @@ public class BidListControllerIT {
         bidList.setType("USER");
         bidList.setBidQuantity(10.0);
 
-        mockMvc.perform(post("/bidList/update/{id}",1)
+        mockMvc.perform(post("/bidList/update/{id}", 1)
                         .param("bidListId", String.valueOf(bidList.getBidListId()))
                         .param("account", bidList.getAccount())
                         .param("type", bidList.getType())
@@ -109,9 +107,10 @@ public class BidListControllerIT {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/home/bidList/list"));
     }
+
     @Test
     void deleteBid() throws Exception {
-        mockMvc.perform(get("/bidList/delete/{id}",1))
+        mockMvc.perform(get("/bidList/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/home/bidList/list"));
 
