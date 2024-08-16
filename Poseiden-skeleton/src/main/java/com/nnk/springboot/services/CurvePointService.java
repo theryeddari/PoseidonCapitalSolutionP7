@@ -6,8 +6,8 @@ import com.nnk.springboot.dto.CurvePointResponseAggregationInfoDTO;
 import com.nnk.springboot.exceptions.CurvePointServiceException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @Transactional
 public class CurvePointService {
 
-    private static final Logger logger = LoggerFactory.getLogger(CurvePointService.class);
+    private static final Logger logger = LogManager.getLogger(CurvePointService.class);
 
     private final CurvePointRepository curvePointRepository;
 

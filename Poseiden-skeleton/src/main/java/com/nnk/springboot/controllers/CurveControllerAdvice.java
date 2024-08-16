@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -11,7 +11,7 @@ import static com.nnk.springboot.exceptions.CurvePointServiceException.*;
 @ControllerAdvice
 public class CurveControllerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(CurveControllerAdvice.class);
+    private static final Logger logger = LogManager.getLogger(CurveControllerAdvice.class);
 
     /**
      * Handles {@link CurvePointAggregationInfoException} by logging the error and returning the exception message.

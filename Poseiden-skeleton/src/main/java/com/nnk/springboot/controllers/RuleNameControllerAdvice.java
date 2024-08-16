@@ -7,15 +7,15 @@ import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameFindByIdEx
 import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameDeleteException;
 import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameIncoherenceBetweenObjectException;
 import com.nnk.springboot.exceptions.RuleNameServiceException.RuleNameNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class RuleNameControllerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(RuleNameControllerAdvice.class);
+    private static final Logger logger = LogManager.getLogger(RuleNameControllerAdvice.class);
 
     /**
      * Handles {@link RuleNameAggregationInfoException} by logging the error and returning the exception message.

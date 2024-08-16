@@ -1,5 +1,7 @@
 package com.nnk.springboot.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class HomeController {
+		private static final Logger logger = LogManager.getLogger(HomeController.class);
 
 	/**
 	 * Handles requests for the homepage of the site.
@@ -18,6 +21,7 @@ public class HomeController {
 	 */
 	@RequestMapping("/home")
 	public String home() {
+		logger.info("Received request to go home");
 		return "home"; // Name of the view (e.g., home.html)
 	}
 

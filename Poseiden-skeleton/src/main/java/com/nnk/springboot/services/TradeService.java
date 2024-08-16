@@ -6,8 +6,8 @@ import com.nnk.springboot.dto.TradeResponseAggregationInfoDTO;
 import com.nnk.springboot.exceptions.TradeServiceException;
 import com.nnk.springboot.repositories.TradeRepository;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @Transactional
 public class TradeService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TradeService.class);
+    private static final Logger logger = LogManager.getLogger(TradeService.class);
 
     private final TradeRepository tradeRepository;
 

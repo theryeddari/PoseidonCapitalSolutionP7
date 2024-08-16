@@ -1,7 +1,7 @@
 package com.nnk.springboot.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -10,7 +10,7 @@ import static com.nnk.springboot.exceptions.BidListServiceException.*;
 @ControllerAdvice
 public class BidListControllerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(BidListControllerAdvice.class);
+    private static final Logger logger = LogManager.getLogger(BidListControllerAdvice.class);
 
     /**
      * Handles {@link BidListAggregationInfoException} by logging the error and returning the exception message.

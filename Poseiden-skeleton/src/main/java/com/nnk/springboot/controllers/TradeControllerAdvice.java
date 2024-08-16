@@ -7,15 +7,15 @@ import com.nnk.springboot.exceptions.TradeServiceException.TradeFindByIdExceptio
 import com.nnk.springboot.exceptions.TradeServiceException.TradeDeleteException;
 import com.nnk.springboot.exceptions.TradeServiceException.TradeIncoherenceBetweenObjectException;
 import com.nnk.springboot.exceptions.TradeServiceException.TradeNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class TradeControllerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(TradeControllerAdvice.class);
+    private static final Logger logger = LogManager.getLogger(TradeControllerAdvice.class);
 
     /**
      * Handles {@link TradeAggregationInfoException} by logging the error and returning the exception message.

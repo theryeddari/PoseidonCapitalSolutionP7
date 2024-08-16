@@ -1,8 +1,8 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
@@ -14,7 +14,7 @@ import static com.nnk.springboot.exceptions.UserServiceException.*;
 @ControllerAdvice
 public class UserControllerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserControllerAdvice.class);
+    private static final Logger logger = LogManager.getLogger(UserControllerAdvice.class);
 
     /**
      * Handles {@link UserAggregationInfoException} by logging the error and returning the exception message.

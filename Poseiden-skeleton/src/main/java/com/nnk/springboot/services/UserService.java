@@ -6,8 +6,8 @@ import com.nnk.springboot.dto.UserResponseAggregationInfoDTO;
 import com.nnk.springboot.exceptions.UserServiceException;
 import com.nnk.springboot.repositories.UserRepository;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import static com.nnk.springboot.exceptions.UserServiceException.*;
 @Transactional
 public class UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private static final Logger logger = LogManager.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;

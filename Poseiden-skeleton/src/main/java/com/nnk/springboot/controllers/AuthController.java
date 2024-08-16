@@ -1,11 +1,11 @@
 package com.nnk.springboot.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This controller handles requests related to log in operations.
@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AuthController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+    private static final Logger logger = LogManager.getLogger(AuthController.class);
+
 
     /**
      * Handles GET requests to the root URL ("/") and returns the login page view.
