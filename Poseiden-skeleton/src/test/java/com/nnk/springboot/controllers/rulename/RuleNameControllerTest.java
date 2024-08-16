@@ -61,7 +61,7 @@ public class RuleNameControllerTest {
 
         String viewName = ruleNameController.validate(ruleName, bindingResult, model);
 
-        assertEquals("redirect:/ruleName/list", viewName);
+        assertEquals("redirect:/home/ruleName/list", viewName);
         verify(ruleNameService, times(1)).ruleNameSave(ruleName);
         verify(model, never()).addAttribute(eq("ruleName"), eq(ruleName));
     }
@@ -103,7 +103,7 @@ public class RuleNameControllerTest {
 
         String viewName = ruleNameController.updateRuleName(1, ruleName, bindingResult, model);
 
-        assertEquals("redirect:/ruleName/list", viewName);
+        assertEquals("redirect:/home/ruleName/list", viewName);
         verify(ruleNameService, times(1)).ruleNameUpdate(1, ruleName);
     }
 
@@ -128,6 +128,6 @@ public class RuleNameControllerTest {
         String viewName = ruleNameController.deleteRuleName(1);
 
         verify(ruleNameService, times(1)).ruleNameDelete(1);
-        assertEquals("redirect:/ruleName/list", viewName);
+        assertEquals("redirect:/home/ruleName/list", viewName);
     }
 }

@@ -61,7 +61,7 @@ public class BidListControllerTest {
         when(bidListService.bidListSave(bidList)).thenReturn(bidList);
         String viewName = bidListController.validate(bidList, bindingResult, model);
 
-        assertEquals("redirect:/bidList/list", viewName);
+        assertEquals("redirect:/home/bidList/list", viewName);
         verify(bidListService, times(1)).bidListSave(bidList);
         verify(model, never()).addAttribute(eq("bidList"), eq(bidList));
 
@@ -106,7 +106,7 @@ public class BidListControllerTest {
 
         String viewName = bidListController.updateBid(1, bidList, bindingResult, model);
 
-        assertEquals("redirect:/bidList/list", viewName);
+        assertEquals("redirect:/home/bidList/list", viewName);
         verify(bidListService, times(1)).bidListUpdate(1, bidList);
     }
 
@@ -130,7 +130,7 @@ public class BidListControllerTest {
         String viewName = bidListController.deleteBid(1);
 
         verify(bidListService, times(1)).bidListDelete(1);
-        assertEquals("redirect:/bidList/list", viewName);
+        assertEquals("redirect:/home/bidList/list", viewName);
     }
 
 }

@@ -61,7 +61,7 @@ public class TradeControllerTest {
 
         String viewName = tradeController.validate(trade, bindingResult, model);
 
-        assertEquals("redirect:/trade/list", viewName);
+        assertEquals("redirect:/home/trade/list", viewName);
         verify(tradeService, times(1)).tradeSave(trade);
         verify(model, never()).addAttribute(eq("trade"), eq(trade));
     }
@@ -103,7 +103,7 @@ public class TradeControllerTest {
 
         String viewName = tradeController.updateTrade(1, trade, bindingResult, model);
 
-        assertEquals("redirect:/trade/list", viewName);
+        assertEquals("redirect:/home/trade/list", viewName);
         verify(tradeService, times(1)).tradeUpdate(1, trade);
     }
 
@@ -128,6 +128,6 @@ public class TradeControllerTest {
         String viewName = tradeController.deleteTrade(1);
 
         verify(tradeService, times(1)).tradeDelete(1);
-        assertEquals("redirect:/trade/list", viewName);
+        assertEquals("redirect:/home/trade/list", viewName);
     }
 }

@@ -33,7 +33,7 @@ public class RatingControllerIT {
 
     @Test
     void home() throws Exception {
-        mockMvc.perform(get("/rating/list"))
+        mockMvc.perform(get("/home/rating/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<th>MoodysRating</th>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<th>FitchRating</th>")));
@@ -54,7 +54,7 @@ public class RatingControllerIT {
                         .param("orderNumber", "1")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/rating/list"));
+                .andExpect(header().string("Location", "/home/rating/list"));
     }
 
     @Test
@@ -86,13 +86,13 @@ public class RatingControllerIT {
                         .param("orderNumber", "1")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/rating/list"));
+                .andExpect(header().string("Location", "/home/rating/list"));
     }
 
     @Test
     void deleteRating() throws Exception {
         mockMvc.perform(get("/rating/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/rating/list"));
+                .andExpect(header().string("Location", "/home/rating/list"));
     }
 }

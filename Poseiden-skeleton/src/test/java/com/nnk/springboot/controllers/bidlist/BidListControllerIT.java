@@ -39,7 +39,7 @@ public class BidListControllerIT {
     @Test
     void home() throws Exception {
 
-        mockMvc.perform(get("/bidList/list"))
+        mockMvc.perform(get("/home/bidList/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>user</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>USER</td>")))
@@ -66,7 +66,7 @@ public class BidListControllerIT {
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/bidList/list"));
+                .andExpect(header().string("Location", "/home/bidList/list"));
 
     }
     @Test
@@ -107,13 +107,13 @@ public class BidListControllerIT {
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/bidList/list"));
+                .andExpect(header().string("Location", "/home/bidList/list"));
     }
     @Test
     void deleteBid() throws Exception {
         mockMvc.perform(get("/bidList/delete/{id}",1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/bidList/list"));
+                .andExpect(header().string("Location", "/home/bidList/list"));
 
     }
 

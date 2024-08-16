@@ -62,7 +62,7 @@ public class RatingControllerTest {
 
         String viewName = ratingController.validate(rating, bindingResult, model);
 
-        assertEquals("redirect:/rating/list", viewName);
+        assertEquals("redirect:/home/rating/list", viewName);
         verify(ratingService, times(1)).ratingSave(rating);
         verify(model, never()).addAttribute(eq("rating"), eq(rating));
     }
@@ -106,7 +106,7 @@ public class RatingControllerTest {
 
         String viewName = ratingController.updateRating(1, rating, bindingResult, model);
 
-        assertEquals("redirect:/rating/list", viewName);
+        assertEquals("redirect:/home/rating/list", viewName);
         verify(ratingService, times(1)).ratingUpdate(1, rating);
     }
 
@@ -131,6 +131,6 @@ public class RatingControllerTest {
         String viewName = ratingController.deleteRating(1);
 
         verify(ratingService, times(1)).ratingDelete(1);
-        assertEquals("redirect:/rating/list", viewName);
+        assertEquals("redirect:/home/rating/list", viewName);
     }
 }

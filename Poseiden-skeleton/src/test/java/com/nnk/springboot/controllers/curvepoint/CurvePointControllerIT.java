@@ -34,7 +34,7 @@ public class CurvePointControllerIT {
 
     @Test
     void home() throws Exception {
-        mockMvc.perform(get("/curvePoint/list"))
+        mockMvc.perform(get("/home/curvePoint/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>1</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>10.0</td>")))
@@ -58,7 +58,7 @@ public class CurvePointControllerIT {
                         .param("value", String.valueOf(curvePoint.getValue()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/curvePoint/list"));
+                .andExpect(header().string("Location", "/home/curvePoint/list"));
     }
 
     @Test
@@ -95,13 +95,13 @@ public class CurvePointControllerIT {
                         .param("value", String.valueOf(curvePoint.getValue()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/curvePoint/list"));
+                .andExpect(header().string("Location", "/home/curvePoint/list"));
     }
 
     @Test
     void deleteCurvePoint() throws Exception {
         mockMvc.perform(get("/curvePoint/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/curvePoint/list"));
+                .andExpect(header().string("Location", "/home/curvePoint/list"));
     }
 }

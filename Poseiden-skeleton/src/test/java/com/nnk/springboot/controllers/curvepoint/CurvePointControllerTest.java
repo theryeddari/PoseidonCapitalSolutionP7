@@ -62,7 +62,7 @@ public class CurvePointControllerTest {
 
         String viewName = curvePointController.validate(curvePoint, bindingResult, model);
 
-        assertEquals("redirect:/curvePoint/list", viewName);
+        assertEquals("redirect:/home/curvePoint/list", viewName);
         verify(curvePointService, times(1)).curvePointSave(curvePoint);
         verify(model, never()).addAttribute(eq("curvePoint"), eq(curvePoint));
     }
@@ -106,7 +106,7 @@ public class CurvePointControllerTest {
 
         String viewName = curvePointController.updateCurvePoint(1, curvePoint, bindingResult, model);
 
-        assertEquals("redirect:/curvePoint/list", viewName);
+        assertEquals("redirect:/home/curvePoint/list", viewName);
         verify(curvePointService, times(1)).curvePointUpdate(1, curvePoint);
     }
 
@@ -131,6 +131,6 @@ public class CurvePointControllerTest {
         String viewName = curvePointController.deleteCurvePoint(1);
 
         verify(curvePointService, times(1)).curvePointDelete(1);
-        assertEquals("redirect:/curvePoint/list", viewName);
+        assertEquals("redirect:/home/curvePoint/list", viewName);
     }
 }

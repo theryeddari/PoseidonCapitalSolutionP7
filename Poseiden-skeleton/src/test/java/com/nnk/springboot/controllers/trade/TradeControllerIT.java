@@ -33,7 +33,7 @@ public class TradeControllerIT {
 
     @Test
     void home() throws Exception {
-        mockMvc.perform(get("/trade/list"))
+        mockMvc.perform(get("/home/trade/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>bob</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>user</td>")))
@@ -57,7 +57,7 @@ public class TradeControllerIT {
                         .param("buyQuantity", "1000.0")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/trade/list"));
+                .andExpect(header().string("Location", "/home/trade/list"));
     }
 
     @Test
@@ -89,13 +89,13 @@ public class TradeControllerIT {
                         .param("buyQuantity", "1000.0")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/trade/list"));
+                .andExpect(header().string("Location", "/home/trade/list"));
     }
 
     @Test
     void deleteTrade() throws Exception {
         mockMvc.perform(get("/trade/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/trade/list"));
+                .andExpect(header().string("Location", "/home/trade/list"));
     }
 }

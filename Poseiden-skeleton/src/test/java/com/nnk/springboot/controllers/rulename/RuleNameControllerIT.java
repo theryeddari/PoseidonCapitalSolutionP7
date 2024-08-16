@@ -1,7 +1,6 @@
 package com.nnk.springboot.controllers.rulename;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nnk.springboot.domain.RuleName;
 import jakarta.transaction.Transactional;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ public class RuleNameControllerIT {
 
     @Test
     void home() throws Exception {
-        mockMvc.perform(get("/ruleName/list"))
+        mockMvc.perform(get("/home/ruleName/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>name</td>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>description</td>")));
@@ -57,7 +56,7 @@ public class RuleNameControllerIT {
                         .param("json", "Example JSON")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/ruleName/list"));
+                .andExpect(header().string("Location", "/home/ruleName/list"));
     }
 
     @Test
@@ -86,13 +85,13 @@ public class RuleNameControllerIT {
                         .param("json", "Updated JSON")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/ruleName/list"));
+                .andExpect(header().string("Location", "/home/ruleName/list"));
     }
 
     @Test
     void deleteRuleName() throws Exception {
         mockMvc.perform(get("/ruleName/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/ruleName/list"));
+                .andExpect(header().string("Location", "/home/ruleName/list"));
     }
 }

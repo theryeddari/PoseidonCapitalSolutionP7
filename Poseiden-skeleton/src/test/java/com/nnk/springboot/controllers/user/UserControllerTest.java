@@ -61,7 +61,7 @@ public class UserControllerTest {
 
         String viewName = userController.validate(user, bindingResult, model);
 
-        assertEquals("redirect:/user/list", viewName);
+        assertEquals("redirect:/home/admin/user/list", viewName);
         verify(userService, times(1)).userSave(user);
         verify(model, never()).addAttribute(eq("user"), eq(user));
     }
@@ -103,7 +103,7 @@ public class UserControllerTest {
 
         String viewName = userController.updateUser(1, user, bindingResult, model);
 
-        assertEquals("redirect:/user/list", viewName);
+        assertEquals("redirect:/home/admin/user/list", viewName);
         verify(userService, times(1)).userUpdate(1, user);
     }
 
@@ -128,6 +128,6 @@ public class UserControllerTest {
         String viewName = userController.deleteUser(1);
 
         verify(userService, times(1)).userDelete(1);
-        assertEquals("redirect:/user/list", viewName);
+        assertEquals("redirect:/home/admin/user/list", viewName);
     }
 }
