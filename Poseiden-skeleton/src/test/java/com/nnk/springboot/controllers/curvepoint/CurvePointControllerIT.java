@@ -71,7 +71,7 @@ public class CurvePointControllerIT {
                         .param("value", String.valueOf(curvePoint.getValue()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">This Field can&#39;t be null</p>")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">term cant be null</p>")));
     }
 
     @Test

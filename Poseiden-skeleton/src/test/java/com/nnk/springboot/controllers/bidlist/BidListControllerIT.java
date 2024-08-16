@@ -80,7 +80,7 @@ public class BidListControllerIT {
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Account is mandatory</p>")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">account is mandatory</p>")));
     }
 
     @Test

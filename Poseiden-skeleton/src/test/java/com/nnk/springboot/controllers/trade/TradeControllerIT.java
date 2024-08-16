@@ -67,7 +67,7 @@ public class TradeControllerIT {
                         .param("buyQuantity", "0.0")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">This field must have a positive number</p>")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">buyQuantity field must have a positive number</p>")));
     }
 
     @Test

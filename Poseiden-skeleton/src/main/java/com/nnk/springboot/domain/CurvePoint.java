@@ -25,12 +25,12 @@ public class CurvePoint {
 
     @Column(name = "term")
     @Positive(message = "{app.positive}")
-    @NotNull(message = "{curvepoint.not-null}")
+    @NotNull(message = "{app.not-null}")
     private Double term;
 
     @Column(name = "value")
     @Positive(message = "{app.positive}")
-    @NotNull(message = "{curvepoint.not-null}")
+    @NotNull(message = "{app.not-null}")
     private Double value;
 
     @Column(name = "creationDate")

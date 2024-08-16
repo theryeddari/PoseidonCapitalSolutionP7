@@ -34,7 +34,7 @@ public class Rating {
 
     @Column(name = "orderNumber")
     @Positive(message = "{app.positive}")
-    @NotNull(message = "{curvepoint.not-null}")
+    @NotNull(message = "{app.not-null}")
     private Byte orderNumber;
 
 }

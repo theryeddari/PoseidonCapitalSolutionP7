@@ -63,20 +63,20 @@ public class UserControllerIT {
                         .param("password", "Passw0rd")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Username is mandatory</p>")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">&quot;Password must be at least 8 characters long, include at least one uppercase letter, one digit, and one special character&quot;</p>")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">username is mandatory</p>")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">password must be at least 8 characters long, include at least one uppercase letter, one digit, and one special character</p>")));
     }
 
     @Test
     void validateUser_false_AlreadyExist() throws Exception {
         mockMvc.perform(post("/user/validate")
-                        .param("username", "") // Missing fields
+                        .param("username", "user")
                         .param("fullname", "User")
-                        .param("password", "Passw0rd")
+                        .param("password", "Passw0rd!")
+                        .param("role", "USER")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Username is mandatory</p>")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">&quot;Password must be at least 8 characters long, include at least one uppercase letter, one digit, and one special character&quot;</p>")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">An error occured while save User because Username already exist, change it</p>")));
     }
 
 

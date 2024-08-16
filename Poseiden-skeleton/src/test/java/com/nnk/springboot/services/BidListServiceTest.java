@@ -42,10 +42,10 @@ public class BidListServiceTest {
 
         List<BidListsResponseAggregationInfoDTO> dtos = response.getBidListsResponseAggregationInfoDTO();
 
-        assertEquals("1", dtos.get(0).getId());
-        assertEquals("user", dtos.get(0).getAccount());
-        assertEquals("USER", dtos.get(0).getType());
-        assertEquals("10.0", dtos.get(0).getBidQuantity());
+        assertEquals("1", dtos.getFirst().getId());
+        assertEquals("user", dtos.getFirst().getAccount());
+        assertEquals("USER", dtos.getFirst().getType());
+        assertEquals("10.0", dtos.getFirst().getBidQuantity());
     }
 
     @Test

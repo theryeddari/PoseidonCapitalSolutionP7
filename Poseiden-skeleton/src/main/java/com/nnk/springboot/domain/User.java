@@ -20,13 +20,13 @@ public class User {
 
 
     @Size(max = 125)
-    @NotBlank(message = "Username is mandatory")
+    @NotBlank(message = "{app.not-blank}")
     @Column(name = "username", length = 125)
     private String username;
 
     @Size(max = 125)
     @Column(name = "password", length = 125)
-    @NotBlank(message = "Password is mandatory")
+    @NotBlank(message = "{app.not-blank}")
     @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "{app.pattern.password}")
     private String password;
 
@@ -36,7 +36,7 @@ public class User {
 
     @Size(max = 125)
     @Column(name = "role", length = 125)
-    @NotBlank(message = "Role is mandatory")
+    @NotBlank(message = "{app.not-blank}")
     private String role;
 
 }

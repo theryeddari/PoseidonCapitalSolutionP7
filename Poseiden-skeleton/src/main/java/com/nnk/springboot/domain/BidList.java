@@ -2,7 +2,6 @@ package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,15 +24,14 @@ public class BidList {
     private Byte bidListId;
 
     @Column(name = "account", nullable = false, length = 30)
-    @NotBlank(message = "{bid-list.account.not-blank}")
+    @NotBlank(message = "{app.not-blank}")
     private String account;
 
     @Column(name = "type", nullable = false, length = 30)
-    @NotBlank(message = "{bid-list.type.not-black}")
+    @NotBlank(message = "{app.not-blank}")
     private String type;
 
     @Column(name = "bidQuantity")
-    @NotNull(message = "{bid-list.type.not-null}")
     @Positive(message = "{app.positive}")
     private Double bidQuantity;
 
