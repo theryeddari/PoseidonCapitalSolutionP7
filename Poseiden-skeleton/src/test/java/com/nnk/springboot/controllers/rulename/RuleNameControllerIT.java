@@ -43,9 +43,9 @@ public class RuleNameControllerIT {
     void addRuleNameForm() throws Exception {
         mockMvc.perform(get("/ruleName/add"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"name\" placeholder=\"Name\" class=\"col-4\" name=\"name\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"description\" placeholder=\"Description\" class=\"col-4\" name=\"description\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"json\" placeholder=\"Json\" class=\"col-4\" name=\"json\" value=\"\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"name\" placeholder=\"Name\" type=\"text\" name=\"name\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"description\" placeholder=\"Description\" type=\"text\" name=\"description\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"json\" placeholder=\"Json\" type=\"text\" name=\"json\" value=\"\">")));
     }
 
     @Test
@@ -72,9 +72,9 @@ public class RuleNameControllerIT {
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/ruleName/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"name\" placeholder=\"Name\" class=\"col-4\" name=\"name\" value=\"name\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"description\" placeholder=\"Description\" class=\"col-4\" name=\"description\" value=\"description\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"json\" placeholder=\"Json\" class=\"col-4\" name=\"json\" value=\"json\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"name\" placeholder=\"Name\" type=\"text\" name=\"name\" value=\"name\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"description\" placeholder=\"Description\" type=\"text\" name=\"description\" value=\"description\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"json\" placeholder=\"Json\" type=\"text\" name=\"json\" value=\"json\">")));
     }
 
     @Test

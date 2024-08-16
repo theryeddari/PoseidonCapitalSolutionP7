@@ -73,8 +73,8 @@ public class RatingControllerIT {
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/rating/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"sandPRating\" placeholder=\"SandPRating\" class=\"col-4\" name=\"sandPRating\" value=\"sandprating\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" id=\"order\" placeholder=\"FitchRating\" class=\"col-4\" name=\"orderNumber\" value=\"12\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"sandPRating\" placeholder=\"SandPRating\" type=\"number\" name=\"sandPRating\" value=\"sandprating\"")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"order\" placeholder=\"FitchRating\" type=\"number\" name=\"orderNumber\" value=\"12\">")));
     }
 
     @Test

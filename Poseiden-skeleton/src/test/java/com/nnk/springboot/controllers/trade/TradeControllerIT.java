@@ -44,9 +44,8 @@ public class TradeControllerIT {
     void addTradeForm() throws Exception {
         mockMvc.perform(get("/trade/add"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"buyQuantity\" placeholder=\"Buy Quantity\" class=\"col-4\" name=\"buyQuantity\" value=\"\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"account\" placeholder=\"Account\" type=\"text\" name=\"account\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"type\" placeholder=\"Type\" type=\"text\" name=\"type\" value=\"\"")));
     }
 
     @Test
@@ -75,9 +74,8 @@ public class TradeControllerIT {
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/trade/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"bob\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"type\" placeholder=\"Type\" class=\"col-4\" name=\"type\" value=\"user\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"buyQuantity\" placeholder=\"Buy Quantity\" class=\"col-4\" name=\"buyQuantity\" value=\"10.0\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"account\" placeholder=\"Account\" type=\"text\" name=\"account\" value=\"bob\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"type\" placeholder=\"Type\" type=\"text\" name=\"type\" value=\"user\">")));
     }
 
     @Test

@@ -31,7 +31,7 @@ public class AuthControllerIT {
     public void testRealUserLoginSuccess() throws Exception {
         mockMvc.perform(SecurityMockMvcRequestBuilders.formLogin("/login")
                         .user("user")
-                        .password("password"))
+                        .password("Passw0rd!"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/home"))
                 .andExpect(SecurityMockMvcResultMatchers.authenticated().withUsername("user"))
@@ -64,7 +64,7 @@ public class AuthControllerIT {
         // Successful login
         MvcResult loginSuccessAdmin = mockMvc.perform(SecurityMockMvcRequestBuilders.formLogin("/login")
                         .user("admin")
-                        .password("password"))
+                        .password("Passw0rd!"))
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andReturn();
         // get previous session cookie to continue to be connect as admin
@@ -89,7 +89,7 @@ public class AuthControllerIT {
         // Successful login
         MvcResult loginSuccessAdmin = mockMvc.perform(SecurityMockMvcRequestBuilders.formLogin("/login")
                         .user("user")
-                        .password("password"))
+                        .password("Passw0rd!"))
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andReturn();
         // get previous session cookie to continue to be connect as user

@@ -87,7 +87,7 @@ public class BidListControllerIT {
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/bidList/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"account\" placeholder=\"Account\" class=\"col-4\" name=\"account\" value=\"user\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"account\" placeholder=\"Account\" type=\"text\" name=\"account\" value=\"user\">")));
     }
 
     @Test

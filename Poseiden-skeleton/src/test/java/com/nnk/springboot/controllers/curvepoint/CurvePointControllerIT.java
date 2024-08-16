@@ -78,8 +78,8 @@ public class CurvePointControllerIT {
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/curvePoint/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"term\" placeholder=\"Term\" class=\"col-4\" name=\"term\" value=\"10.0\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"number\" step=\"0.01\" id=\"value\" placeholder=\"Value\" class=\"col-4\" name=\"value\" value=\"20.0\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"term\" placeholder=\"Term\" step=\"0.01\" type=\"number\" name=\"term\" value=\"10.0\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"value\" placeholder=\"Value\" step=\"0.01\" type=\"number\" name=\"value\" value=\"20.0\">")));
     }
 
     @Test

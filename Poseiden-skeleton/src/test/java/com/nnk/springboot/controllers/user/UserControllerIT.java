@@ -38,9 +38,9 @@ public class UserControllerIT {
     void addUserForm() throws Exception {
         mockMvc.perform(get("/user/add"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"username\" placeholder=\"User Name\" class=\"col-4\" name=\"username\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"fullname\" placeholder=\"Full Name\" class=\"col-4\" name=\"fullname\" value=\"\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"password\" id=\"password\" placeholder=\"Password\" class=\"col-4\" name=\"password\" value=\"\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"fullname\" placeholder=\"Full Name\" type=\"text\" name=\"fullname\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("input class=\"col-4\" id=\"username\" placeholder=\"User Name\" type=\"text\" name=\"username\" value=\"\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"password\" placeholder=\"Password\" type=\"password\" name=\"password\" value=\"\">")));
     }
 
     @Test
@@ -84,9 +84,9 @@ public class UserControllerIT {
     void showUpdateForm() throws Exception {
         mockMvc.perform(get("/user/update/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"username\" placeholder=\"User Name\" class=\"col-4\" name=\"username\" value=\"admin\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"text\" id=\"fullname\" placeholder=\"Full Name\" class=\"col-4\" name=\"fullname\" value=\"Administrator\">")))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input type=\"password\" id=\"password\" placeholder=\"Password\" class=\"col-4\" name=\"password\" value=\"\">")));
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"fullname\" placeholder=\"Full Name\" type=\"text\" name=\"fullname\" value=\"Administrator\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"username\" placeholder=\"User Name\" type=\"text\" name=\"username\" value=\"admin\">")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"password\" placeholder=\"Password\" type=\"password\" name=\"password\" value=\"\">")));
     }
 
     @Test
