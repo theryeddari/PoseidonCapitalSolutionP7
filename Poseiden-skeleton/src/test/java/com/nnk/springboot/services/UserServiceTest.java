@@ -62,6 +62,8 @@ public class UserServiceTest {
     @Test
     void testUserSave_Success() throws UserSaveException {
         User user = new User();
+        //for condition false and no throw AlreadyExist
+        user.setId((byte) 1);
         user.setPassword("password");
 
         when(encoder.encode(user.getPassword())).thenReturn("encodedPassword");
@@ -76,8 +78,21 @@ public class UserServiceTest {
     }
 
     @Test
+    void testUserSave_UsernameAlreadyExistException() {
+        User user = new User();
+        //for condition false and no throw AlreadyExist
+        user.setPassword("password");
+        when(userRepository.existsByUsername(user.getUsername())).thenReturn(true);
+
+        Exception exception = assertThrows(UserSaveException.class, () -> userService.userSave(user));
+        assertEquals(UsernameAlreadyExistException.class, exception.getCause().getClass());
+    }
+
+    @Test
     void testUserSave_Exception() {
         User user = new User();
+        //for condition false and no throw AlreadyExist
+        user.setId((byte) 1);
         user.setPassword("password");
         when(encoder.encode(user.getPassword())).thenReturn("encodedPassword");
         when(userRepository.save(user)).thenThrow(new RuntimeException());

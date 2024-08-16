@@ -1,7 +1,11 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -31,15 +35,30 @@ public class UserControllerAdvice {
 
     /**
      * Handles {@link UserSaveException} by logging the error and returning the appropriate message
-     * based on the cause of the exception.
+     * based on the cause of the exception. or view for error
      *
      * @param ex the {@link UserSaveException} to handle
      * @return the exception message or the cause message if it is a {@link UserIncoherenceBetweenObjectException}
      */
     @ExceptionHandler(UserSaveException.class)
-    public String handleUserSaveException(UserSaveException ex) {
+    public String handleUserSaveException(UserSaveException ex, Model model) {
         logger.info("Handling UserSaveException");
         logger.debug("Exception details: ", ex);
+
+        User user = new User();
+        BindingResult bindingResult = new BeanPropertyBindingResult(user, "user");
+
+        if (ex.getCause() instanceof UsernameAlreadyExistException) {
+
+            bindingResult.rejectValue("username", "error.user", ex.getCause().getMessage());
+
+            model.addAttribute("org.springframework.validation.BindingResult.user", bindingResult);
+
+            model.addAttribute("user", user);
+
+            return "user/add"; // Le nom de votre vue
+        }
+
         String message = ex.getMessage();
         logger.info("Returning response message: {}", message);
         return message;

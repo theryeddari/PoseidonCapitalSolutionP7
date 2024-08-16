@@ -18,6 +18,7 @@ public class UserTests {
 
     @Test
     public void userTest() {
+
         // Create a new User instance
         User user = new User();
         user.setUsername("testUser");
@@ -25,10 +26,18 @@ public class UserTests {
         user.setFullname("Test User");
         user.setRole("USER");
 
+        //check if ExistByName
+        boolean resultNoExist = userRepository.existsByUsername(user.getUsername());
+        assertFalse(resultNoExist);
+
         // Save
         user = userRepository.save(user);
         assertNotNull(user.getId());
         assertEquals("testUser", user.getUsername());
+
+        //check if ExistByName
+        boolean resultExist = userRepository.existsByUsername(user.getUsername());
+        assertTrue(resultExist);
 
         // Update
         user.setUsername("updatedUser");

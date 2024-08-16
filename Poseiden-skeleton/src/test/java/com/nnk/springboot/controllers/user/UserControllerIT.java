@@ -29,7 +29,7 @@ public class UserControllerIT {
 
     @Test
     void home() throws Exception {
-        mockMvc.perform(get("/user/list"))
+        mockMvc.perform(get("/home/admin/user/list"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<td>user</td>")));
     }
@@ -52,7 +52,7 @@ public class UserControllerIT {
                         .param("role", "USER")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/user/list"));
+                .andExpect(header().string("Location", "/home/admin/user/list"));
     }
 
     @Test
@@ -66,6 +66,19 @@ public class UserControllerIT {
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Username is mandatory</p>")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">&quot;Password must be at least 8 characters long, include at least one uppercase letter, one digit, and one special character&quot;</p>")));
     }
+
+    @Test
+    void validateUser_false_AlreadyExist() throws Exception {
+        mockMvc.perform(post("/user/validate")
+                        .param("username", "") // Missing fields
+                        .param("fullname", "User")
+                        .param("password", "Passw0rd")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">Username is mandatory</p>")))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<p class=\"text-danger\">&quot;Password must be at least 8 characters long, include at least one uppercase letter, one digit, and one special character&quot;</p>")));
+    }
+
 
     @Test
     void showUpdateForm() throws Exception {
@@ -85,13 +98,13 @@ public class UserControllerIT {
                         .param("role", "USER")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/user/list"));
+                .andExpect(header().string("Location", "/home/admin/user/list"));
     }
 
     @Test
     void deleteUser() throws Exception {
         mockMvc.perform(get("/user/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(header().string("Location", "/user/list"));
+                .andExpect(header().string("Location", "/home/admin/user/list"));
     }
 }

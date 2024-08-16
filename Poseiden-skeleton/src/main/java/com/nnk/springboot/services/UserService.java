@@ -3,6 +3,7 @@ package com.nnk.springboot.services;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.dto.UserResponse;
 import com.nnk.springboot.dto.UserResponseAggregationInfoDTO;
+import com.nnk.springboot.exceptions.UserServiceException;
 import com.nnk.springboot.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -67,6 +68,7 @@ public class UserService {
     public User userSave(User user) throws UserSaveException {
         logger.info("Entering userSave method with user: {}", user);
         try {
+            if(user.getId() == null && (userRepository.existsByUsername(user.getUsername()))) { throw new UserServiceException.UsernameAlreadyExistException(); }
             user.setPassword(encoder.encode(user.getPassword()));
             user = userRepository.save(user);
             logger.info("Exiting userSave method successfully with saved user: {}", user);

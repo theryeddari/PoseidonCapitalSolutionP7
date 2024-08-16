@@ -126,4 +126,20 @@ public class UserServiceException extends Exception {
             super(USER_UPDATE_EXCEPTION + MORE_INFO + cause.getClass() + " " + cause.getMessage(), cause);
         }
     }
+
+    /**
+     * Exception thrown when there is an error about username already exist before add a User.
+     */
+
+    public static class UsernameAlreadyExistException extends UserServiceException {
+
+        /**
+         * Constructs a new UsernameAlreadyExistException.
+         *
+         */
+
+        public UsernameAlreadyExistException() {
+            super(USERNAME_ALREADY_EXIST_EXCEPTION);
+        }
+    }
 }
