@@ -21,6 +21,14 @@ public class AuthControllerTest {
     @Mock
     private Model model;
 
+    @Test
+    public void testLoginPage() {
+        // Appeler la méthode loginPage
+        String viewName = authController.loginPage();
+
+        // Vérifier que le nom de la vue est "login"
+        assertEquals("login", viewName);
+    }
 
     @Test
     public void testLoginPageErrorValidateWithoutError() {
@@ -44,5 +52,16 @@ public class AuthControllerTest {
 
         // Verify that the model attribute "error" was added with value "true"
         verify(model).addAttribute("error", "true");
+    }
+
+    @Test
+    public void testErrorPage() {
+
+        String errorMessage = "Access Denied";
+        String viewName = authController.error(errorMessage, model);
+
+        assertEquals("403", viewName);
+
+        verify(model).addAttribute("error", errorMessage);
     }
 }
