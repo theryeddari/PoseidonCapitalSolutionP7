@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static com.nnk.springboot.exceptions.UserServiceException.*;
 
 @Controller
+@RequestMapping("/home/admin/user")
 public class UserController {
 
     private static final Logger logger = LogManager.getLogger(UserController.class);
@@ -31,7 +32,7 @@ public class UserController {
      * @param model the model to populate with users
      * @return the view name for the user list
      */
-    @RequestMapping("/home/admin/user/list")
+    @RequestMapping("/list")
     public String home(Model model) throws UserAggregationInfoException {
         logger.info("Received request to list users");
         UserResponse userResponse = userService.userAggregationInfo();
@@ -47,7 +48,7 @@ public class UserController {
      * @param model the model to populate with the user
      * @return the view name for adding a user
      */
-    @GetMapping("/user/add")
+    @GetMapping("/add")
     public String addUserForm(User user, Model model) {
         logger.info("Received request to show add user form");
         model.addAttribute("user", user);
@@ -63,7 +64,7 @@ public class UserController {
      * @param model  the model to populate with the user
      * @return the view name for the add user form or redirect to the list
      */
-    @PostMapping("/user/validate")
+    @PostMapping("/validate")
     public String validate(@Valid User user, BindingResult result, Model model) throws UserSaveException {
         logger.info("Received request to validate and save user");
         if (result.hasErrors()) {
@@ -83,7 +84,7 @@ public class UserController {
      * @param model the model to populate with the user
      * @return the view name for updating the user
      */
-    @GetMapping("/user/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws UserFindByIdException {
         logger.info("Received request to show update form for user with ID: {}", id);
         User user = userService.userFindById(id);
@@ -101,7 +102,7 @@ public class UserController {
      * @param model  the model to populate with the updated user
      * @return the redirect URL for the user list
      */
-    @PostMapping("/user/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid User user, BindingResult result, Model model) throws UserUpdateException {
         logger.info("Received request to update user with ID: {}", id);
         if (result.hasErrors()) {
@@ -120,7 +121,7 @@ public class UserController {
      * @param id the ID of the user to delete
      * @return the redirect URL for the user list
      */
-    @GetMapping("/user/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Integer id) throws UserDeleteException {
         logger.info("Received request to delete user with ID: {}", id);
         userService.userDelete(id);

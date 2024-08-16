@@ -45,7 +45,7 @@ public class BidListControllerIT {
     @Test
     void addBidForm() throws Exception {
 
-        mockMvc.perform(get("/bidList/add"))
+        mockMvc.perform(get("/home/bidList/add"))
                 .andExpect(status().isOk());
     }
 
@@ -57,7 +57,7 @@ public class BidListControllerIT {
         bidList.setType("USER");
         bidList.setBidQuantity(10.0);
 
-        mockMvc.perform(post("/bidList/validate")
+        mockMvc.perform(post("/home/bidList/validate")
                         .param("account", bidList.getAccount())
                         .param("type", bidList.getType())
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
@@ -74,7 +74,7 @@ public class BidListControllerIT {
         bidList.setType("USER");
         bidList.setBidQuantity(10.0);
 
-        mockMvc.perform(post("/bidList/validate")
+        mockMvc.perform(post("/home/bidList/validate")
                         .param("account", bidList.getAccount())
                         .param("type", bidList.getType())
                         .param("bidQuantity", String.valueOf(bidList.getBidQuantity()))
@@ -85,7 +85,7 @@ public class BidListControllerIT {
 
     @Test
     void showUpdateForm() throws Exception {
-        mockMvc.perform(get("/bidList/update/{id}", 1))
+        mockMvc.perform(get("/home/bidList/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"account\" placeholder=\"Account\" type=\"text\" name=\"account\" value=\"user\">")));
     }
@@ -98,7 +98,7 @@ public class BidListControllerIT {
         bidList.setType("USER");
         bidList.setBidQuantity(10.0);
 
-        mockMvc.perform(post("/bidList/update/{id}", 1)
+        mockMvc.perform(post("/home/bidList/update/{id}", 1)
                         .param("bidListId", String.valueOf(bidList.getBidListId()))
                         .param("account", bidList.getAccount())
                         .param("type", bidList.getType())
@@ -110,7 +110,7 @@ public class BidListControllerIT {
 
     @Test
     void deleteBid() throws Exception {
-        mockMvc.perform(get("/bidList/delete/{id}", 1))
+        mockMvc.perform(get("/home/bidList/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/home/bidList/list"));
 

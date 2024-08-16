@@ -21,6 +21,7 @@ import static com.nnk.springboot.exceptions.RatingServiceException.*;
  * Controller for managing Rating operations.
  */
 @Controller
+@RequestMapping("/home/rating")
 public class RatingController {
 
     private static final Logger logger = LogManager.getLogger(RatingController.class);
@@ -35,7 +36,7 @@ public class RatingController {
      * @return the view name for the rating list
      * @throws RatingAggregationInfoException if there is an error aggregating rating info
      */
-    @RequestMapping("/home/rating/list")
+    @RequestMapping("/list")
     public String home(Model model) throws RatingAggregationInfoException {
         logger.info("Received request to list ratings");
         RatingsResponse ratingResponse = ratingService.ratingAggregationInfo();
@@ -51,7 +52,7 @@ public class RatingController {
      * @param model  the model to populate with the rating
      * @return the view name for adding a rating
      */
-    @GetMapping("/rating/add")
+    @GetMapping("/add")
     public String addRatingForm(Rating rating, Model model) {
         logger.info("Received request to show add rating form");
         model.addAttribute("rating", rating);
@@ -68,7 +69,7 @@ public class RatingController {
      * @return the view name for the add rating form or redirect to the list
      * @throws RatingSaveException if there is an error saving the rating
      */
-    @PostMapping("/rating/validate")
+    @PostMapping("/validate")
     public String validate(@Valid Rating rating, BindingResult result, Model model) throws RatingSaveException {
         logger.info("Received request to validate and save rating");
 
@@ -92,7 +93,7 @@ public class RatingController {
      * @return the view name for updating the rating
      * @throws RatingFindByIdException if there is an error finding the rating by ID
      */
-    @GetMapping("/rating/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws RatingFindByIdException {
         logger.info("Received request to show update form for rating with ID: {}", id);
         Rating rating = ratingService.ratingFindById(id);
@@ -111,7 +112,7 @@ public class RatingController {
      * @return the redirect URL for the rating list
      * @throws RatingUpdateException if there is an error saving the updated rating
      */
-    @PostMapping("/rating/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                                BindingResult result, Model model) throws RatingUpdateException {
         logger.info("Received request to update rating with ID: {}", id);
@@ -135,7 +136,7 @@ public class RatingController {
      * @return the redirect URL for the rating list
      * @throws RatingDeleteException if there is an error deleting the rating
      */
-    @GetMapping("/rating/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id) throws RatingDeleteException {
         logger.info("Received request to delete rating with ID: {}", id);
         ratingService.ratingDelete(id);

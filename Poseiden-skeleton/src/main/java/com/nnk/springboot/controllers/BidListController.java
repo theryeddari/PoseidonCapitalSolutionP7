@@ -21,6 +21,7 @@ import static com.nnk.springboot.exceptions.BidListServiceException.*;
  * Controller for managing BidList operations.
  */
 @Controller
+@RequestMapping("/home/bidList")
 public class BidListController {
 
     private static final Logger logger = LogManager.getLogger(BidListController.class);
@@ -35,7 +36,7 @@ public class BidListController {
      * @return the view name for the bid list
      * @throws BidListAggregationInfoException if there is an error aggregating bid list info
      */
-    @RequestMapping("/home/bidList/list")
+    @RequestMapping("/list")
     public String home(Model model) throws BidListAggregationInfoException {
         logger.info("Received request to list bid lists");
         BidListsResponse bidListsResponse = bidListService.bidListAggregationInfo();
@@ -51,7 +52,7 @@ public class BidListController {
      * @param model   the model to populate with the bid list
      * @return the view name for adding a bid list
      */
-    @GetMapping("/bidList/add")
+    @GetMapping("/add")
     public String addBidForm(BidList bidList, Model model) {
         logger.info("Received request to show add bid form");
         model.addAttribute("bidList", bidList);
@@ -68,7 +69,7 @@ public class BidListController {
      * @return the view name for the add bid form or redirect to the list
      * @throws BidListSaveException if there is an error saving the bid list
      */
-    @PostMapping("/bidList/validate")
+    @PostMapping("/validate")
     public String validate(@Valid BidList bidList, BindingResult result, Model model) throws BidListSaveException {
         logger.info("Received request to validate and save bid list");
 
@@ -92,7 +93,7 @@ public class BidListController {
      * @return the view name for updating the bid list
      * @throws BidListFindByIdException if there is an error finding the bid list by ID
      */
-    @GetMapping("/bidList/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") int id, Model model) throws BidListFindByIdException {
         logger.info("Received request to show update form for bid list with ID: {}", id);
         BidList bidList = bidListService.bidListFindById(id);
@@ -111,7 +112,7 @@ public class BidListController {
      * @return the redirect URL for the bid list
      * @throws BidListUpdateException if there is an error saving the updated bid list
      */
-    @PostMapping("/bidList/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) throws BidListUpdateException {
         logger.info("Received request to update bid list with ID: {}", id);
 
@@ -133,7 +134,7 @@ public class BidListController {
      * @return the redirect URL for the bid list
      * @throws BidListDeleteException if there is an error deleting the bid list
      */
-    @GetMapping("/bidList/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id) throws BidListDeleteException {
         logger.info("Received request to delete bid list with ID: {}", id);
         bidListService.bidListDelete(id);

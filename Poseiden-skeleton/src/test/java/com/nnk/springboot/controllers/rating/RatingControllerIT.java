@@ -41,13 +41,13 @@ public class RatingControllerIT {
 
     @Test
     void addRatingForm() throws Exception {
-        mockMvc.perform(get("/rating/add"))
+        mockMvc.perform(get("/home/rating/add"))
                 .andExpect(status().isOk());
     }
 
     @Test
     void validate_true() throws Exception {
-        mockMvc.perform(post("/rating/validate")
+        mockMvc.perform(post("/home/rating/validate")
                         .param("moodysRating", "AAA")
                         .param("sandPRating", "AAA")
                         .param("fitchRating", "AAA")
@@ -59,7 +59,7 @@ public class RatingControllerIT {
 
     @Test
     void validate_false() throws Exception {
-        mockMvc.perform(post("/rating/validate")
+        mockMvc.perform(post("/home/rating/validate")
                         .param("moodysRating", "AAA")
                         .param("sandPRating", "AAA")
                         .param("fitchRating", "AAA")
@@ -71,7 +71,7 @@ public class RatingControllerIT {
 
     @Test
     void showUpdateForm() throws Exception {
-        mockMvc.perform(get("/rating/update/{id}", 1))
+        mockMvc.perform(get("/home/rating/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"sandPRating\" placeholder=\"SandPRating\" type=\"number\" name=\"sandPRating\" value=\"sandprating\"")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"order\" placeholder=\"FitchRating\" type=\"number\" name=\"orderNumber\" value=\"12\">")));
@@ -79,7 +79,7 @@ public class RatingControllerIT {
 
     @Test
     void updateRating_Success() throws Exception {
-        mockMvc.perform(post("/rating/update/{id}", 1)
+        mockMvc.perform(post("/home/rating/update/{id}", 1)
                         .param("moodysRating", "AAA")
                         .param("sandPRating", "AAA")
                         .param("fitchRating", "AAA")
@@ -91,7 +91,7 @@ public class RatingControllerIT {
 
     @Test
     void deleteRating() throws Exception {
-        mockMvc.perform(get("/rating/delete/{id}", 1))
+        mockMvc.perform(get("/home/rating/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/home/rating/list"));
     }

@@ -21,6 +21,7 @@ import static com.nnk.springboot.exceptions.RuleNameServiceException.*;
  * Controller for managing RuleName operations.
  */
 @Controller
+@RequestMapping("/home/ruleName")
 public class RuleNameController {
 
     private static final Logger logger = LogManager.getLogger(RuleNameController.class);
@@ -35,7 +36,7 @@ public class RuleNameController {
      * @return the view name for the rule name list
      * @throws RuleNameAggregationInfoException if there is an error aggregating rule name info
      */
-    @RequestMapping("/home/ruleName/list")
+    @RequestMapping("/list")
     public String home(Model model) throws RuleNameAggregationInfoException {
         logger.info("Received request to list rule names");
         RuleNameResponse ruleNameResponse = ruleNameService.ruleNameAggregationInfo();
@@ -51,7 +52,7 @@ public class RuleNameController {
      * @param model    the model to populate with the rule name
      * @return the view name for adding a rule name
      */
-    @GetMapping("/ruleName/add")
+    @GetMapping("/add")
     public String addRuleNameForm(RuleName ruleName, Model model) {
         logger.info("Received request to show add rule name form");
         model.addAttribute("ruleName", ruleName);
@@ -68,7 +69,7 @@ public class RuleNameController {
      * @return the view name for the add rule name form or redirect to the list
      * @throws RuleNameSaveException if there is an error saving the rule name
      */
-    @PostMapping("/ruleName/validate")
+    @PostMapping("/validate")
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) throws RuleNameSaveException {
         logger.info("Received request to validate and save rule name");
 
@@ -92,7 +93,7 @@ public class RuleNameController {
      * @return the view name for updating the rule name
      * @throws RuleNameFindByIdException if there is an error finding the rule name by ID
      */
-    @GetMapping("/ruleName/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws RuleNameFindByIdException {
         logger.info("Received request to show update form for rule name with ID: {}", id);
         RuleName ruleName = ruleNameService.ruleNameFindById(id);
@@ -111,7 +112,7 @@ public class RuleNameController {
      * @return the redirect URL for the rule name list
      * @throws RuleNameUpdateException if there is an error updating the rule name
      */
-    @PostMapping("/ruleName/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
                                  BindingResult result, Model model) throws RuleNameUpdateException {
         logger.info("Received request to update rule name with ID: {}", id);
@@ -135,7 +136,7 @@ public class RuleNameController {
      * @return the redirect URL for the rule name list
      * @throws RuleNameDeleteException if there is an error deleting the rule name
      */
-    @GetMapping("/ruleName/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id) throws RuleNameDeleteException {
         logger.info("Received request to delete rule name with ID: {}", id);
         ruleNameService.ruleNameDelete(id);

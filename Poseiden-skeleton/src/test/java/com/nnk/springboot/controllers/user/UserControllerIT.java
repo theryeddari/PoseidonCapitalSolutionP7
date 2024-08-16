@@ -36,7 +36,7 @@ public class UserControllerIT {
 
     @Test
     void addUserForm() throws Exception {
-        mockMvc.perform(get("/user/add"))
+        mockMvc.perform(get("/home/admin/user/add"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"fullname\" placeholder=\"Full Name\" type=\"text\" name=\"fullname\" value=\"\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("input class=\"col-4\" id=\"username\" placeholder=\"User Name\" type=\"text\" name=\"username\" value=\"\">")))
@@ -45,7 +45,7 @@ public class UserControllerIT {
 
     @Test
     void validateUser_true() throws Exception {
-        mockMvc.perform(post("/user/validate")
+        mockMvc.perform(post("/home/admin/user/validate")
                         .param("username", "newUser")
                         .param("fullname", "New User")
                         .param("password", "Passw0rd!")
@@ -57,7 +57,7 @@ public class UserControllerIT {
 
     @Test
     void validateUser_false() throws Exception {
-        mockMvc.perform(post("/user/validate")
+        mockMvc.perform(post("/home/admin/user/validate")
                         .param("username", "") // Missing fields
                         .param("fullname", "User")
                         .param("password", "Passw0rd")
@@ -69,7 +69,7 @@ public class UserControllerIT {
 
     @Test
     void validateUser_false_AlreadyExist() throws Exception {
-        mockMvc.perform(post("/user/validate")
+        mockMvc.perform(post("/home/admin/user/validate")
                         .param("username", "user")
                         .param("fullname", "User")
                         .param("password", "Passw0rd!")
@@ -82,7 +82,7 @@ public class UserControllerIT {
 
     @Test
     void showUpdateForm() throws Exception {
-        mockMvc.perform(get("/user/update/{id}", 1))
+        mockMvc.perform(get("/home/admin/user/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"fullname\" placeholder=\"Full Name\" type=\"text\" name=\"fullname\" value=\"Administrator\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"username\" placeholder=\"User Name\" type=\"text\" name=\"username\" value=\"admin\">")))
@@ -91,7 +91,7 @@ public class UserControllerIT {
 
     @Test
     void updateUser_Success() throws Exception {
-        mockMvc.perform(post("/user/update/{id}", 1)
+        mockMvc.perform(post("/home/admin/user/update/{id}", 1)
                         .param("username", "updatedUser")
                         .param("fullname", "Updated User")
                         .param("password", "UpdatePassw0rd!")
@@ -103,7 +103,7 @@ public class UserControllerIT {
 
     @Test
     void deleteUser() throws Exception {
-        mockMvc.perform(get("/user/delete/{id}", 1))
+        mockMvc.perform(get("/home/admin/user/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/home/admin/user/list"));
     }

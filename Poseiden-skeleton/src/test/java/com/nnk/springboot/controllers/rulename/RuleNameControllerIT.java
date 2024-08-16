@@ -41,7 +41,7 @@ public class RuleNameControllerIT {
 
     @Test
     void addRuleNameForm() throws Exception {
-        mockMvc.perform(get("/ruleName/add"))
+        mockMvc.perform(get("/home/ruleName/add"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"name\" placeholder=\"Name\" type=\"text\" name=\"name\" value=\"\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"description\" placeholder=\"Description\" type=\"text\" name=\"description\" value=\"\">")))
@@ -50,7 +50,7 @@ public class RuleNameControllerIT {
 
     @Test
     void validate_true() throws Exception {
-        mockMvc.perform(post("/ruleName/validate")
+        mockMvc.perform(post("/home/ruleName/validate")
                         .param("name", "Example Rule")
                         .param("description", "Example Description")
                         .param("json", "Example JSON")
@@ -61,7 +61,7 @@ public class RuleNameControllerIT {
 
     @Test
     void validate_false() throws Exception {
-        mockMvc.perform(post("/ruleName/validate")
+        mockMvc.perform(post("/home/ruleName/validate")
                         .param("name", "") // Missing fields
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class RuleNameControllerIT {
 
     @Test
     void showUpdateForm() throws Exception {
-        mockMvc.perform(get("/ruleName/update/{id}", 1))
+        mockMvc.perform(get("/home/ruleName/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"name\" placeholder=\"Name\" type=\"text\" name=\"name\" value=\"name\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"description\" placeholder=\"Description\" type=\"text\" name=\"description\" value=\"description\">")))
@@ -79,7 +79,7 @@ public class RuleNameControllerIT {
 
     @Test
     void updateRuleName_Success() throws Exception {
-        mockMvc.perform(post("/ruleName/update/{id}", 1)
+        mockMvc.perform(post("/home/ruleName/update/{id}", 1)
                         .param("name", "Updated Rule")
                         .param("description", "Updated Description")
                         .param("json", "Updated JSON")
@@ -90,7 +90,7 @@ public class RuleNameControllerIT {
 
     @Test
     void deleteRuleName() throws Exception {
-        mockMvc.perform(get("/ruleName/delete/{id}", 1))
+        mockMvc.perform(get("/home/ruleName/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/home/ruleName/list"));
     }

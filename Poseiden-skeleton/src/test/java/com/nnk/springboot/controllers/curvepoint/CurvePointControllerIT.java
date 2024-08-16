@@ -43,7 +43,7 @@ public class CurvePointControllerIT {
 
     @Test
     void addCurvePointForm() throws Exception {
-        mockMvc.perform(get("/curvePoint/add"))
+        mockMvc.perform(get("/home/curvePoint/add"))
                 .andExpect(status().isOk());
     }
 
@@ -53,7 +53,7 @@ public class CurvePointControllerIT {
         curvePoint.setTerm(10.0);
         curvePoint.setValue(20.0);
 
-        mockMvc.perform(post("/curvePoint/validate")
+        mockMvc.perform(post("/home/curvePoint/validate")
                         .param("term", String.valueOf(curvePoint.getTerm()))
                         .param("value", String.valueOf(curvePoint.getValue()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
@@ -66,7 +66,7 @@ public class CurvePointControllerIT {
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setValue(20.0);
 
-        mockMvc.perform(post("/curvePoint/validate")
+        mockMvc.perform(post("/home/curvePoint/validate")
                         .param("term", "")
                         .param("value", String.valueOf(curvePoint.getValue()))
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED))
@@ -76,7 +76,7 @@ public class CurvePointControllerIT {
 
     @Test
     void showUpdateForm() throws Exception {
-        mockMvc.perform(get("/curvePoint/update/{id}", 1))
+        mockMvc.perform(get("/home/curvePoint/update/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"term\" placeholder=\"Term\" step=\"0.01\" type=\"number\" name=\"term\" value=\"10.0\">")))
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("<input class=\"col-4\" id=\"value\" placeholder=\"Value\" step=\"0.01\" type=\"number\" name=\"value\" value=\"20.0\">")));
@@ -89,7 +89,7 @@ public class CurvePointControllerIT {
         curvePoint.setTerm(10.0);
         curvePoint.setValue(20.0);
 
-        mockMvc.perform(post("/curvePoint/update/{id}", 1)
+        mockMvc.perform(post("/home/curvePoint/update/{id}", 1)
                         .param("curveId", String.valueOf(curvePoint.getCurveId()))
                         .param("term", String.valueOf(curvePoint.getTerm()))
                         .param("value", String.valueOf(curvePoint.getValue()))
@@ -100,7 +100,7 @@ public class CurvePointControllerIT {
 
     @Test
     void deleteCurvePoint() throws Exception {
-        mockMvc.perform(get("/curvePoint/delete/{id}", 1))
+        mockMvc.perform(get("/home/curvePoint/delete/{id}", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(header().string("Location", "/home/curvePoint/list"));
     }

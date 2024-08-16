@@ -29,7 +29,7 @@
     </div>
     <div class="row"><h2>Bid List</h2></div>
     <div class="row">
-        <a class="btn btn-primary btn-sm" href="/bidList/add">Add New</a>
+        <a class="btn btn-primary btn-sm" href="/home/bidList/add">Add New</a>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -47,8 +47,8 @@
                 <td th:text="${bidList.type}"></td>
                 <td th:text="${bidList.bidQuantity}"></td>
                 <td class="text-center" style="width: 15%">
-                    <a th:href="@{/bidList/update/{id}(id=${bidList.id})}">Edit</a>&nbsp;|&nbsp;
-                    <a th:href="@{/bidList/delete/{id}(id=${bidList.id})}">Delete</a>
+                    <a th:href="@{/home/bidList/update/{id}(id=${bidList.id})}">Edit</a>&nbsp;|&nbsp;
+                    <a th:href="@{/home/bidList/delete/{id}(id=${bidList.id})}">Delete</a>
                 </td>
             </tr>
             </tbody>

@@ -27,7 +27,7 @@
     </div>
     <div class="row"><h2>Rating List</h2></div>
     <div class="row">
-        <a class="btn btn-primary btn-sm" href="/rating/add">Add New</a>
+        <a class="btn btn-primary btn-sm" href="/home/rating/add">Add New</a>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -47,8 +47,8 @@
                 <td th:text="${rating.fitchRating}"></td>
                 <td th:text="${rating.orderNumber}"></td>
                 <td class="text-center" style="width: 15%">
-                    <a th:href="@{/rating/update/{id}(id=${rating.id})}">Edit</a>&nbsp;|&nbsp;
-                    <a th:href="@{/rating/delete/{id}(id=${rating.id})}">Delete</a>
+                    <a th:href="@{/home/rating/update/{id}(id=${rating.id})}">Edit</a>&nbsp;|&nbsp;
+                    <a th:href="@{/home/rating/delete/{id}(id=${rating.id})}">Delete</a>
                 </td>
             </tr>
             </tbody>

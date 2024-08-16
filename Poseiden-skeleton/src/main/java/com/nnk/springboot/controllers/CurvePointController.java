@@ -21,6 +21,7 @@ import static com.nnk.springboot.exceptions.CurvePointServiceException.*;
  * Controller for managing CurvePoint operations.
  */
 @Controller
+@RequestMapping("/home/curvePoint")
 public class CurvePointController {
 
     private static final Logger logger = LogManager.getLogger(CurvePointController.class);
@@ -35,7 +36,7 @@ public class CurvePointController {
      * @return the view name for the curve point list
      * @throws CurvePointAggregationInfoException if there is an error aggregating curve point info
      */
-    @RequestMapping("home/curvePoint/list")
+    @RequestMapping("/list")
     public String home(Model model) throws CurvePointAggregationInfoException {
         logger.info("Received request to list curve points");
         CurvePointResponse curvePointResponse = curvePointService.curvePointAggregationInfo();
@@ -51,7 +52,7 @@ public class CurvePointController {
      * @param model      the model to populate with the curve point
      * @return the view name for adding a curve point
      */
-    @GetMapping("/curvePoint/add")
+    @GetMapping("/add")
     public String addCurveForm(CurvePoint curvePoint, Model model) {
         logger.info("Received request to show add curve point form");
         model.addAttribute("curvePoint", curvePoint);
@@ -68,7 +69,7 @@ public class CurvePointController {
      * @return the view name for the add curve point form or redirect to the list
      * @throws CurvePointSaveException if there is an error saving the curve point
      */
-    @PostMapping("/curvePoint/validate")
+    @PostMapping("/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) throws CurvePointSaveException {
         logger.info("Received request to validate and save curve point");
 
@@ -92,7 +93,7 @@ public class CurvePointController {
      * @return the view name for updating the curve point
      * @throws CurvePointFindByIdException if there is an error finding the curve point by ID
      */
-    @GetMapping("/curvePoint/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") int id, Model model) throws CurvePointFindByIdException {
         logger.info("Received request to show update form for curve point with ID: {}", id);
         CurvePoint curvePoint = curvePointService.curvePointFindById(id);
@@ -111,7 +112,7 @@ public class CurvePointController {
      * @return the redirect URL for the curve point
      * @throws CurvePointUpdateException if there is an error updating the curve point
      */
-    @PostMapping("/curvePoint/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) throws CurvePointUpdateException {
         logger.info("Received request to update curve point with ID: {}", id);
 
@@ -134,7 +135,7 @@ public class CurvePointController {
      * @return the redirect URL for the curve point
      * @throws CurvePointDeleteException if there is an error deleting the curve point
      */
-    @GetMapping("/curvePoint/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteCurvePoint(@PathVariable("id") Integer id) throws CurvePointDeleteException {
         logger.info("Received request to delete curve point with ID: {}", id);
         curvePointService.curvePointDelete(id);

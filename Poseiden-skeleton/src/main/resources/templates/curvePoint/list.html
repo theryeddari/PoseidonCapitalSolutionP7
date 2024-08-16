@@ -28,7 +28,7 @@
     </div>
     <div class="row"><h2>Curve Point List</h2></div>
     <div class="row">
-        <a class="btn btn-primary btn-sm" href="/curvePoint/add">Add New</a>
+        <a class="btn btn-primary btn-sm" href="/home/curvePoint/add">Add New</a>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -46,8 +46,8 @@
                 <td th:text="${curvePoint.term}"></td>
                 <td th:text="${curvePoint.value}"></td>
                 <td class="text-center" style="width: 15%">
-                    <a th:href="@{/curvePoint/update/{id}(id=${curvePoint.getCurveId()})}">Edit</a>&nbsp;|&nbsp;
-                    <a th:href="@{/curvePoint/delete/{id}(id=${curvePoint.getCurveId()})}">Delete</a>
+                    <a th:href="@{/home/curvePoint/update/{id}(id=${curvePoint.getCurveId()})}">Edit</a>&nbsp;|&nbsp;
+                    <a th:href="@{/home/curvePoint/delete/{id}(id=${curvePoint.getCurveId()})}">Delete</a>
                 </td>
             </tr>
             </tbody>

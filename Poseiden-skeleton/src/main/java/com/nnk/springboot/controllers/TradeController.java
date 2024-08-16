@@ -21,6 +21,7 @@ import static com.nnk.springboot.exceptions.TradeServiceException.*;
  * Controller for managing Trade operations.
  */
 @Controller
+@RequestMapping("/home/trade")
 public class TradeController {
 
     private static final Logger logger = LogManager.getLogger(TradeController.class);
@@ -35,7 +36,7 @@ public class TradeController {
      * @return the view name for the trade list
      * @throws TradeAggregationInfoException if there is an error aggregating trade info
      */
-    @RequestMapping("home/trade/list")
+    @RequestMapping("/list")
     public String home(Model model) throws TradeAggregationInfoException {
         logger.info("Received request to list trades");
         TradeResponse tradeResponse = tradeService.tradeAggregationInfo();
@@ -51,7 +52,7 @@ public class TradeController {
      * @param model the model to populate with the trade
      * @return the view name for adding a trade
      */
-    @GetMapping("/trade/add")
+    @GetMapping("/add")
     public String addTradeForm(Trade trade, Model model) {
         logger.info("Received request to show add trade form");
         model.addAttribute("trade", trade);
@@ -68,7 +69,7 @@ public class TradeController {
      * @return the view name for the add trade form or redirect to the list
      * @throws TradeSaveException if there is an error saving the trade
      */
-    @PostMapping("/trade/validate")
+    @PostMapping("/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) throws TradeSaveException {
         logger.info("Received request to validate and save trade");
 
@@ -92,7 +93,7 @@ public class TradeController {
      * @return the view name for updating the trade
      * @throws TradeFindByIdException if there is an error finding the trade by ID
      */
-    @GetMapping("/trade/update/{id}")
+    @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) throws TradeFindByIdException {
         logger.info("Received request to show update form for trade with ID: {}", id);
         Trade trade = tradeService.tradeFindById(id);
@@ -111,7 +112,7 @@ public class TradeController {
      * @return the redirect URL for the trade list
      * @throws TradeUpdateException if there is an error updating the trade
      */
-    @PostMapping("/trade/update/{id}")
+    @PostMapping("/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
                               BindingResult result, Model model) throws TradeUpdateException {
         logger.info("Received request to update trade with ID: {}", id);
@@ -135,7 +136,7 @@ public class TradeController {
      * @return the redirect URL for the trade list
      * @throws TradeDeleteException if there is an error deleting the trade
      */
-    @GetMapping("/trade/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id) throws TradeDeleteException {
         logger.info("Received request to delete trade with ID: {}", id);
         tradeService.tradeDelete(id);
