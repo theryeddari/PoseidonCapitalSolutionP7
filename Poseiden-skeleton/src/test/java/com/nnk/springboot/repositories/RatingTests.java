@@ -17,28 +17,51 @@ public class RatingTests {
     private RatingRepository ratingRepository;
 
     @Test
-    public void ratingTest() {
+    public void testRatingCreation() {
         Rating rating = new Rating();
         rating.setMoodysRating("Moodys Rating");
         rating.setSandPRating("Sand PRating");
         rating.setFitchRating("Fitch Rating");
         rating.setOrderNumber((byte) 10);
 
-        // Save
         rating = ratingRepository.save(rating);
         assertNotNull(rating.getId());
         assertEquals(10, (byte) rating.getOrderNumber());
+    }
 
-        // Update
+    @Test
+    public void testRatingUpdate() {
+        // Create and save a rating
+        Rating rating = new Rating();
+        rating.setMoodysRating("Moodys Rating");
+        rating.setSandPRating("Sand PRating");
+        rating.setFitchRating("Fitch Rating");
+        rating.setOrderNumber((byte) 10);
+        rating = ratingRepository.save(rating);
+
+        // Update the rating
         rating.setOrderNumber((byte) 20);
         rating = ratingRepository.save(rating);
         assertEquals(20, (byte) rating.getOrderNumber());
+    }
 
-        // Find
+    @Test
+    public void testFindAllRatings() {
         List<Rating> listResult = ratingRepository.findAll();
         assertFalse(listResult.isEmpty());
+    }
 
-        // Delete
+    @Test
+    public void testDeleteRating() {
+        // Create and save a rating
+        Rating rating = new Rating();
+        rating.setMoodysRating("Moodys Rating");
+        rating.setSandPRating("Sand PRating");
+        rating.setFitchRating("Fitch Rating");
+        rating.setOrderNumber((byte) 10);
+        rating = ratingRepository.save(rating);
+
+        // Delete the rating
         Integer id = Integer.valueOf(rating.getId());
         ratingRepository.delete(rating);
         Optional<Rating> ratingList = ratingRepository.findById(id);

@@ -17,44 +17,84 @@ public class UserTests {
     private UserRepository userRepository;
 
     @Test
-    public void userTest() {
-
-        // Create a new User instance
+    public void testUserCreation() {
         User user = new User();
         user.setUsername("testUser");
         user.setPassword("P@ssw0rd");
         user.setFullname("Test User");
         user.setRole("USER");
 
-        //check if ExistByName while no exist
-        boolean resultNoExist = userRepository.existsByUsername(user.getUsername());
-        assertFalse(resultNoExist);
-
-        // Save
         user = userRepository.save(user);
         assertNotNull(user.getId());
         assertEquals("testUser", user.getUsername());
+    }
 
-        //check if ExistByName while exist
+    @Test
+    public void testUserExistsByUsernameWhenNoUser() {
+        boolean resultNoExist = userRepository.existsByUsername("nonExistingUser");
+        assertFalse(resultNoExist);
+    }
+
+    @Test
+    public void testUserExistsByUsernameWhenUserExists() {
+        User user = new User();
+        user.setUsername("testUser");
+        user.setPassword("P@ssw0rd");
+        user.setFullname("Test User");
+        user.setRole("USER");
+
+        user = userRepository.save(user);
+
         boolean resultExist = userRepository.existsByUsername(user.getUsername());
         assertTrue(resultExist);
+    }
 
-        //Find By name and check it with user saved
+    @Test
+    public void testFindUserByUsername() {
+        User user = new User();
+        user.setUsername("testUser");
+        user.setPassword("P@ssw0rd");
+        user.setFullname("Test User");
+        user.setRole("USER");
+
+        user = userRepository.save(user);
+
         User user1 = userRepository.findByUsername(user.getUsername()).orElse(null);
-        assert user1 != null;
+        assertNotNull(user1);
         assertEquals(user.getId(), user1.getId());
+    }
 
-        // Update
+    @Test
+    public void testUpdateUser() {
+        User user = new User();
+        user.setUsername("testUser");
+        user.setPassword("P@ssw0rd");
+        user.setFullname("Test User");
+        user.setRole("USER");
+
+        user = userRepository.save(user);
+
         user.setUsername("updatedUser");
         user = userRepository.save(user);
         assertEquals("updatedUser", user.getUsername());
+    }
 
-
-        // Find
+    @Test
+    public void testFindAllUsers() {
         List<User> listResult = userRepository.findAll();
         assertFalse(listResult.isEmpty());
+    }
 
-        // Delete
+    @Test
+    public void testDeleteUser() {
+        User user = new User();
+        user.setUsername("testUser");
+        user.setPassword("P@ssw0rd");
+        user.setFullname("Test User");
+        user.setRole("USER");
+
+        user = userRepository.save(user);
+
         Integer id = Integer.valueOf(user.getId());
         userRepository.delete(user);
         Optional<User> userList = userRepository.findById(id);

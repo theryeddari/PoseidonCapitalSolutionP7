@@ -17,31 +17,57 @@ public class RuleTests {
     private RuleNameRepository ruleNameRepository;
 
     @Test
-    public void ruleTest() {
+    public void testRuleCreation() {
         RuleName rule = new RuleName();
         rule.setName("Rule Name");
         rule.setDescription("Description");
         rule.setJson("Json");
         rule.setTemplate("Template");
-        rule.setSqlStr("SQl");
+        rule.setSqlStr("SQL");
         rule.setSqlPart("SQL Part");
 
-
-        // Save
         rule = ruleNameRepository.save(rule);
         assertNotNull(rule.getId());
         assertEquals("Rule Name", rule.getName());
+    }
 
-        // Update
+    @Test
+    public void testRuleUpdate() {
+        // Create and save a rule
+        RuleName rule = new RuleName();
+        rule.setName("Rule Name");
+        rule.setDescription("Description");
+        rule.setJson("Json");
+        rule.setTemplate("Template");
+        rule.setSqlStr("SQL");
+        rule.setSqlPart("SQL Part");
+        rule = ruleNameRepository.save(rule);
+
+        // Update the rule
         rule.setName("Rule Name Update");
         rule = ruleNameRepository.save(rule);
         assertEquals("Rule Name Update", rule.getName());
+    }
 
-        // Find
+    @Test
+    public void testFindAllRules() {
         List<RuleName> listResult = ruleNameRepository.findAll();
         assertFalse(listResult.isEmpty());
+    }
 
-        // Delete
+    @Test
+    public void testDeleteRule() {
+        // Create and save a rule
+        RuleName rule = new RuleName();
+        rule.setName("Rule Name");
+        rule.setDescription("Description");
+        rule.setJson("Json");
+        rule.setTemplate("Template");
+        rule.setSqlStr("SQL");
+        rule.setSqlPart("SQL Part");
+        rule = ruleNameRepository.save(rule);
+
+        // Delete the rule
         Integer id = Integer.valueOf(rule.getId());
         ruleNameRepository.delete(rule);
         Optional<RuleName> ruleList = ruleNameRepository.findById(id);

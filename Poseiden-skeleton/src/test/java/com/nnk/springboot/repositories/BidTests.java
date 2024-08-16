@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest
 public class BidTests {
 
@@ -18,29 +17,48 @@ public class BidTests {
     private BidListRepository bidListRepository;
 
     @Test
-    public void bidListTest() {
+    public void testBidListCreation() {
         BidList bid = new BidList();
         bid.setAccount("Account Test");
         bid.setType("Type Test");
         bid.setBidQuantity(10d);
 
-        // Save
         bid = bidListRepository.save(bid);
         assertNotNull(bid.getBidListId());
-        assertEquals(bid.getBidQuantity(), 10d, 10d);
+        assertEquals(10d, bid.getBidQuantity(), 0.001d);
+    }
 
-        System.out.println(bid.getBidListId());
+    @Test
+    public void testBidListUpdate() {
+        // Create and save a BidList
+        BidList bid = new BidList();
+        bid.setAccount("Account Test");
+        bid.setType("Type Test");
+        bid.setBidQuantity(10d);
+        bid = bidListRepository.save(bid);
 
-        // Update
+        // Update the BidList
         bid.setBidQuantity(20d);
         bid = bidListRepository.save(bid);
-        assertEquals(bid.getBidQuantity(), 20d, 20d);
+        assertEquals(20d, bid.getBidQuantity(), 0.001d);
+    }
 
-        // Find
+    @Test
+    public void testFindAllBidLists() {
         List<BidList> listResult = bidListRepository.findAll();
         assertFalse(listResult.isEmpty());
+    }
 
-        // Delete
+    @Test
+    public void testDeleteBidList() {
+        // Create and save a BidList
+        BidList bid = new BidList();
+        bid.setAccount("Account Test");
+        bid.setType("Type Test");
+        bid.setBidQuantity(10d);
+        bid = bidListRepository.save(bid);
+
+        // Delete the BidList
         int id = bid.getBidListId();
         bidListRepository.delete(bid);
         Optional<BidList> bidList = bidListRepository.findById(id);

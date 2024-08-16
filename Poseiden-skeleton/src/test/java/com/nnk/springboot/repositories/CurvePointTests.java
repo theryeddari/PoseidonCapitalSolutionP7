@@ -17,30 +17,48 @@ public class CurvePointTests {
     private CurvePointRepository curvePointRepository;
 
     @Test
-    public void curvePointTest() {
+    public void testCurvePointCreation() {
         CurvePoint curvePoint = new CurvePoint();
         curvePoint.setTerm(10d);
         curvePoint.setValue(30d);
 
-        // Save
         curvePoint = curvePointRepository.save(curvePoint);
         assertNotNull(curvePoint.getCurveId());
-        assertEquals(10, curvePoint.getTerm());
+        assertEquals(10d, curvePoint.getTerm());
+    }
 
-        // Update
+    @Test
+    public void testCurvePointUpdate() {
+        // Create and save a CurvePoint
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setTerm(10d);
+        curvePoint.setValue(30d);
+        curvePoint = curvePointRepository.save(curvePoint);
+
+        // Update the CurvePoint
         curvePoint.setTerm(20d);
         curvePoint = curvePointRepository.save(curvePoint);
-        assertEquals(20, curvePoint.getTerm());
+        assertEquals(20d, curvePoint.getTerm());
+    }
 
-        // Find
+    @Test
+    public void testFindAllCurvePoints() {
         List<CurvePoint> listResult = curvePointRepository.findAll();
         assertFalse(listResult.isEmpty());
+    }
 
-        // Delete
+    @Test
+    public void testDeleteCurvePoint() {
+        // Create and save a CurvePoint
+        CurvePoint curvePoint = new CurvePoint();
+        curvePoint.setTerm(10d);
+        curvePoint.setValue(30d);
+        curvePoint = curvePointRepository.save(curvePoint);
+
+        // Delete the CurvePoint
         Integer id = Integer.valueOf(curvePoint.getCurveId());
         curvePointRepository.delete(curvePoint);
         Optional<CurvePoint> curvePointList = curvePointRepository.findById(id);
         assertFalse(curvePointList.isPresent());
     }
-
 }
