@@ -26,7 +26,7 @@ public class UserTests {
         user.setFullname("Test User");
         user.setRole("USER");
 
-        //check if ExistByName
+        //check if ExistByName while no exist
         boolean resultNoExist = userRepository.existsByUsername(user.getUsername());
         assertFalse(resultNoExist);
 
@@ -35,14 +35,20 @@ public class UserTests {
         assertNotNull(user.getId());
         assertEquals("testUser", user.getUsername());
 
-        //check if ExistByName
+        //check if ExistByName while exist
         boolean resultExist = userRepository.existsByUsername(user.getUsername());
         assertTrue(resultExist);
+
+        //Find By name and check it with user saved
+        User user1 = userRepository.findByUsername(user.getUsername()).orElse(null);
+        assert user1 != null;
+        assertEquals(user.getId(), user1.getId());
 
         // Update
         user.setUsername("updatedUser");
         user = userRepository.save(user);
         assertEquals("updatedUser", user.getUsername());
+
 
         // Find
         List<User> listResult = userRepository.findAll();
