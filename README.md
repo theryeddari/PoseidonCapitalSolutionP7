@@ -22,7 +22,7 @@ La branch Main est utilisé comme branch de présentation par défaut.
 
 Pour toute utilisation du code, ajout ou modification veuillez creer une nouvelle branch à partir de la branch Master qui est diponible dans le projet aprés avoir cloner le repro.
 
-[Branch Master](https://github.com/theryeddari/PoseidonCapitalSolutionP7.git) 
+[Branch Master](https://github.com/theryeddari/PoseidonCapitalSolutionP7/tree/a7bfd71ccf96cbfbb42b661628ff88f3cd084f92/Poseiden-skeleton) 
 
 Clonez le dépôt de la branch Master:
 
@@ -86,7 +86,7 @@ Pour exécuter les tests unitaires :
 ```
 Le rapport de test est disponible dans le dossier target/site/index.html ou présent  ici :
 
-[rapport SureFire](https://github.com/theryeddari/P8-TourGuide/blob/e51bbd3725823a355724c16e5ba6e0512cbd124f/surefire.png)
+[rapport SureFire](https://github.com/theryeddari/PoseidonCapitalSolutionP7/blob/c40aa8c722dd9f0980467938666d50af73daf1d5/surfire.png)
 
 ### Couverture de code
 
@@ -98,7 +98,7 @@ Pour générer un rapport de couverture :
 
 Le rapports de couverture est disponible dans le dossier target/site/jacoco/index.html ou présent  ici
 
-[rapport Jacoco](https://github.com/theryeddari/P8-TourGuide/blob/e51bbd3725823a355724c16e5ba6e0512cbd124f/jacoco.png)
+[rapport Jacoco](https://github.com/theryeddari/PoseidonCapitalSolutionP7/blob/c40aa8c722dd9f0980467938666d50af73daf1d5/Jacoco.png)
 
 
 ## Structure du Projet
